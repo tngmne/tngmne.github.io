@@ -274,6 +274,35 @@
       color: #666;
     }
 
+    .pin-section {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+
+    .pin-section input {
+      width: 120px;
+      padding: 8px 12px;
+      font-size: 18px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      text-align: center;
+      letter-spacing: 2px;
+      margin-top: 8px;
+    }
+
+    .pin-section input:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+
+    .pin-section .error {
+      color: #dc3545;
+      font-size: 14px;
+      margin-top: 5px;
+      display: none;
+    }
+
     .receipt-close {
       position: absolute;
       top: 10px;
@@ -299,11 +328,27 @@
       font-size: 18px;
       margin-top: 20px;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .receipt-confirm:hover {
+    .receipt-confirm:disabled {
+      background-color: #a8d5b3;
+      cursor: not-allowed;
+      transform: scale(0.98);
+      opacity: 0.8;
+    }
+
+    .receipt-confirm:not(:disabled):hover {
       background-color: #218838;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .receipt-confirm:not(:disabled):active {
+      transform: translateY(0);
+      box-shadow: none;
     }
   </style>
 </head>
@@ -353,7 +398,12 @@
       <div class="receipt-items" id="receiptItems"></div>
       <div class="receipt-total" id="receiptTotal"></div>
       <div class="receipt-info" id="receiptInfo"></div>
-      <button class="receipt-confirm" onclick="confirmAndSendOrder()">Confirm Order</button>
+      <div class="pin-section">
+        <label for="pinInput">Enter Administrator PIN:</label>
+        <input type="password" id="pinInput" maxlength="4" placeholder="****" oninput="validatePin(this.value)">
+        <div class="error" id="pinError">Incorrect PIN</div>
+      </div>
+      <button class="receipt-confirm" id="confirmOrderBtn" onclick="confirmAndSendOrder()" disabled>Confirm Order</button>
     </div>
   </div>
 
@@ -379,7 +429,7 @@
     ];
 
     const dinnerMeals = [
-      { name: "Steak", desc: "Grilled steak, mashed potatoes, vegetables", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/GRCFMgJ-WVZeYDn-wbmdTQY_prepare.jpeg" },
+      { name: "Pork tenderloin with young potatoes and mashroom sauce", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/myaso/svinaya-koreyka-v-limonno-chesnochnom-souse-s-pyure-iz-batata" },
       { name: "Pasta", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg" },
       { name: "Seafood", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg" },
       { name: "Vegan Bowl", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg" }
@@ -463,11 +513,36 @@
       window.scrollTo({ top: paymentOptions.offsetTop, behavior: "smooth" });
     }
 
+    function validatePin(value) {
+      const confirmBtn = document.getElementById('confirmOrderBtn');
+      const pinError = document.getElementById('pinError');
+      
+      if (value === '2606') {
+        confirmBtn.disabled = false;
+        pinError.style.display = 'none';
+      } else {
+        confirmBtn.disabled = true;
+        if (value.length === 4) {
+          pinError.style.display = 'block';
+        } else {
+          pinError.style.display = 'none';
+        }
+      }
+    }
+
     function showReceiptModal(method) {
       const receiptModal = document.getElementById('receiptModal');
       const receiptItems = document.getElementById('receiptItems');
       const receiptTotal = document.getElementById('receiptTotal');
       const receiptInfo = document.getElementById('receiptInfo');
+      const pinInput = document.getElementById('pinInput');
+      const confirmBtn = document.getElementById('confirmOrderBtn');
+      const pinError = document.getElementById('pinError');
+
+      // Reset PIN input and button state
+      pinInput.value = '';
+      confirmBtn.disabled = true;
+      pinError.style.display = 'none';
       
       // Clear previous content
       receiptItems.innerHTML = '';
@@ -510,7 +585,15 @@
     }
     
     function closeReceiptModal() {
-      document.getElementById('receiptModal').style.display = 'none';
+      const receiptModal = document.getElementById('receiptModal');
+      const pinInput = document.getElementById('pinInput');
+      const pinError = document.getElementById('pinError');
+      const confirmBtn = document.getElementById('confirmOrderBtn');
+      
+      receiptModal.style.display = 'none';
+      pinInput.value = '';
+      pinError.style.display = 'none';
+      confirmBtn.disabled = true;
     }
     
     function confirmAndSendOrder() {
