@@ -224,6 +224,87 @@
     #roomNumber {
       background-color: #eee;
     }
+
+    #receiptModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .receipt-content {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .receipt-header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .receipt-items {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .receipt-total {
+      font-weight: bold;
+      margin: 15px 0;
+      padding-top: 15px;
+      border-top: 2px dashed #ccc;
+    }
+
+    .receipt-info {
+      margin-top: 15px;
+      text-align: left;
+      color: #666;
+    }
+
+    .receipt-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 5px;
+      color: #666;
+    }
+
+    .receipt-close:hover {
+      color: #333;
+    }
+
+    .receipt-confirm {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .receipt-confirm:hover {
+      background-color: #218838;
+    }
   </style>
 </head>
 <body>
@@ -253,8 +334,8 @@
 
   <div class="payment-options hidden" id="paymentOptions">
     <label>Payment Method:</label><br>
-    <button onclick="selectPayment('Cash')">Cash</button>
-    <button onclick="selectPayment('Card')">Card</button>
+    <button onclick="showReceiptModal('Cash')">Cash</button>
+    <button onclick="showReceiptModal('Card')">Card</button>
   </div>
 
   <div id="roomPopup">
@@ -262,6 +343,17 @@
       <h3>Select Room Number</h3>
       <div id="roomGrid" class="room-grid"></div>
       <button class="close-btn" onclick="closeRoomPopup()">Close</button>
+    </div>
+  </div>
+
+  <div id="receiptModal">
+    <div class="receipt-content">
+      <button class="receipt-close" onclick="closeReceiptModal()">×</button>
+      <div class="receipt-header">🧾 Receipt</div>
+      <div class="receipt-items" id="receiptItems"></div>
+      <div class="receipt-total" id="receiptTotal"></div>
+      <div class="receipt-info" id="receiptInfo"></div>
+      <button class="receipt-confirm" onclick="confirmAndSendOrder()">Confirm Order</button>
     </div>
   </div>
 
@@ -371,28 +463,74 @@
       window.scrollTo({ top: paymentOptions.offsetTop, behavior: "smooth" });
     }
 
-    function selectPayment(method) {
-      let receipt = "🧾 Receipt\n\n";
+    function showReceiptModal(method) {
+      const receiptModal = document.getElementById('receiptModal');
+      const receiptItems = document.getElementById('receiptItems');
+      const receiptTotal = document.getElementById('receiptTotal');
+      const receiptInfo = document.getElementById('receiptInfo');
+      
+      // Clear previous content
+      receiptItems.innerHTML = '';
+      
+      // Add items
       let total = 0;
       for (let [name, item] of Object.entries(selectedMeals)) {
-        let line = `${name} x${item.qty} = ${item.qty * item.price} €`;
-        receipt += line + "\n";
-        total += item.qty * item.price;
+        const itemTotal = item.qty * item.price;
+        total += itemTotal;
+        receiptItems.innerHTML += `<div>${name} x${item.qty} = ${itemTotal} €</div>`;
       }
-
+      
+      // Add total
+      receiptTotal.textContent = `Total: ${total} €`;
+      
+      // Add info
       const time = document.querySelector('.time-buttons button.selected')?.textContent || "N/A";
       const location = document.querySelector('input[name="location"]:checked')?.value || "N/A";
       const room = location === "Room" ? roomNumberInput.value : "N/A";
-
-      receipt += `\nTotal: ${total} €`;
-      receipt += `\nTime: ${time}`;
-      receipt += `\nLocation: ${location}`;
-      if (location === "Room") receipt += `\nRoom: ${room}`;
-      receipt += `\nPayment Method: ${method}`;
-
-      // Show receipt to customer
-      alert(receipt);
-
+      
+      receiptInfo.innerHTML = `
+        <div>Time: ${time}</div>
+        <div>Location: ${location}</div>
+        ${location === "Room" ? `<div>Room: ${room}</div>` : ''}
+        <div>Payment Method: ${method}</div>
+      `;
+      
+      // Store the receipt data for later use when sending to Telegram
+      receiptModal.dataset.receipt = JSON.stringify({
+        items: selectedMeals,
+        total,
+        time,
+        location,
+        room,
+        method
+      });
+      
+      // Show modal
+      receiptModal.style.display = 'flex';
+    }
+    
+    function closeReceiptModal() {
+      document.getElementById('receiptModal').style.display = 'none';
+    }
+    
+    function confirmAndSendOrder() {
+      const receiptModal = document.getElementById('receiptModal');
+      const receiptData = JSON.parse(receiptModal.dataset.receipt);
+      
+      // Format receipt for Telegram
+      let receipt = "🧾 Receipt\n\n";
+      for (let [name, item] of Object.entries(receiptData.items)) {
+        receipt += `${name} x${item.qty} = ${item.qty * item.price} €\n`;
+      }
+      receipt += `\nTotal: ${receiptData.total} €`;
+      receipt += `\nTime: ${receiptData.time}`;
+      receipt += `\nLocation: ${receiptData.location}`;
+      if (receiptData.location === "Room") receipt += `\nRoom: ${receiptData.room}`;
+      receipt += `\nPayment Method: ${receiptData.method}`;
+      
+      // Close modal
+      closeReceiptModal();
+      
       // Send to Telegram
       const BOT_TOKEN = '8071098931:AAFz_EOIJDp7RrJczbimuIE-sZmXnMPjOi0';
       const CHAT_ID = '1138899345';    // Your chat ID
