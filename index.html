@@ -90,6 +90,13 @@
       cursor: not-allowed;
     }
 
+    #resetBtn {
+      margin-top: 30px;
+      margin-left: 10px;
+      background-color: #dc3545;
+      color: white;
+    }
+
     .hidden {
       display: none;
     }
@@ -195,6 +202,7 @@
   <div id="totalPrice">Total: 0 €</div>
 
   <button id="continueBtn" disabled onclick="showNextStep()">Continue</button>
+  <button id="resetBtn" onclick="resetAll()">Reset</button>
 
   <div id="locationStep" class="step hidden">
     <label>Where to eat:</label><br>
@@ -365,6 +373,47 @@
           hour++;
         }
       }
+    }
+
+    function resetAll() {
+      // Reset meal selections
+      const quantityInputs = document.querySelectorAll('.quantity-control input');
+      quantityInputs.forEach(input => {
+        input.value = 0;
+        handleQuantityChange(
+          input.closest('.option').querySelector('.option-title').textContent,
+          parseFloat(input.closest('.option').querySelector('.price').textContent),
+          0
+        );
+      });
+
+      // Reset location selection
+      const locationRadios = document.querySelectorAll('input[name="location"]');
+      locationRadios.forEach(radio => radio.checked = false);
+
+      // Reset room number
+      if (roomNumberInput) {
+        roomNumberInput.value = '';
+        roomNumberContainer.classList.add('hidden');
+      }
+
+      // Reset time selection
+      const timeButtons = document.querySelectorAll('.time-buttons button');
+      timeButtons.forEach(btn => btn.classList.remove('selected'));
+
+      // Hide subsequent steps
+      locationStep.classList.add('hidden');
+      paymentBtn.classList.add('hidden');
+      paymentOptions.classList.add('hidden');
+
+      // Reset total price
+      totalPriceEl.textContent = 'Total: 0 €';
+      
+      // Disable continue button
+      continueBtn.disabled = true;
+
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function loadMeals() {
