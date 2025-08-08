@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Meal Selection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .meal-options {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .option {
+      background-color: white;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      width: 280px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .option img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .option-title {
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .price {
+      margin-top: 8px;
+      color: #333;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .quantity-control {
+      margin-top: 12px;
+    }
+
+    .quantity-control input {
+      width: 80px;
+      padding: 10px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    #totalPrice {
+      margin-top: 25px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 16px 28px;
+      font-size: 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #continueBtn, #paymentBtn {
+      margin-top: 30px;
+      background-color: #007BFF;
+      color: white;
+    }
+
+    #continueBtn:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .step {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-top: 10px;
+      width: 220px;
+    }
+
+    .payment-options {
+      margin-top: 20px;
+    }
+
+    .payment-options button {
+      margin: 10px;
+      padding: 14px 24px;
+      font-size: 18px;
+      border-radius: 6px;
+      border: 1px solid #007BFF;
+    }
+
+    .time-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .time-buttons button {
+      padding: 12px 20px;
+      font-size: 16px;
+      border: 1px solid #007BFF;
+      background-color: white;
+      color: #007BFF;
+    }
+
+    .time-buttons button.selected {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    #roomPopup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-height: 90vh;
+      overflow-y: auto;
+      max-width: 500px;
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .room-grid button {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #007BFF;
+      background-color: #f0f0f0;
+    }
+
+    .close-btn {
+      margin-top: 15px;
+      background: #dc3545;
+      color: white;
+    }
+
+    #roomNumber {
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="mealHeading">Meal Selection</h1>
+
+  <div id="mealContainer" class="meal-options"></div>
+  <div id="totalPrice">Total: 0 €</div>
+
+  <button id="continueBtn" disabled onclick="showNextStep()">Continue</button>
+
+  <div id="locationStep" class="step hidden">
+    <label>Where to eat:</label><br>
+    <input type="radio" name="location" value="Room" onclick="toggleRoom(true)"> Room
+    <input type="radio" name="location" value="Restaurant" onclick="toggleRoom(false)"> Restaurant
+
+    <div id="roomNumberContainer" class="hidden">
+      <label>Room Number:</label><br>
+      <input type="text" id="roomNumber" readonly placeholder="Select a room" onclick="showRoomPopup()">
+    </div>
+
+    <label>Select Time to Eat / Deliver:</label>
+    <div id="timeButtonsContainer" class="time-buttons"></div>
+
+    <button id="paymentBtn" class="hidden" onclick="showPaymentOptions()">Select Payment Option</button>
+  </div>
+
+  <div class="payment-options hidden" id="paymentOptions">
+    <label>Payment Method:</label><br>
+    <button onclick="selectPayment('Cash')">Cash</button>
+    <button onclick="selectPayment('Card')">Card</button>
+  </div>
+
+  <div id="roomPopup">
+    <div class="popup-content">
+      <h3>Select Room Number</h3>
+      <div id="roomGrid" class="room-grid"></div>
+      <button class="close-btn" onclick="closeRoomPopup()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const mealContainer = document.getElementById('mealContainer');
+    const totalPriceEl = document.getElementById('totalPrice');
+    const continueBtn = document.getElementById('continueBtn');
+    const locationStep = document.getElementById('locationStep');
+    const roomNumberContainer = document.getElementById('roomNumberContainer');
+    const roomNumberInput = document.getElementById('roomNumber');
+    const paymentBtn = document.getElementById('paymentBtn');
+    const paymentOptions = document.getElementById('paymentOptions');
+    const timeButtonsContainer = document.getElementById('timeButtonsContainer');
+    const roomPopup = document.getElementById('roomPopup');
+    const roomGrid = document.getElementById('roomGrid');
+    const selectedMeals = {};
+
+    const breakfastMeals = [
+      { name: "Continental", desc: "Croissant, toast, coffee, juice", price: 2, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/ryTRiQJ-aOFwAiH-TjvYkWa_prepare.jpeg", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/skrembl-s-krevetkoy-i-avokado" },
+      { name: "English", desc: "Eggs, sausage, beans, toast", price: 3, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/egsckBl-COcqqOs-qbXXAZM_prepare.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/yayca-benedikt-s-lososem-i-parmezanom" },
+      { name: "American", desc: "Pancakes, eggs, bacon, juice", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/bkOlGMH-kjnelHM-mfDtHSU_prepare.jpeg" },
+      { name: "Vegetarian", desc: "Fruits, yogurt, granola, tea", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/bTbjeUC-IPxIELH-zRxlTYs_prepare.jpeg" }
+    ];
+
+    const dinnerMeals = [
+      { name: "Steak", desc: "Grilled steak, mashed potatoes, vegetables", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/GRCFMgJ-WVZeYDn-wbmdTQY_prepare.jpeg" },
+      { name: "Pasta", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg" },
+      { name: "Seafood", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg" },
+      { name: "Vegan Bowl", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg" }
+    ];
+
+    function toggleRoom(show) {
+      roomNumberContainer.classList.toggle("hidden", !show);
+      if (show) showRoomPopup();
+      checkForPayment();
+    }
+
+    function showRoomPopup() {
+      roomPopup.style.display = "flex";
+    }
+
+    function closeRoomPopup() {
+      roomPopup.style.display = "none";
+    }
+
+    function selectRoom(number) {
+      roomNumberInput.value = number;
+      closeRoomPopup();
+      checkForPayment();
+    }
+
+    function loadRoomButtons() {
+      for (let i = 1; i <= 145; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.onclick = () => selectRoom(i);
+        roomGrid.appendChild(btn);
+      }
+    }
+
+    function handleQuantityChange(name, price, value) {
+      if (value > 0) {
+        selectedMeals[name] = { qty: value, price };
+      } else {
+        delete selectedMeals[name];
+      }
+
+      let total = 0;
+      for (let item of Object.values(selectedMeals)) {
+        total += item.qty * item.price;
+      }
+
+      totalPriceEl.textContent = `Total: ${total} €`;
+      continueBtn.disabled = total === 0;
+    }
+
+    function showNextStep() {
+      locationStep.classList.remove('hidden');
+      window.scrollTo({ top: locationStep.offsetTop, behavior: "smooth" });
+    }
+
+    function checkForPayment() {
+      const location = document.querySelector('input[name="location"]:checked');
+      const room = roomNumberInput.value;
+      const selectedTime = document.querySelector('.time-buttons button.selected');
+
+      const ready = location && selectedTime && (
+        location.value === "Restaurant" || (location.value === "Room" && room.trim() !== "")
+      );
+
+      paymentBtn.classList.toggle("hidden", !ready);
+    }
+
+    function showPaymentOptions() {
+      paymentOptions.classList.remove("hidden");
+      window.scrollTo({ top: paymentOptions.offsetTop, behavior: "smooth" });
+    }
+
+    function selectPayment(method) {
+      let receipt = "🧾 Receipt\n\n";
+      let total = 0;
+      for (let [name, item] of Object.entries(selectedMeals)) {
+        let line = `${name} x${item.qty} = ${item.qty * item.price} €`;
+        receipt += line + "\n";
+        total += item.qty * item.price;
+      }
+
+      const time = document.querySelector('.time-buttons button.selected')?.textContent || "N/A";
+      const location = document.querySelector('input[name="location"]:checked')?.value || "N/A";
+      const room = location === "Room" ? roomNumberInput.value : "N/A";
+
+      receipt += `\nTotal: ${total} €`;
+      receipt += `\nTime: ${time}`;
+      receipt += `\nLocation: ${location}`;
+      if (location === "Room") receipt += `\nRoom: ${room}`;
+      receipt += `\nPayment Method: ${method}`;
+
+      alert(receipt);
+
+      const encoded = encodeURIComponent(receipt);
+      window.open(`https://wa.me/380677614166?text=${encoded}`, '_blank');
+    }
+
+    function loadTimeButtons() {
+      let hour = 0, minute = 30;
+      while (hour < 24) {
+        const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        const btn = document.createElement('button');
+        btn.textContent = timeStr;
+        btn.onclick = () => {
+          document.querySelectorAll('.time-buttons button').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          checkForPayment();
+        };
+        timeButtonsContainer.appendChild(btn);
+
+        minute += 60;
+        if (minute >= 60) {
+          minute = 0;
+          hour++;
+        }
+      }
+    }
+
+    function loadMeals() {
+      const now = new Date();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      if (currentMinutes === 720) {
+        mealContainer.innerHTML = "<p>Meal selection is temporarily unavailable from 12:00 to 12:01.</p>";
+        return;
+      }
+
+      const isBreakfast = currentMinutes >= 30 && currentMinutes <= 720;
+      const options = isBreakfast ? breakfastMeals : dinnerMeals;
+      document.getElementById("mealHeading").textContent = isBreakfast ? "Select Your Breakfast" : "Select Your Dinner";
+
+      options.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'option';
+        const imgHTML = item.link
+          ? `<img src="${item.img}" alt="${item.name}" onclick="window.open('${item.link}', '_blank')">`
+          : `<img src="${item.img}" alt="${item.name}">`;
+        div.innerHTML = `
+          ${imgHTML}
+          <div class="option-title">${item.name}</div>
+          <div>${item.desc}</div>
+          <div class="price">${item.price} €</div>
+          <div class="quantity-control">
+            <label>Qty:</label>
+            <input type="number" min="0" max="5" value="0"
+              onchange="handleQuantityChange('${item.name}', ${item.price}, parseInt(this.value))">
+          </div>
+        `;
+        mealContainer.appendChild(div);
+      });
+    }
+
+    loadMeals();
+    loadTimeButtons();
+    loadRoomButtons();
+  </script>
+</body>
+</html>
