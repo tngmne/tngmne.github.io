@@ -58,11 +58,42 @@
       margin-top: 12px;
     }
 
-    .quantity-control input {
-      width: 80px;
-      padding: 10px;
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .quantity-control button {
+      width: 44px;
+      height: 44px;
+      font-size: 24px;
+      border: 1px solid #007BFF;
+      background-color: white;
+      color: #007BFF;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.2s ease;
+    }
+
+    .quantity-control button:active {
+      background-color: #007BFF;
+      color: white;
+      transform: scale(0.95);
+    }
+
+    .quantity-control .quantity {
+      font-size: 24px;
+      min-width: 40px;
       text-align: center;
-      font-size: 18px;
+      font-weight: bold;
+      color: #333;
     }
 
     #totalPrice {
@@ -291,7 +322,18 @@
       }
     }
 
-    function handleQuantityChange(name, price, value) {
+    function updateQuantity(name, price, action, button) {
+      const quantitySpan = button.parentElement.querySelector('.quantity');
+      let value = parseInt(quantitySpan.textContent);
+      
+      if (action === 'increase' && value < 5) {
+        value++;
+      } else if (action === 'decrease' && value > 0) {
+        value--;
+      }
+      
+      quantitySpan.textContent = value;
+      
       if (value > 0) {
         selectedMeals[name] = { qty: value, price };
       } else {
@@ -348,10 +390,48 @@
       if (location === "Room") receipt += `\nRoom: ${room}`;
       receipt += `\nPayment Method: ${method}`;
 
+      // Show receipt to customer
       alert(receipt);
 
-      const encoded = encodeURIComponent(receipt);
-      window.open(`https://wa.me/380677614166?text=${encoded}`, '_blank');
+      // Send to Telegram
+      const BOT_TOKEN = '8071098931:AAFz_EOIJDp7RrJczbimuIE-sZmXnMPjOi0';
+      const CHAT_ID = '1138899345';    // Your chat ID
+      
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: receipt,
+          parse_mode: 'HTML',
+          reply_markup: JSON.stringify({
+            inline_keyboard: [
+              [{
+                text: '✅ Confirm Order',
+                callback_data: 'confirm_order'
+              }],
+              [{
+                text: '❌ Reject Order',
+                callback_data: 'reject_order'
+              }]
+            ]
+          })
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          alert('Order sent successfully! We will process it shortly.');
+        } else {
+          alert('Error sending order. Please try again or contact us directly.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error sending order. Please try again or contact us directly.');
+      });
     }
 
     function loadTimeButtons() {
@@ -377,14 +457,13 @@
 
     function resetAll() {
       // Reset meal selections
-      const quantityInputs = document.querySelectorAll('.quantity-control input');
-      quantityInputs.forEach(input => {
-        input.value = 0;
-        handleQuantityChange(
-          input.closest('.option').querySelector('.option-title').textContent,
-          parseFloat(input.closest('.option').querySelector('.price').textContent),
-          0
-        );
+      const quantitySpans = document.querySelectorAll('.quantity-control .quantity');
+      quantitySpans.forEach(span => {
+        span.textContent = '0';
+        const optionDiv = span.closest('.option');
+        const name = optionDiv.querySelector('.option-title').textContent;
+        const price = parseFloat(optionDiv.querySelector('.price').textContent);
+        delete selectedMeals[name];
       });
 
       // Reset location selection
@@ -441,9 +520,9 @@
           <div>${item.desc}</div>
           <div class="price">${item.price} €</div>
           <div class="quantity-control">
-            <label>Qty:</label>
-            <input type="number" min="0" max="5" value="0"
-              onchange="handleQuantityChange('${item.name}', ${item.price}, parseInt(this.value))">
+            <button onclick="updateQuantity('${item.name}', ${item.price}, 'decrease', this)">−</button>
+            <span class="quantity">0</span>
+            <button onclick="updateQuantity('${item.name}', ${item.price}, 'increase', this)">+</button>
           </div>
         `;
         mealContainer.appendChild(div);
