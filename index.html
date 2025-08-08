@@ -540,6 +540,11 @@
       }
     }
 
+    function generateOrderNumber() {
+      const timestamp = Date.now();
+      return `ORDER-${timestamp}`;
+    }
+
     function showReceiptModal(method) {
       const receiptModal = document.getElementById('receiptModal');
       const receiptItems = document.getElementById('receiptItems');
@@ -549,6 +554,9 @@
       const confirmBtn = document.getElementById('confirmOrderBtn');
       const pinError = document.getElementById('pinError');
 
+      // Generate unique order number
+      const orderNumber = generateOrderNumber();
+
       // Reset PIN input and button state
       pinInput.value = '';
       confirmBtn.disabled = true;
@@ -556,6 +564,9 @@
       
       // Clear previous content
       receiptItems.innerHTML = '';
+      
+      // Add order number at the top
+      receiptItems.innerHTML = `<div style="font-weight: bold; margin-bottom: 10px;">Order #: ${orderNumber}</div>`;
       
       // Add items
       let total = 0;
@@ -582,6 +593,7 @@
       
       // Store the receipt data for later use when sending to Telegram
       receiptModal.dataset.receipt = JSON.stringify({
+        orderNumber,
         items: selectedMeals,
         total,
         time,
@@ -611,7 +623,7 @@
       const receiptData = JSON.parse(receiptModal.dataset.receipt);
       
       // Format receipt for Telegram
-      let receipt = "🧾 Receipt\n\n";
+      let receipt = `🧾 Receipt\nOrder #: ${receiptData.orderNumber}\n\n`;
       for (let [name, item] of Object.entries(receiptData.items)) {
         receipt += `${name} x${item.qty} = ${item.qty * item.price} €\n`;
       }
