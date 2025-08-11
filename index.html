@@ -860,7 +860,18 @@
         location === "Restaurant" || (location === "Room" && room.trim() !== "")
       );
 
+      const wasHidden = paymentBtn.classList.contains("hidden");
       paymentBtn.classList.toggle("hidden", !ready);
+      
+      // If payment button just became visible and was triggered by time selection, scroll to it
+      if (ready && wasHidden && selectedTime) {
+        setTimeout(() => {
+          paymentBtn.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+        }, 100);
+      }
     }
 
     function showPaymentOptions() {
