@@ -745,7 +745,137 @@
       font-size: 1.55rem;
     }
 
+    /* Tablet and Mobile Optimizations */
+    @media (max-width: 1024px) {
+      body {
+        padding: 1rem;
+      }
+
+      .meal-options {
+        gap: 1rem;
+      }
+
+      .option {
+        padding: 1rem;
+      }
+
+      .option img {
+        height: 120px;
+      }
+    }
+
     @media (max-width: 768px) {
+      body {
+        padding: 0.5rem;
+        font-size: 14px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        margin: 1rem 0;
+      }
+
+      .meal-options {
+        gap: 0.75rem;
+      }
+
+      .option {
+        padding: 0.75rem;
+        margin: 0.5rem 0;
+      }
+
+      .option img {
+        height: 100px;
+      }
+
+      .option-title {
+        font-size: 1rem;
+        margin: 0.5rem 0;
+      }
+
+      .price {
+        font-size: 1.1rem;
+      }
+
+      .description {
+        font-size: 0.85rem;
+        line-height: 1.3;
+      }
+
+      .quantity-control button {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+      }
+
+      .quantity {
+        font-size: 1rem;
+        min-width: 40px;
+      }
+
+      #totalPrice {
+        font-size: 1.3rem;
+        padding: 0.75rem 1.5rem;
+        margin: 1rem auto;
+        bottom: 4.5rem;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem;
+      }
+
+      .action-buttons button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      #continueBtn {
+        font-size: 1.3rem;
+        padding: 0.75rem 1.5rem;
+      }
+
+      .section-label {
+        font-size: 1.3rem;
+        padding: 1rem 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .payment-label {
+        font-size: 1.3rem;
+        padding: 1rem 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .location-toggle {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.5rem;
+      }
+
+      .location-toggle button {
+        font-size: 1.2rem;
+        padding: 1rem 2rem;
+        min-width: auto;
+      }
+
+      .time-buttons {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 0.5rem;
+      }
+
+      .time-buttons button {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .payment-options button {
+        margin: 0.25rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+      }
+
       .thanks-content {
         margin: 5% 1rem;
         padding: 1.5rem;
@@ -754,6 +884,100 @@
       .thanks-timer {
         font-size: 2rem;
         padding: 0.75rem;
+      }
+
+      .receipt-content {
+        padding: 1.5rem;
+        margin: 1rem;
+      }
+
+      .receipt-header {
+        font-size: 1.5rem;
+      }
+
+      .pin-section input {
+        font-size: 1.2rem;
+        padding: 0.75rem;
+      }
+
+      .receipt-confirm {
+        font-size: 1.1rem;
+        padding: 0.75rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0.25rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .meal-options {
+        gap: 0.5rem;
+      }
+
+      .option {
+        padding: 0.5rem;
+      }
+
+      .option img {
+        height: 80px;
+      }
+
+      .option-title {
+        font-size: 0.9rem;
+      }
+
+      .price {
+        font-size: 1rem;
+      }
+
+      .description {
+        font-size: 0.8rem;
+      }
+
+      #totalPrice {
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        max-width: 280px;
+        bottom: 4rem;
+      }
+
+      .section-label {
+        font-size: 1.1rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .payment-label {
+        font-size: 1.1rem;
+        padding: 0.75rem 1rem;
+      }
+
+      .location-toggle button {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+      }
+
+      .time-buttons {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+      }
+
+      .time-buttons button {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.8rem;
+      }
+
+      .receipt-content {
+        margin: 0.5rem;
+        padding: 1rem;
+      }
+
+      #continueBtn {
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
       }
     }
   </style>
@@ -1317,10 +1541,28 @@
       const isBreakfast = currentMinutes >= 510 && currentMinutes <= 750;
       const isDinner = currentMinutes >= 751 && currentMinutes <= 1350;
       
+      const totalPriceEl = document.getElementById('totalPrice');
+      const actionButtons = document.querySelector('.action-buttons');
+      const locationStep = document.getElementById('locationStep');
+      const paymentStep = document.getElementById('paymentStep');
+      
       if (!isBreakfast && !isDinner) {
-        mealContainer.innerHTML = "<p>Meal selection is currently unavailable. Breakfast is available 8:30 AM - 12:30 PM, dinner 12:31 PM - 10:30 PM.</p>";
+        // Hide all interactive elements during off-hours
+        if (totalPriceEl) totalPriceEl.style.display = 'none';
+        if (actionButtons) actionButtons.style.display = 'none';
+        if (locationStep) locationStep.classList.add('hidden');
+        if (paymentStep) paymentStep.classList.add('hidden');
+        
+        const mealHeading = document.getElementById("mealHeading");
+        mealHeading.innerHTML = "Meal Selection";
+        
+        mealContainer.innerHTML = "<p style='text-align: center; font-size: 1.1rem; color: var(--zebra-gray); margin: 2rem 0; padding: 1rem;'>Meal selection is currently unavailable.<br><br><strong>Working Hours:</strong><br>Breakfast: 8:30 AM - 12:30 PM<br>Dinner: 12:31 PM - 10:30 PM</p>";
         return;
       }
+
+      // Show interactive elements during service hours
+      if (totalPriceEl) totalPriceEl.style.display = 'block';
+      if (actionButtons) actionButtons.style.display = 'flex';
 
       const mealHeading = document.getElementById("mealHeading");
       if (isBreakfast) {
