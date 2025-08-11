@@ -1248,7 +1248,12 @@
         return;
       }
 
-      document.getElementById("mealHeading").textContent = isBreakfast ? "Select Your Breakfast" : "Select Your Meal";
+      const mealHeading = document.getElementById("mealHeading");
+      if (isBreakfast) {
+        mealHeading.innerHTML = "Select Your Breakfast<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>served from 8.30 till 12.30</small>";
+      } else {
+        mealHeading.innerHTML = "Select Your Meal<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>served from 12.30 till 22.30</small>";
+      }
 
       if (isBreakfast) {
         // Load breakfast meals as before
