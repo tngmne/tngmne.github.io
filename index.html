@@ -46,6 +46,60 @@
       padding: 1rem;
     }
 
+    /* Section Navigation Styles */
+    .section-navigation {
+      background: var(--zebra-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      margin: 1.5rem auto 2rem;
+      padding: 1.5rem;
+      max-width: 1200px;
+      border: 2px solid var(--zebra-accent);
+    }
+    
+    .nav-title {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--zebra-accent);
+      margin-bottom: 1rem;
+    }
+    
+    .nav-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .nav-button {
+      background: linear-gradient(135deg, var(--zebra-white) 0%, var(--zebra-stripe) 100%);
+      border: 2px solid var(--zebra-accent);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--zebra-dark);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      min-width: 120px;
+    }
+    
+    .nav-button:hover {
+      background: linear-gradient(135deg, var(--zebra-accent) 0%, var(--zebra-secondary) 100%);
+      color: var(--zebra-white);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .nav-button:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
     .option {
       background-color: var(--zebra-white);
       border: none;
@@ -762,6 +816,21 @@
       .option img {
         height: 120px;
       }
+
+      .section-navigation {
+        margin: 1rem auto;
+        padding: 1rem;
+      }
+
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+        min-width: 100px;
+      }
     }
 
     @media (max-width: 768px) {
@@ -811,6 +880,26 @@
       .quantity {
         font-size: 1rem;
         min-width: 40px;
+      }
+
+      .section-navigation {
+        margin: 0.75rem auto;
+        padding: 0.75rem;
+      }
+
+      .nav-title {
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .nav-buttons {
+        gap: 0.4rem;
+      }
+
+      .nav-button {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+        min-width: 80px;
       }
 
       #totalPrice {
@@ -985,6 +1074,12 @@
 <body>
   <h1 id="mealHeading">Meal Selection</h1>
 
+  <!-- Section Navigation Menu -->
+  <div id="sectionNavigation" class="section-navigation" style="display: none;">
+    <div class="nav-title">Quick Navigation</div>
+    <div id="navButtons" class="nav-buttons"></div>
+  </div>
+
   <div id="mealContainer" class="meal-options"></div>
   <div id="totalPrice">Total: 0 €</div>
 
@@ -1053,6 +1148,163 @@
     const paymentOptions = document.getElementById('paymentOptions');
     const timeButtonsContainer = document.getElementById('timeButtonsContainer');
     const roomPopup = document.getElementById('roomPopup');
+
+    // Service Hours Configuration
+    const BREAKFAST_START_HOUR = 8;
+    const BREAKFAST_START_MINUTE = 30;
+    const BREAKFAST_END_HOUR = 12;
+    const BREAKFAST_END_MINUTE = 30;
+    const DINNER_START_HOUR = 13;
+    const DINNER_START_MINUTE = 0;
+    const DINNER_END_HOUR = 22;
+    const DINNER_END_MINUTE = 30;
+    
+    // Convert to minutes for easy comparison
+    const MINUTES_PER_HOUR = 60; // Minutes conversion factor
+    const BREAKFAST_START_MINUTES = BREAKFAST_START_HOUR * MINUTES_PER_HOUR + BREAKFAST_START_MINUTE; // 510
+    const BREAKFAST_END_MINUTES = BREAKFAST_END_HOUR * MINUTES_PER_HOUR + BREAKFAST_END_MINUTE; // 750
+    const DINNER_START_MINUTES = DINNER_START_HOUR * MINUTES_PER_HOUR + DINNER_START_MINUTE; // 780
+    const DINNER_END_MINUTES = DINNER_END_HOUR * MINUTES_PER_HOUR + DINNER_END_MINUTE; // 1350
+    const DINNER_SERVICE_END_MINUTES = DINNER_END_HOUR * MINUTES_PER_HOUR + DINNER_END_MINUTE; // 1350 - Service available until 22:30
+
+    // UI Configuration Constants
+    const ADMIN_PIN = '2606';
+    const TIME_SLOT_INTERVAL = 30; // minutes
+    const TIME_SLOTS = [0, 30]; // minute values for time slots
+    const CSS_CLASSES = {
+      HIDDEN: 'hidden',
+      SELECTED: 'selected',
+      ACTIVE: 'active',
+      DISABLED: 'disabled'
+    };
+    const DISPLAY_STYLES = {
+      FLEX: 'flex',
+      BLOCK: 'block',
+      NONE: 'none'
+    };
+
+    // Telegram Bot Configuration
+    const TELEGRAM_CONFIG = {
+      BOT_TOKEN: '8071098931:AAFz_EOIJDp7RrJczbimuIE-sZmXnMPjOi0',
+      CHAT_ID: '1138899345',
+      API_URL: 'https://api.telegram.org/bot'
+    };
+
+    // Room Configuration
+    const ROOM_FLOORS = [
+      { floor: 1, start: 1, end: 6 },   // 101-106
+      { floor: 2, start: 1, end: 14 },  // 201-214
+      { floor: 3, start: 1, end: 14 },  // 301-314
+      { floor: 4, start: 1, end: 14 },  // 401-414
+      { floor: 5, start: 1, end: 14 },  // 501-514
+      { floor: 6, start: 1, end: 14 },  // 601-614
+      { floor: 7, start: 1, end: 14 },  // 701-714
+      { floor: 8, start: 1, end: 14 },  // 801-814
+      { floor: 9, start: 1, end: 14 },  // 901-914
+      { floor: 10, start: 1, end: 14 }, // 1001-1014
+      { floor: 11, start: 1, end: 14 }, // 1101-1114
+      { floor: 12, start: 1, end: 14 }, // 1201-1214
+      { floor: 13, start: 1, end: 3 }   // 1301-1303
+    ];
+
+    // Application Messages
+    const MESSAGES = {
+      MEAL_UNAVAILABLE: 'Meal selection is currently unavailable.',
+      WORKING_HOURS_LABEL: 'Working Hours:',
+      ORDER_SUCCESS: 'Order placed successfully!',
+      ORDER_ERROR: 'Error placing order. Please try again.',
+      INVALID_PIN: 'Invalid PIN. Please try again.',
+      ADMIN_MODE: 'Admin Mode Activated',
+      SELECT_MEAL: 'Please select a meal type',
+      SELECT_TIME: 'Please select a time',
+      SELECT_ROOM: 'Please select your room number',
+      SELECT_PAYMENT: 'Please select payment method'
+    };
+
+    // Meal Categories Configuration
+    const MEAL_CATEGORIES = {
+      BREAKFAST: ['Breakfast Items'],
+      DINNER: [
+        "Cold appetizers",
+        "Salads", 
+        "Soup",
+        "Risotto",
+        "Fish",
+        "Meat",
+        "Desserts"
+      ]
+    };
+
+    // Helper functions
+    function formatTime12Hour(hour, minute) {
+      const period = hour >= 12 ? 'PM' : 'AM';
+      const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+      return `${displayHour}:${minute.toString().padStart(2, '0')} ${period}`;
+    }
+
+    // Section Navigation Functions
+    function createSectionNavigation(isBreakfast) {
+      const sectionNav = document.getElementById('sectionNavigation');
+      const navButtons = document.getElementById('navButtons');
+      
+      if (!sectionNav || !navButtons) return;
+      
+      navButtons.innerHTML = '';
+      
+      const categories = isBreakfast ? MEAL_CATEGORIES.BREAKFAST : MEAL_CATEGORIES.DINNER;
+      
+      // Only show navigation if there are multiple categories (for dinner)
+      if (!isBreakfast && categories.length > 1) {
+        categories.forEach(category => {
+          const button = document.createElement('button');
+          button.className = 'nav-button';
+          button.textContent = category;
+          button.onclick = () => scrollToSection(category);
+          navButtons.appendChild(button);
+        });
+        sectionNav.style.display = 'block';
+      } else {
+        sectionNav.style.display = 'none';
+      }
+    }
+
+    function scrollToSection(categoryName) {
+      // Create ID from category name
+      const categoryId = `category-${categoryName.toLowerCase().replace(/\s+/g, '-')}`;
+      const element = document.getElementById(categoryId);
+      
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        });
+      }
+    }
+
+    function formatTime24Hour(hour, minute) {
+      return `${hour.toString().padStart(2, '0')}.${minute.toString().padStart(2, '0')}`;
+    }
+
+    function getWorkingHoursText() {
+      const breakfastStart = formatTime12Hour(BREAKFAST_START_HOUR, BREAKFAST_START_MINUTE);
+      const breakfastEnd = formatTime12Hour(BREAKFAST_END_HOUR, BREAKFAST_END_MINUTE);
+      const dinnerStart = formatTime12Hour(DINNER_START_HOUR, DINNER_START_MINUTE);
+      const dinnerEnd = formatTime12Hour(DINNER_END_HOUR, DINNER_END_MINUTE);
+      return `Breakfast: ${breakfastStart} - ${breakfastEnd}<br>Dinner: ${dinnerStart} - ${dinnerEnd}`;
+    }
+
+    function getServingHoursText(isBreakfast) {
+      if (isBreakfast) {
+        const start = formatTime24Hour(BREAKFAST_START_HOUR, BREAKFAST_START_MINUTE);
+        const end = formatTime24Hour(BREAKFAST_END_HOUR, BREAKFAST_END_MINUTE);
+        return `served from ${start} till ${end}`;
+      } else {
+        const start = formatTime24Hour(DINNER_START_HOUR, DINNER_START_MINUTE);
+        const end = formatTime24Hour(DINNER_END_HOUR, DINNER_END_MINUTE);
+        return `served from ${start} till ${end}`;
+      }
+    }
     const roomGrid = document.getElementById('roomGrid');
     const selectedMeals = {};
 
@@ -1138,24 +1390,8 @@
     }
 
     function loadRoomButtons() {
-      // Define available room ranges
-      const roomRanges = [
-        { floor: 1, start: 1, end: 15 },  // 101-115
-        { floor: 2, start: 1, end: 15 },  // 201-215
-        { floor: 3, start: 1, end: 14 },  // 301-314
-        { floor: 4, start: 1, end: 14 },  // 401-414
-        { floor: 5, start: 1, end: 13 },  // 501-513
-        { floor: 6, start: 1, end: 13 },  // 601-613
-        { floor: 7, start: 1, end: 13 },  // 701-713
-        { floor: 8, start: 1, end: 13 },  // 801-813
-        { floor: 9, start: 1, end: 7 },   // 901-907
-        { floor: 10, start: 1, end: 7 },  // 1001-1007
-        { floor: 11, start: 1, end: 10 }, // 1101-1110
-        { floor: 12, start: 1, end: 7 },  // 1201-1207
-        { floor: 13, start: 1, end: 3 }   // 1301-1303
-      ];
-      
-      roomRanges.forEach(range => {
+      // Use the centralized room configuration
+      ROOM_FLOORS.forEach(range => {
         for (let i = range.start; i <= range.end; i++) {
           const roomNumber = range.floor * 100 + i;
           const btn = document.createElement('button');
@@ -1241,15 +1477,15 @@
       const confirmBtn = document.getElementById('confirmOrderBtn');
       const pinError = document.getElementById('pinError');
       
-      if (value === '2606') {
+      if (value === ADMIN_PIN) {
         confirmBtn.disabled = false;
-        pinError.style.display = 'none';
+        pinError.style.display = DISPLAY_STYLES.NONE;
       } else {
         confirmBtn.disabled = true;
         if (value.length === 4) {
-          pinError.style.display = 'block';
+          pinError.style.display = DISPLAY_STYLES.BLOCK;
         } else {
-          pinError.style.display = 'none';
+          pinError.style.display = DISPLAY_STYLES.NONE;
         }
       }
     }
@@ -1274,7 +1510,7 @@
       // Reset PIN input and button state
       pinInput.value = '';
       confirmBtn.disabled = true;
-      pinError.style.display = 'none';
+      pinError.style.display = DISPLAY_STYLES.NONE;
       
       // Clear previous content
       receiptItems.innerHTML = '';
@@ -1351,10 +1587,10 @@
       closeReceiptModal();
       
       // Send to Telegram
-      const BOT_TOKEN = '8071098931:AAFz_EOIJDp7RrJczbimuIE-sZmXnMPjOi0';
-      const CHAT_ID = '1138899345';    // Your chat ID
+      const BOT_TOKEN = TELEGRAM_CONFIG.BOT_TOKEN;
+      const CHAT_ID = TELEGRAM_CONFIG.CHAT_ID;
       
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      fetch(`${TELEGRAM_CONFIG.API_URL}${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1397,36 +1633,36 @@
       const now = new Date();
       const currentHour = now.getHours();
       const currentMinute = now.getMinutes();
-      const currentTotalMinutes = currentHour * 60 + currentMinute;
+      const currentTotalMinutes = currentHour * MINUTES_PER_HOUR + currentMinute;
       
-      // Define breakfast time slots (8:30 - 12:30)
+      // Define breakfast time slots using constants
       const breakfastSlots = [];
-      for (let h = 8; h <= 12; h++) {
-        for (let m of [0, 30]) {
-          if (h === 8 && m === 0) continue; // Skip 8:00, start from 8:30
-          if (h === 12 && m === 30) {
-            breakfastSlots.push({ hour: h, minute: m, minutes: h * 60 + m });
-            break; // Include 12:30 and stop
+      for (let h = BREAKFAST_START_HOUR; h <= BREAKFAST_END_HOUR; h++) {
+        for (let m of TIME_SLOTS) {
+          if (h === BREAKFAST_START_HOUR && m === 0) continue; // Skip 8:00, start from 8:30
+          if (h === BREAKFAST_END_HOUR && m === BREAKFAST_END_MINUTE) {
+            breakfastSlots.push({ hour: h, minute: m, minutes: h * MINUTES_PER_HOUR + m });
+            break; // Include end time and stop
           }
-          breakfastSlots.push({ hour: h, minute: m, minutes: h * 60 + m });
+          breakfastSlots.push({ hour: h, minute: m, minutes: h * MINUTES_PER_HOUR + m });
         }
       }
       
-      // Define dinner time slots (13:00 - 22:30)
+      // Define dinner time slots using constants
       const dinnerSlots = [];
-      for (let h = 13; h <= 22; h++) {
-        for (let m of [0, 30]) {
-          if (h === 22 && m === 30) {
-            dinnerSlots.push({ hour: h, minute: m, minutes: h * 60 + m });
-            break; // Include 22:30 and stop
+      for (let h = DINNER_START_HOUR; h <= DINNER_END_HOUR; h++) {
+        for (let m of TIME_SLOTS) {
+          if (h === DINNER_END_HOUR && m === DINNER_END_MINUTE) {
+            dinnerSlots.push({ hour: h, minute: m, minutes: h * MINUTES_PER_HOUR + m });
+            break; // Include end time and stop
           }
-          dinnerSlots.push({ hour: h, minute: m, minutes: h * 60 + m });
+          dinnerSlots.push({ hour: h, minute: m, minutes: h * MINUTES_PER_HOUR + m });
         }
       }
       
       // Determine which slots to show based on current time
-      const isCurrentlyBreakfast = currentTotalMinutes >= 510 && currentTotalMinutes <= 750; // 8:30 AM - 12:30 PM
-      const isCurrentlyDinner = currentTotalMinutes >= 751 && currentTotalMinutes <= 1350; // 12:31 PM - 22:30 PM
+      const isCurrentlyBreakfast = currentTotalMinutes >= BREAKFAST_START_MINUTES && currentTotalMinutes <= BREAKFAST_END_MINUTES;
+      const isCurrentlyDinner = currentTotalMinutes >= DINNER_START_MINUTES && currentTotalMinutes <= DINNER_SERVICE_END_MINUTES;
       
       let slotsToShow = [];
       if (isCurrentlyBreakfast) {
@@ -1536,10 +1772,9 @@
       const now = new Date();
       const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-      // Breakfast available 8:30 AM - 12:30 PM (510 - 750 minutes)
-      // Dinner available 12:31 PM - 22:30 PM (751 - 1350 minutes)
-      const isBreakfast = currentMinutes >= 510 && currentMinutes <= 750;
-      const isDinner = currentMinutes >= 751 && currentMinutes <= 1350;
+      // Check service availability using constants
+      const isBreakfast = currentMinutes >= BREAKFAST_START_MINUTES && currentMinutes <= BREAKFAST_END_MINUTES;
+      const isDinner = currentMinutes >= DINNER_START_MINUTES && currentMinutes <= DINNER_SERVICE_END_MINUTES;
       
       const totalPriceEl = document.getElementById('totalPrice');
       const actionButtons = document.querySelector('.action-buttons');
@@ -1556,7 +1791,7 @@
         const mealHeading = document.getElementById("mealHeading");
         mealHeading.innerHTML = "Meal Selection";
         
-        mealContainer.innerHTML = "<p style='text-align: center; font-size: 1.1rem; color: var(--zebra-gray); margin: 2rem 0; padding: 1rem;'>Meal selection is currently unavailable.<br><br><strong>Working Hours:</strong><br>Breakfast: 8:30 AM - 12:30 PM<br>Dinner: 12:31 PM - 10:30 PM</p>";
+        mealContainer.innerHTML = `<p style='text-align: center; font-size: 1.1rem; color: var(--zebra-gray); margin: 2rem 0; padding: 1rem;'>${MESSAGES.MEAL_UNAVAILABLE}<br><br><strong>${MESSAGES.WORKING_HOURS_LABEL}</strong><br>${getWorkingHoursText()}</p>`;
         return;
       }
 
@@ -1566,10 +1801,13 @@
 
       const mealHeading = document.getElementById("mealHeading");
       if (isBreakfast) {
-        mealHeading.innerHTML = "Select Your Breakfast<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>served from 8.30 till 12.30</small>";
+        mealHeading.innerHTML = `Select Your Breakfast<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>${getServingHoursText(true)}</small>`;
       } else {
-        mealHeading.innerHTML = "Select Your Meal<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>served from 12.31 till 22.30</small>";
+        mealHeading.innerHTML = `Select Your Meal<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>${getServingHoursText(false)}</small>`;
       }
+
+      // Create section navigation
+      createSectionNavigation(isBreakfast);
 
       if (isBreakfast) {
         // Load breakfast meals as before
@@ -1594,15 +1832,7 @@
         });
       } else {
         // Load dinner meals organized by categories
-        const categories = [
-          "Cold appetizers",
-          "Salads", 
-          "Soup",
-          "Risotto",
-          "Fish",
-          "Meat",
-          "Desserts"
-        ];
+        const categories = MEAL_CATEGORIES.DINNER;
         
         categories.forEach(category => {
           const categoryItems = dinnerMeals.filter(item => item.category === category);
@@ -1610,6 +1840,7 @@
           if (categoryItems.length > 0) {
             // Add category header
             const categoryHeader = document.createElement('div');
+            categoryHeader.id = `category-${category.toLowerCase().replace(/\s+/g, '-')}`;
             categoryHeader.style.cssText = `
               grid-column: 1 / -1;
               font-size: 1.5rem;
@@ -1621,6 +1852,7 @@
               background: var(--zebra-white);
               border-radius: var(--radius-lg);
               box-shadow: var(--shadow-sm);
+              scroll-margin-top: 100px;
             `;
             categoryHeader.textContent = category;
             mealContainer.appendChild(categoryHeader);
