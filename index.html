@@ -753,12 +753,32 @@
     }
 
     function loadRoomButtons() {
-      for (let i = 1; i <= 145; i++) {
-        const btn = document.createElement('button');
-        btn.textContent = i;
-        btn.onclick = () => selectRoom(i);
-        roomGrid.appendChild(btn);
-      }
+      // Define available room ranges
+      const roomRanges = [
+        { floor: 1, start: 1, end: 15 },  // 101-115
+        { floor: 2, start: 1, end: 15 },  // 201-215
+        { floor: 3, start: 1, end: 14 },  // 301-314
+        { floor: 4, start: 1, end: 14 },  // 401-414
+        { floor: 5, start: 1, end: 13 },  // 501-513
+        { floor: 6, start: 1, end: 13 },  // 601-613
+        { floor: 7, start: 1, end: 13 },  // 701-713
+        { floor: 8, start: 1, end: 13 },  // 801-813
+        { floor: 9, start: 1, end: 7 },   // 901-907
+        { floor: 10, start: 1, end: 7 },  // 1001-1007
+        { floor: 11, start: 1, end: 10 }, // 1101-1110
+        { floor: 12, start: 1, end: 7 },  // 1201-1207
+        { floor: 13, start: 1, end: 3 }   // 1301-1303
+      ];
+      
+      roomRanges.forEach(range => {
+        for (let i = range.start; i <= range.end; i++) {
+          const roomNumber = range.floor * 100 + i;
+          const btn = document.createElement('button');
+          btn.textContent = roomNumber;
+          btn.onclick = () => selectRoom(roomNumber);
+          roomGrid.appendChild(btn);
+        }
+      });
     }
 
     function updateQuantity(name, price, action, button) {
@@ -1084,7 +1104,7 @@
       }
 
       const options = isBreakfast ? breakfastMeals : dinnerMeals;
-      document.getElementById("mealHeading").textContent = isBreakfast ? "Select Your Breakfast" : "Select Your Dinner";
+      document.getElementById("mealHeading").textContent = isBreakfast ? "Select Your Breakfast" : "Select Your Meal";
 
       options.forEach(item => {
         const div = document.createElement('div');
