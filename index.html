@@ -75,10 +75,11 @@
 
     .option-title {
       font-weight: 600;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       margin-bottom: 0.75rem;
       color: var(--zebra-black);
       flex-shrink: 0;
+      line-height: 1.1;
     }
 
     .description {
@@ -731,39 +732,39 @@
 
     const dinnerMeals = [
       // Cold appetizers - 4 meals
-      { name: "Pork tenderloin with young potatoes and mashroom sauce", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/myaso/svinaya-koreyka-v-limonno-chesnochnom-souse-s-pyure-iz-batata", category: "Cold appetizers" },
-      { name: "Pasta", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Cold appetizers" },
-      { name: "Seafood", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Cold appetizers" },
-      { name: "Vegan Bowl", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Cold appetizers" },
+      { name: "Bruschetta with marinated pear, gorgonzola sauce, and smoked salmon", desc: "A delicate combination of sweet pear with a hint of wine, tangy gorgonzola cream with basil, and tender house-cured smoked salmon.", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/bkOlGMH-kjnelHM-mfDtHSU.webp", category: "Cold appetizers" },
+      { name: "Bruschetta with squid, hoisin cream, and chuka seaweed", desc: "Exotic bruschetta with squid, marinated chukka seaweed, mildly sweet hoisin cream, paprika oil and marinated edamame beans", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/kPlIlIr-RIoylBS-MdRJeyy.webp", category: "Cold appetizers" },
+      { name: "Bruschetta with roast beef and aioli cream", desc: "Juicy roast beef on a crispy toast with a smooth cream rich in roasted garlic aroma, spicy arugula, whole grain mustard, and parmesan", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/klbgUfl-sZAFEqw-ELGpaXb.webp", category: "Cold appetizers" },
+      { name: "Beef carpaccio with roasted peach", desc: "Tender slices of beef combined with fragrant peach and a balsamic-based dressing.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/hQJrjLD-FCUeSOl-SwubRJb.webp", category: "Cold appetizers" },
       
       // Salads - 3 meals
-      { name: "Caesar Salad", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Salads" },
-      { name: "Greek Salad", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Salads" },
-      { name: "Mediterranean Salad", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Salads" },
+      { name: "Salad with roast beef, roasted bell pepper, and pimento sauce", desc: "A salad mix with homemade roast beef, dressed with a sauce made from roasted peppers, sun-dried tomatoes, cilantro, honey and grated roasted walnut.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/gIlCFdO-JqsCDsD-yuVJCVA.webp", category: "Salads" },
+      { name: "Seafood salad with coconut dressing", desc: "Young squid and fresh shrimp with a salad mix in a coconut-lime dressing based on mascarpone and paprika oil", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/rHCZwwl-tKeXDxy-JvqnwpH.webp", category: "Salads" },
+      { name: "Seasonal vegetable salad with Pomorosso dressing", desc: "A mix of seasonal vegetables with a signature sun-dried tomato-based dressing. The freshness of the vegetables is balanced by delicate farmhouse feta cheese and piquant notes of the dressing.", price: 8, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/uXGkxVe-EhzYAYC-VkkDRml.webp", category: "Salads" },
       
       // Soup - 2 meals
-      { name: "Tomato Soup", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Soup" },
-      { name: "Mushroom Soup", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Soup" },
+      { name: "Fish soup with seafood", desc: "A rich signature-style soup with cilantro and parsley oil, squid, shrimp, and salmon.", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MFCywVG-yDbTKpF-AHdmJzF.webp", category: "Soup" },
+      { name: "Cold beetroot soup with kefir and baby potatoes", desc: "Refreshing cold kefir-based soup with beetroot, presented in a signature style. Served with sautéed young potatoes.", price: 10, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/DznPacA-DkDuqoH-XkKHkMV.webp", category: "Soup" },
       
       // Risotto - 3 meals
-      { name: "Mushroom Risotto", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Risotto" },
-      { name: "Seafood Risotto", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Risotto" },
-      { name: "Chicken Risotto", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Risotto" },
+      { name: "Purple risotto with meatballs and parmesan sauce", desc: "A vibrant dish with veal meatballs, prepared using the classic risotto technique and served with a rich cheese sauce.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/LHnLwxt-rlewSoJ-IiFeJGj.webp", category: "Risotto" },
+      { name: "Risotto with porcini mushrooms", desc: "Creamy risotto in a mushroom broth with porcini mushrooms, parmesan, and dill oil.", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/uDvjFrW-lTwPIvh-woGUzqJ.webp", category: "Risotto" },
+      { name: "Tom Yum risotto with shrimp and squid", desc: "An Asian twist on a classic Italian recipe with squid and shrimp. Infused with coconut notes, lime and the tang of Tom Yum.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/qBCShfD-qVSMPLy-MlyJTPi.webp", category: "Risotto" },
       
       // Fish - 3 meals
-      { name: "Grilled Salmon", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Fish" },
-      { name: "Sea Bass", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Fish" },
-      { name: "Tuna Steak", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Fish" },
+      { name: "Grilled dorado with vegetable sauté", desc: "Tender grilled dorado paired with a crispy sauté of seasonal vegetables.", price: 25, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/oWXFZBg-QVTFAYS-YVlSlOX.webp", category: "Fish" },
+      { name: "Sea bass fillet with celery root cream and Basoro sauce", desc: "Tender sea bass fillet, pan-seared to a golden crust, served on a velvety celery cream with refined Basoro sauce made from white wine, orange, and aromatic spices. Marinated fennel adds the necessary freshness to the dish.", price: 23, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR.webp", category: "Fish" },
+      { name: "Bourbon salmon", desc: "Tender salmon fillet with mashed potatoes and a sweet-and-sour sauce made from bourbon, honey, and chili pepper.", price: 17, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/CDbjitD-DTYXssC-IwVErjL.webp", category: "Fish" },
       
       // Meat - 4 meals
-      { name: "Beef Steak", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Meat" },
-      { name: "Pork Tenderloin", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Meat" },
-      { name: "Lamb Chops", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Meat" },
-      { name: "Chicken Breast", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Meat" },
+      { name: "Beef medallions with mashed potatoes and porcini mushroom sauce", desc: "Juicy beef medallions with tender mashed potatoes and a rich creamy sauce made from aromatic wild mushrooms and thyme.", price: 24, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/IzKbeVG-VuCjJFC-XAhJoAT.webp", category: "Meat" },
+      { name: "Sous-vide chicken with egg noodles and anise teriyaki sauce", desc: "Juicy sous-vide chicken fillet served with egg noodles in a signature anise teriyaki sauce.", price: 15, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/OebmNKU-FJYnCSH-RbAeXIC.webp", category: "Meat" },
+      { name: "Pork tenderloin with young potatoes and mashroom sauce", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce.", price: 17, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Meat" },
+      { name: "Signature Pljeskavitsa", desc: "A Balkan classic made from a blend of beef and spices, grilled to perfection. Served with homemade pickles and French fries.", price: 15, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/QrinGlH-oDvCCcR-DMymsiH.webp", category: "Meat" },
       
       // Desserts - 2 meals
-      { name: "Tiramisu", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Desserts" },
-      { name: "Chocolate Cake", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Desserts" }
+      { name: "Brownie with dulce de leche cream and caramelized hazelnuts", desc: "Rich chocolate brownie with the most delicate cream made from boiled condensed milk, soaked cherries, and caramelized hazelnuts.", price: 9, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/GRCFMgJ-WVZeYDn-wbmdTQY.webp", category: "Desserts" },
+      { name: "Tiramisu", desc: "A classic Italian dessert. Airy mascarpone cream with notes of lime and orange, sponge cake soaked in coffee and amaretto.", price: 9, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz.webp", category: "Desserts" }
     ];
 
     function selectLocation(location) {
