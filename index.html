@@ -153,7 +153,7 @@
 
     #totalPrice {
       position: sticky;
-      bottom: 1.5rem;
+      bottom: 5.5rem;
       background: var(--zebra-white);
       padding: 1rem 2rem;
       border-radius: var(--radius-lg);
@@ -167,10 +167,14 @@
     }
 
     .action-buttons {
+      position: sticky;
+      bottom: 1.5rem;
       display: flex;
       gap: 1rem;
       justify-content: center;
-      margin-top: 2rem;
+      margin: 2rem auto;
+      max-width: 400px;
+      z-index: 10;
     }
 
     button {
@@ -640,8 +644,10 @@
   <div id="mealContainer" class="meal-options"></div>
   <div id="totalPrice">Total: 0 €</div>
 
-  <button id="continueBtn" disabled onclick="showNextStep()">Continue</button>
-  <button id="resetBtn" onclick="resetAll()">Reset</button>
+  <div class="action-buttons">
+    <button id="continueBtn" disabled onclick="showNextStep()">Continue</button>
+    <button id="resetBtn" onclick="resetAll()">Reset</button>
+  </div>
 
   <div id="locationStep" class="step hidden">
     <label>Where to eat:</label>
@@ -713,10 +719,40 @@
     ];
 
     const dinnerMeals = [
-      { name: "Pork tenderloin with young potatoes and mashroom sauce", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/myaso/svinaya-koreyka-v-limonno-chesnochnom-souse-s-pyure-iz-batata" },
-      { name: "Pasta", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg" },
-      { name: "Seafood", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg" },
-      { name: "Vegan Bowl", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg" }
+      // Cold appetizers - 4 meals
+      { name: "Pork tenderloin with young potatoes and mashroom sauce", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/myaso/svinaya-koreyka-v-limonno-chesnochnom-souse-s-pyure-iz-batata", category: "Cold appetizers" },
+      { name: "Pasta", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Cold appetizers" },
+      { name: "Seafood", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Cold appetizers" },
+      { name: "Vegan Bowl", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Cold appetizers" },
+      
+      // Salads - 3 meals
+      { name: "Caesar Salad", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Salads" },
+      { name: "Greek Salad", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Salads" },
+      { name: "Mediterranean Salad", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Salads" },
+      
+      // Soup - 2 meals
+      { name: "Tomato Soup", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Soup" },
+      { name: "Mushroom Soup", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Soup" },
+      
+      // Risotto - 3 meals
+      { name: "Mushroom Risotto", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Risotto" },
+      { name: "Seafood Risotto", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Risotto" },
+      { name: "Chicken Risotto", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Risotto" },
+      
+      // Fish - 3 meals
+      { name: "Grilled Salmon", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Fish" },
+      { name: "Sea Bass", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Fish" },
+      { name: "Tuna Steak", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Fish" },
+      
+      // Meat - 4 meals
+      { name: "Beef Steak", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Meat" },
+      { name: "Pork Tenderloin", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Meat" },
+      { name: "Lamb Chops", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg", category: "Meat" },
+      { name: "Chicken Breast", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce", price: 5, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Meat" },
+      
+      // Desserts - 2 meals
+      { name: "Tiramisu", desc: "Spaghetti with tomato sauce and basil", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz_prepare.jpeg", category: "Desserts" },
+      { name: "Chocolate Cake", desc: "Grilled salmon, rice, asparagus", price: 6, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk_prepare.jpeg", category: "Desserts" }
     ];
 
     function selectLocation(location) {
@@ -806,16 +842,6 @@
 
       totalPriceEl.textContent = `Total: ${total} €`;
       continueBtn.disabled = total === 0;
-      
-      // If user selected any meal, scroll to show the continue button
-      if (total > 0) {
-        setTimeout(() => {
-          continueBtn.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'center' 
-          });
-        }, 300);
-      }
     }
 
     function showNextStep() {
@@ -1103,28 +1129,85 @@
         return;
       }
 
-      const options = isBreakfast ? breakfastMeals : dinnerMeals;
       document.getElementById("mealHeading").textContent = isBreakfast ? "Select Your Breakfast" : "Select Your Meal";
 
-      options.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'option';
-        const imgHTML = item.link
-          ? `<img src="${item.img}" alt="${item.name}" onclick="window.open('${item.link}', '_blank')">`
-          : `<img src="${item.img}" alt="${item.name}">`;
-        div.innerHTML = `
-          ${imgHTML}
-          <div class="option-title">${item.name}</div>
-          <div class="description">${item.desc}</div>
-          <div class="price">${item.price} €</div>
-          <div class="quantity-control">
-            <button onclick="updateQuantity('${item.name}', ${item.price}, 'decrease', this)">−</button>
-            <span class="quantity">0</span>
-            <button onclick="updateQuantity('${item.name}', ${item.price}, 'increase', this)">+</button>
-          </div>
-        `;
-        mealContainer.appendChild(div);
-      });
+      if (isBreakfast) {
+        // Load breakfast meals as before
+        breakfastMeals.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'option';
+          const imgHTML = item.link
+            ? `<img src="${item.img}" alt="${item.name}" onclick="window.open('${item.link}', '_blank')">`
+            : `<img src="${item.img}" alt="${item.name}">`;
+          div.innerHTML = `
+            ${imgHTML}
+            <div class="option-title">${item.name}</div>
+            <div class="description">${item.desc}</div>
+            <div class="price">${item.price} €</div>
+            <div class="quantity-control">
+              <button onclick="updateQuantity('${item.name}', ${item.price}, 'decrease', this)">−</button>
+              <span class="quantity">0</span>
+              <button onclick="updateQuantity('${item.name}', ${item.price}, 'increase', this)">+</button>
+            </div>
+          `;
+          mealContainer.appendChild(div);
+        });
+      } else {
+        // Load dinner meals organized by categories
+        const categories = [
+          "Cold appetizers",
+          "Salads", 
+          "Soup",
+          "Risotto",
+          "Fish",
+          "Meat",
+          "Desserts"
+        ];
+        
+        categories.forEach(category => {
+          const categoryItems = dinnerMeals.filter(item => item.category === category);
+          
+          if (categoryItems.length > 0) {
+            // Add category header
+            const categoryHeader = document.createElement('div');
+            categoryHeader.style.cssText = `
+              grid-column: 1 / -1;
+              font-size: 1.5rem;
+              font-weight: 700;
+              color: var(--zebra-accent);
+              text-align: center;
+              margin: 2rem 0 1rem 0;
+              padding: 1rem;
+              background: var(--zebra-white);
+              border-radius: var(--radius-lg);
+              box-shadow: var(--shadow-sm);
+            `;
+            categoryHeader.textContent = category;
+            mealContainer.appendChild(categoryHeader);
+            
+            // Add items in this category
+            categoryItems.forEach(item => {
+              const div = document.createElement('div');
+              div.className = 'option';
+              const imgHTML = item.link
+                ? `<img src="${item.img}" alt="${item.name}" onclick="window.open('${item.link}', '_blank')">`
+                : `<img src="${item.img}" alt="${item.name}">`;
+              div.innerHTML = `
+                ${imgHTML}
+                <div class="option-title">${item.name}</div>
+                <div class="description">${item.desc}</div>
+                <div class="price">${item.price} €</div>
+                <div class="quantity-control">
+                  <button onclick="updateQuantity('${item.name}', ${item.price}, 'decrease', this)">−</button>
+                  <span class="quantity">0</span>
+                  <button onclick="updateQuantity('${item.name}', ${item.price}, 'increase', this)">+</button>
+                </div>
+              `;
+              mealContainer.appendChild(div);
+            });
+          }
+        });
+      }
     }
 
     loadMeals();
