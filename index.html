@@ -334,6 +334,17 @@
       color: var(--zebra-white);
     }
 
+    /* Shake animation for location selector */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+      20%, 40%, 60%, 80% { transform: translateX(10px); }
+    }
+
+    .location-toggle.shake {
+      animation: shake 0.8s ease-in-out;
+    }
+
     #roomPopup {
       position: fixed;
       top: 0; left: 0;
@@ -641,27 +652,53 @@
     }
 
     .location-toggle button {
-      padding: 0.75rem 1.5rem;
+      padding: 1.25rem 2.5rem;
       border: none;
       border-radius: var(--radius-md);
       background: transparent;
       color: var(--zebra-gray);
       cursor: pointer;
-      transition: all 0.2s ease;
-      font-weight: 500;
-      font-size: 1.125rem;
-      min-width: 100px;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 1.5rem;
+      min-width: 140px;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .location-toggle button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .location-toggle button:hover::before {
+      left: 100%;
     }
 
     .location-toggle button.active {
-      background: var(--zebra-white);
+      background: linear-gradient(135deg, var(--zebra-white) 0%, #f8f9fa 100%);
       color: var(--zebra-accent);
-      box-shadow: var(--shadow-sm);
-      font-weight: 600;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+      font-weight: 700;
+      transform: translateY(-3px) scale(1.02);
+      font-size: 1.6rem;
+      border: 2px solid var(--zebra-accent);
     }
 
     .location-toggle button:hover:not(.active) {
       color: var(--zebra-black);
+      background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(248,249,250,0.8) 100%);
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      font-size: 1.55rem;
     }
 
     @media (max-width: 768px) {
@@ -1110,6 +1147,34 @@
           btn.style.cursor = 'not-allowed';
         } else {
           btn.onclick = () => {
+            // Check if location is selected first
+            if (!window.selectedLocation) {
+              // Shake the location selector to indicate missing selection
+              const locationToggle = document.querySelector('.location-toggle');
+              locationToggle.classList.add('shake');
+              setTimeout(() => {
+                locationToggle.classList.remove('shake');
+              }, 800);
+              return;
+            }
+            
+            // If room is selected, check if room number is provided
+            if (window.selectedLocation === 'Room') {
+              const roomInput = document.getElementById('roomNumber');
+              if (!roomInput.value.trim()) {
+                // Shake the location selector to indicate missing room selection
+                const locationToggle = document.querySelector('.location-toggle');
+                locationToggle.classList.add('shake');
+                setTimeout(() => {
+                  locationToggle.classList.remove('shake');
+                }, 800);
+                // Also show the room popup if not visible
+                showRoomPopup();
+                return;
+              }
+            }
+            
+            // Proceed with time selection
             document.querySelectorAll('.time-buttons button').forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
             checkForPayment();
