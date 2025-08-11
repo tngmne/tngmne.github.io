@@ -274,6 +274,14 @@
       transition: all 0.2s ease;
     }
 
+    .time-buttons button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: var(--zebra-gray);
+      color: var(--zebra-white);
+      border-color: var(--zebra-gray);
+    }
+
     .time-buttons button:hover:not(.selected) {
       background: var(--zebra-stripe);
     }
@@ -889,19 +897,46 @@
     }
 
     function loadTimeButtons() {
-      let hour = 0, minute = 30;
+      const now = new Date();
+      const currentHour = now.getHours();
+      const currentMinute = now.getMinutes();
+      const currentTotalMinutes = currentHour * 60 + currentMinute;
+      
+      let hour = 0, minute = 0;
       while (hour < 24) {
         const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        const timeInMinutes = hour * 60 + minute;
         const btn = document.createElement('button');
         btn.textContent = timeStr;
-        btn.onclick = () => {
-          document.querySelectorAll('.time-buttons button').forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          checkForPayment();
-        };
+        
+        // Disable if time has passed
+        const timePassed = timeInMinutes <= currentTotalMinutes;
+        
+        // Disable dinner hours (12:31 PM - 11:30 PM) during breakfast time
+        const isDinnerSlot = timeInMinutes >= 751 && timeInMinutes <= 1410;
+        const isBreakfastTime = currentTotalMinutes <= 750;
+        const disableDinnerSlots = isBreakfastTime && isDinnerSlot;
+        
+        // Disable breakfast hours (00:00 - 12:30 PM) during dinner time
+        const isBreakfastSlot = timeInMinutes <= 750;
+        const isDinnerTime = currentTotalMinutes >= 751;
+        const disableBreakfastSlots = isDinnerTime && isBreakfastSlot;
+        
+        if (timePassed || disableDinnerSlots || disableBreakfastSlots) {
+          btn.disabled = true;
+          btn.style.opacity = '0.5';
+          btn.style.cursor = 'not-allowed';
+        } else {
+          btn.onclick = () => {
+            document.querySelectorAll('.time-buttons button').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            checkForPayment();
+          };
+        }
+        
         timeButtonsContainer.appendChild(btn);
 
-        minute += 60;
+        minute += 30;
         if (minute >= 60) {
           minute = 0;
           hour++;
@@ -953,12 +988,16 @@
       const now = new Date();
       const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-      if (currentMinutes === 720) {
-        mealContainer.innerHTML = "<p>Meal selection is temporarily unavailable from 12:00 to 12:01.</p>";
+      // Breakfast available until 12:30 PM (750 minutes)
+      // Dinner available from 12:31 PM (751 minutes) till 23:30 PM (1410 minutes)
+      const isBreakfast = currentMinutes <= 750;
+      const isDinner = currentMinutes >= 751 && currentMinutes <= 1410;
+      
+      if (!isBreakfast && !isDinner) {
+        mealContainer.innerHTML = "<p>Meal selection is currently unavailable. Breakfast is available until 12:30 PM, dinner from 12:31 PM till 11:30 PM.</p>";
         return;
       }
 
-      const isBreakfast = currentMinutes >= 30 && currentMinutes <= 720;
       const options = isBreakfast ? breakfastMeals : dinnerMeals;
       document.getElementById("mealHeading").textContent = isBreakfast ? "Select Your Breakfast" : "Select Your Dinner";
 
