@@ -1162,27 +1162,54 @@
       const currentMinute = now.getMinutes();
       const currentTotalMinutes = currentHour * 60 + currentMinute;
       
-      let hour = 0, minute = 0;
-      while (hour < 24) {
-        const timeStr = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-        const timeInMinutes = hour * 60 + minute;
+      // Define breakfast time slots (8:30 - 12:30)
+      const breakfastSlots = [];
+      for (let h = 8; h <= 12; h++) {
+        for (let m of [0, 30]) {
+          if (h === 8 && m === 0) continue; // Skip 8:00, start from 8:30
+          if (h === 12 && m === 30) {
+            breakfastSlots.push({ hour: h, minute: m, minutes: h * 60 + m });
+            break; // Include 12:30 and stop
+          }
+          breakfastSlots.push({ hour: h, minute: m, minutes: h * 60 + m });
+        }
+      }
+      
+      // Define dinner time slots (13:00 - 22:30)
+      const dinnerSlots = [];
+      for (let h = 13; h <= 22; h++) {
+        for (let m of [0, 30]) {
+          if (h === 22 && m === 30) {
+            dinnerSlots.push({ hour: h, minute: m, minutes: h * 60 + m });
+            break; // Include 22:30 and stop
+          }
+          dinnerSlots.push({ hour: h, minute: m, minutes: h * 60 + m });
+        }
+      }
+      
+      // Determine which slots to show based on current time
+      const isCurrentlyBreakfast = currentTotalMinutes >= 510 && currentTotalMinutes <= 750; // 8:30 AM - 12:30 PM
+      const isCurrentlyDinner = currentTotalMinutes >= 751 && currentTotalMinutes <= 1350; // 12:31 PM - 22:30 PM
+      
+      let slotsToShow = [];
+      if (isCurrentlyBreakfast) {
+        slotsToShow = breakfastSlots;
+      } else if (isCurrentlyDinner) {
+        slotsToShow = dinnerSlots;
+      } else {
+        // Outside service hours - show no slots
+        return;
+      }
+      
+      slotsToShow.forEach(slot => {
+        const timeStr = `${slot.hour.toString().padStart(2, '0')}:${slot.minute.toString().padStart(2, '0')}`;
         const btn = document.createElement('button');
         btn.textContent = timeStr;
         
         // Disable if time has passed
-        const timePassed = timeInMinutes <= currentTotalMinutes;
+        const timePassed = slot.minutes <= currentTotalMinutes;
         
-        // Disable dinner hours (12:31 PM - 11:30 PM) during breakfast time
-        const isDinnerSlot = timeInMinutes >= 751 && timeInMinutes <= 1410;
-        const isBreakfastTime = currentTotalMinutes <= 750;
-        const disableDinnerSlots = isBreakfastTime && isDinnerSlot;
-        
-        // Disable breakfast hours (00:00 - 12:30 PM) during dinner time
-        const isBreakfastSlot = timeInMinutes <= 750;
-        const isDinnerTime = currentTotalMinutes >= 751;
-        const disableBreakfastSlots = isDinnerTime && isBreakfastSlot;
-        
-        if (timePassed || disableDinnerSlots || disableBreakfastSlots) {
+        if (timePassed) {
           btn.disabled = true;
           btn.style.opacity = '0.5';
           btn.style.cursor = 'not-allowed';
@@ -1223,13 +1250,7 @@
         }
         
         timeButtonsContainer.appendChild(btn);
-
-        minute += 30;
-        if (minute >= 60) {
-          minute = 0;
-          hour++;
-        }
-      }
+      });
     }
 
     function resetAll() {
@@ -1278,13 +1299,13 @@
       const now = new Date();
       const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
-      // Breakfast available until 12:30 PM (750 minutes)
-      // Dinner available from 12:31 PM (751 minutes) till 23:30 PM (1410 minutes)
-      const isBreakfast = currentMinutes <= 750;
-      const isDinner = currentMinutes >= 751 && currentMinutes <= 1410;
+      // Breakfast available 8:30 AM - 12:30 PM (510 - 750 minutes)
+      // Dinner available 12:31 PM - 22:30 PM (751 - 1350 minutes)
+      const isBreakfast = currentMinutes >= 510 && currentMinutes <= 750;
+      const isDinner = currentMinutes >= 751 && currentMinutes <= 1350;
       
       if (!isBreakfast && !isDinner) {
-        mealContainer.innerHTML = "<p>Meal selection is currently unavailable. Breakfast is available until 12:30 PM, dinner from 12:31 PM till 11:30 PM.</p>";
+        mealContainer.innerHTML = "<p>Meal selection is currently unavailable. Breakfast is available 8:30 AM - 12:30 PM, dinner 12:31 PM - 10:30 PM.</p>";
         return;
       }
 
@@ -1292,7 +1313,7 @@
       if (isBreakfast) {
         mealHeading.innerHTML = "Select Your Breakfast<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>served from 8.30 till 12.30</small>";
       } else {
-        mealHeading.innerHTML = "Select Your Meal<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>served from 12.30 till 22.30</small>";
+        mealHeading.innerHTML = "Select Your Meal<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>served from 12.31 till 22.30</small>";
       }
 
       if (isBreakfast) {
