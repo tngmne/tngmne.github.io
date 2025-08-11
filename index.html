@@ -313,6 +313,7 @@
       width: 90%;
       max-width: 600px;
       box-shadow: var(--shadow-md);
+      position: relative;
     }
 
     .room-grid {
@@ -455,6 +456,23 @@
       color: var(--zebra-black);
     }
 
+    .room-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      color: var(--zebra-gray);
+      transition: color 0.2s ease;
+    }
+
+    .room-close:hover {
+      color: var(--zebra-black);
+    }
+
     .receipt-confirm {
       background: var(--zebra-success);
       color: var(--zebra-white);
@@ -568,6 +586,41 @@
       }
     }
 
+    .location-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin: 1rem auto;
+      background: var(--zebra-stripe);
+      border-radius: var(--radius-lg);
+      padding: 0.25rem;
+      width: fit-content;
+      justify-content: center;
+    }
+
+    .location-toggle button {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--zebra-gray);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 500;
+      font-size: 1.125rem;
+      min-width: 100px;
+    }
+
+    .location-toggle button.active {
+      background: var(--zebra-white);
+      color: var(--zebra-accent);
+      box-shadow: var(--shadow-sm);
+      font-weight: 600;
+    }
+
+    .location-toggle button:hover:not(.active) {
+      color: var(--zebra-black);
+    }
+
     @media (max-width: 768px) {
       .thanks-content {
         margin: 5% 1rem;
@@ -591,9 +644,11 @@
   <button id="resetBtn" onclick="resetAll()">Reset</button>
 
   <div id="locationStep" class="step hidden">
-    <label>Where to eat:</label><br>
-    <input type="radio" name="location" value="Room" onclick="toggleRoom(true)"> Room
-    <input type="radio" name="location" value="Restaurant" onclick="toggleRoom(false)"> Restaurant
+    <label>Where to eat:</label>
+    <div class="location-toggle">
+      <button id="roomBtn" onclick="selectLocation('Room')">🗝️ Room</button>
+      <button id="restaurantBtn" onclick="selectLocation('Restaurant')">🍽️ Restaurant</button>
+    </div>
 
     <div id="roomNumberContainer" class="hidden">
       <label>Room Number:</label><br>
@@ -614,9 +669,9 @@
 
   <div id="roomPopup">
     <div class="popup-content">
+      <button class="room-close" onclick="closeRoomPopup()">×</button>
       <h3>Select Room Number</h3>
       <div id="roomGrid" class="room-grid"></div>
-      <button class="close-btn" onclick="closeRoomPopup()">Close</button>
     </div>
   </div>
 
@@ -653,7 +708,7 @@
     const breakfastMeals = [
       { name: "Scramble with shrimp and hoisin cream", desc: "Delicate scrambled eggs with butter, juicy shrimp with a hint of garlic, and a tangy hoisin cream. Served with a mix of greens in a honey-balsamic dressing, cherry tomatoes, and a brioche bun", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/ryTRiQJ-aOFwAiH-TjvYkWa_prepare.jpeg", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/skrembl-s-krevetkoy-i-avokado" },
       { name: "Benedict with bacon and hollandaise sauce", desc: "Delicate English muffin with poached eggs, crispy bacon, and airy hollandaise sauce with a hint of nutmeg. Served with a mix of greens and spicy arugula in a honey-balsamic dressing and cherry tomatoes", price: 10, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/IgoPOfX-OgMIJbM-HGylJRl.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/yaichnica-glazunya-s-kolbaskami-i-syrom" },
-      { name: "Montenegrin breakfast", desc: "Hearty Balkan-style set: grilled sausages, sunny-side-up eggs, crispy bacon, young potatoes in garlic oil, and farmhouse cheese.", price: 11, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/VBDefRv-fWwMKVy-OQjfLXl.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/fruktovaya-tarelka" },
+      { name: "Montenegrian breakfast", desc: "Hearty Balkan-style set: grilled sausages, sunny-side-up eggs, crispy bacon, young potatoes in garlic oil, and farmhouse cheese.", price: 11, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/VBDefRv-fWwMKVy-OQjfLXl.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/fruktovaya-tarelka" },
       { name: "Pancakes with honey and seasonal fruits", desc: "Pancakes with honey and fresh fruits.", price: 7, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/AqINVvH-PeERgoe-OsSIokL.webp", link:"https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/syrniki-klubnika-smetana-karamel" }
     ];
 
@@ -664,9 +719,22 @@
       { name: "Vegan Bowl", desc: "Quinoa, chickpeas, avocado, greens", price: 4, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR_prepare.jpeg" }
     ];
 
-    function toggleRoom(show) {
-      roomNumberContainer.classList.toggle("hidden", !show);
-      if (show) showRoomPopup();
+    function selectLocation(location) {
+      // Update button states
+      const roomBtn = document.getElementById('roomBtn');
+      const restaurantBtn = document.getElementById('restaurantBtn');
+      
+      roomBtn.classList.toggle('active', location === 'Room');
+      restaurantBtn.classList.toggle('active', location === 'Restaurant');
+      
+      // Store selected location
+      window.selectedLocation = location;
+      
+      // Show/hide room selection
+      const showRoom = location === 'Room';
+      roomNumberContainer.classList.toggle("hidden", !showRoom);
+      if (showRoom) showRoomPopup();
+      
       checkForPayment();
     }
 
@@ -718,20 +786,32 @@
 
       totalPriceEl.textContent = `Total: ${total} €`;
       continueBtn.disabled = total === 0;
+      
+      // If user selected any meal, scroll to show the continue button
+      if (total > 0) {
+        setTimeout(() => {
+          continueBtn.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+        }, 300);
+      }
     }
 
     function showNextStep() {
       locationStep.classList.remove('hidden');
+      // Select Restaurant by default
+      selectLocation('Restaurant');
       window.scrollTo({ top: locationStep.offsetTop, behavior: "smooth" });
     }
 
     function checkForPayment() {
-      const location = document.querySelector('input[name="location"]:checked');
+      const location = window.selectedLocation;
       const room = roomNumberInput.value;
       const selectedTime = document.querySelector('.time-buttons button.selected');
 
       const ready = location && selectedTime && (
-        location.value === "Restaurant" || (location.value === "Room" && room.trim() !== "")
+        location === "Restaurant" || (location === "Room" && room.trim() !== "")
       );
 
       paymentBtn.classList.toggle("hidden", !ready);
@@ -800,7 +880,7 @@
       
       // Add info
       const time = document.querySelector('.time-buttons button.selected')?.textContent || "N/A";
-      const location = document.querySelector('input[name="location"]:checked')?.value || "N/A";
+      const location = window.selectedLocation || "N/A";
       const room = location === "Room" ? roomNumberInput.value : "N/A";
       
       receiptInfo.innerHTML = `
@@ -886,6 +966,8 @@
       .then(data => {
         if (data.ok) {
           alert('Order sent successfully! We will process it shortly.');
+          // Reset the page after successful order
+          resetAll();
         } else {
           alert('Error sending order. Please try again or contact us directly.');
         }
@@ -956,8 +1038,11 @@
       });
 
       // Reset location selection
-      const locationRadios = document.querySelectorAll('input[name="location"]');
-      locationRadios.forEach(radio => radio.checked = false);
+      const roomBtn = document.getElementById('roomBtn');
+      const restaurantBtn = document.getElementById('restaurantBtn');
+      if (roomBtn) roomBtn.classList.remove('active');
+      if (restaurantBtn) restaurantBtn.classList.remove('active');
+      window.selectedLocation = null;
 
       // Reset room number
       if (roomNumberInput) {
