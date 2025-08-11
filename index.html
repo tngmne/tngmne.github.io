@@ -170,11 +170,33 @@
       position: sticky;
       bottom: 1.5rem;
       display: flex;
-      gap: 1rem;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
       margin: 2rem auto;
-      max-width: 400px;
+      width: 100%;
+      max-width: 1400px;
+      padding: 0 1rem;
       z-index: 10;
+    }
+
+    #resetBtn {
+      background: var(--zebra-danger);
+      color: var(--zebra-white);
+      margin-right: auto;
+    }
+
+    #continueBtn {
+      background: var(--zebra-accent);
+      color: var(--zebra-white);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #continueBtn:disabled {
+      background: var(--zebra-gray);
+      cursor: not-allowed;
+      opacity: 0.7;
     }
 
     button {
@@ -187,19 +209,8 @@
       transition: all 0.2s ease;
     }
 
-    #continueBtn, #paymentBtn {
+    #paymentBtn {
       background: var(--zebra-accent);
-      color: var(--zebra-white);
-    }
-
-    #continueBtn:disabled {
-      background: var(--zebra-gray);
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-
-    #resetBtn {
-      background: var(--zebra-danger);
       color: var(--zebra-white);
     }
 
@@ -645,8 +656,8 @@
   <div id="totalPrice">Total: 0 €</div>
 
   <div class="action-buttons">
-    <button id="continueBtn" disabled onclick="showNextStep()">Continue</button>
     <button id="resetBtn" onclick="resetAll()">Reset</button>
+    <button id="continueBtn" disabled onclick="showNextStep()">Continue</button>
   </div>
 
   <div id="locationStep" class="step hidden">
