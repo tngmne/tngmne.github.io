@@ -85,11 +85,37 @@
     .description {
       color: var(--zebra-gray);
       flex-grow: 1;
-      overflow-y: auto;
       margin-bottom: 1rem;
       padding-right: 0.5rem;
       font-size: 1rem;
       line-height: 1.5;
+      max-height: 9.9em;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: max-height 0.3s ease;
+    }
+
+    .description::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0.5rem;
+      height: 1.5em;
+      background: linear-gradient(transparent, var(--zebra-white));
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .description.expanded {
+      max-height: none;
+      overflow-y: auto;
+    }
+
+    .description.expanded::after {
+      opacity: 0;
     }
 
     .description::-webkit-scrollbar {
@@ -794,6 +820,10 @@
       roomPopup.style.display = "none";
     }
 
+    function toggleDescription(descriptionElement) {
+      descriptionElement.classList.toggle('expanded');
+    }
+
     function selectRoom(number) {
       roomNumberInput.value = number;
       closeRoomPopup();
@@ -1165,7 +1195,7 @@
           div.innerHTML = `
             ${imgHTML}
             <div class="option-title">${item.name}</div>
-            <div class="description">${item.desc}</div>
+            <div class="description" onclick="toggleDescription(this)">${item.desc}</div>
             <div class="price">${item.price} €</div>
             <div class="quantity-control">
               <button onclick="updateQuantity('${item.name}', ${item.price}, 'decrease', this)">−</button>
@@ -1218,7 +1248,7 @@
               div.innerHTML = `
                 ${imgHTML}
                 <div class="option-title">${item.name}</div>
-                <div class="description">${item.desc}</div>
+                <div class="description" onclick="toggleDescription(this)">${item.desc}</div>
                 <div class="price">${item.price} €</div>
                 <div class="quantity-control">
                   <button onclick="updateQuantity('${item.name}', ${item.price}, 'decrease', this)">−</button>
