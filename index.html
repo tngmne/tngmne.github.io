@@ -182,16 +182,26 @@
     #totalPrice {
       position: sticky;
       bottom: 5.5rem;
-      background: var(--zebra-white);
-      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--zebra-accent), #4facfe);
+      padding: 1.25rem 2.5rem;
       border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 8px 32px rgba(61, 125, 202, 0.3), 0 4px 16px rgba(0, 0, 0, 0.1);
       margin: 1.5rem auto;
-      max-width: 300px;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--zebra-accent);
+      max-width: 320px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--zebra-white);
       z-index: 10;
+      text-align: center;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #totalPrice:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(61, 125, 202, 0.4), 0 6px 20px rgba(0, 0, 0, 0.15);
     }
 
     .action-buttons {
@@ -242,6 +252,13 @@
       color: var(--zebra-white);
     }
 
+    #paymentMethodBtn {
+      background: var(--zebra-accent);
+      color: var(--zebra-white);
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -278,6 +295,20 @@
       outline: none;
       border-color: var(--zebra-accent);
       box-shadow: 0 0 0 3px rgba(61, 125, 202, 0.2);
+    }
+
+    .payment-label {
+      padding: 1.25rem 2.5rem;
+      border: none;
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--zebra-gray);
+      font-weight: 600;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: center;
+      margin-bottom: 1rem;
     }
 
     .payment-options {
@@ -739,14 +770,15 @@
 
     <label>Select Time to Eat / Deliver:</label>
     <div id="timeButtonsContainer" class="time-buttons"></div>
-
-    <button id="paymentBtn" class="hidden" onclick="showPaymentOptions()">Select Payment Option</button>
   </div>
 
-  <div class="payment-options hidden" id="paymentOptions">
-    <label>Payment Method:</label><br>
-    <button onclick="showReceiptModal('Cash')">Cash</button>
-    <button onclick="showReceiptModal('Card')">Card</button>
+  <div id="paymentStep" class="step hidden">
+    <div class="payment-label">Select Payment Option</div>
+    
+    <div class="payment-options" id="paymentOptions">
+      <button onclick="showReceiptModal('Cash')">Cash</button>
+      <button onclick="showReceiptModal('Card')">Card</button>
+    </div>
   </div>
 
   <div id="roomPopup">
@@ -765,7 +797,7 @@
       <div class="receipt-total" id="receiptTotal"></div>
       <div class="receipt-info" id="receiptInfo"></div>
       <div class="pin-section">
-        <label for="pinInput">Enter Administrator PIN:</label>
+        <label for="pinInput"><span style="color: #e74c3c; font-weight: bold;">Pass the device to admitistrator to complete the order.</span> PIN:</label>
         <input type="password" id="pinInput" maxlength="4" placeholder="****" oninput="validatePin(this.value)">
         <div class="error" id="pinError">Incorrect PIN</div>
       </div>
@@ -935,29 +967,38 @@
       const location = window.selectedLocation;
       const room = roomNumberInput.value;
       const selectedTime = document.querySelector('.time-buttons button.selected');
+      const paymentStep = document.getElementById('paymentStep');
+      const paymentOptions = document.getElementById('paymentOptions');
 
       const ready = location && selectedTime && (
         location === "Restaurant" || (location === "Room" && room.trim() !== "")
       );
 
-      const wasHidden = paymentBtn.classList.contains("hidden");
-      paymentBtn.classList.toggle("hidden", !ready);
-      
-      // If payment button just became visible and was triggered by time selection, scroll to it
-      if (ready && wasHidden && selectedTime) {
+      if (ready) {
+        // Show the entire payment section with all buttons visible
+        paymentStep.classList.remove('hidden');
+        paymentOptions.classList.remove('hidden');
+        // Scroll to the payment step
         setTimeout(() => {
-          paymentBtn.scrollIntoView({ 
+          paymentStep.scrollIntoView({ 
             behavior: 'smooth', 
             block: 'center' 
           });
         }, 100);
+      } else {
+        // Hide payment step if conditions are not met
+        paymentStep.classList.add('hidden');
+        paymentOptions.classList.add('hidden');
       }
     }
 
-    function showPaymentOptions() {
-      paymentOptions.classList.remove("hidden");
-      window.scrollTo({ top: paymentOptions.offsetTop, behavior: "smooth" });
+    function showPaymentStep() {
+      const paymentStep = document.getElementById('paymentStep');
+      paymentStep.classList.remove("hidden");
+      window.scrollTo({ top: paymentStep.offsetTop, behavior: "smooth" });
     }
+
+
 
     function validatePin(value) {
       const confirmBtn = document.getElementById('confirmOrderBtn');
@@ -1221,8 +1262,7 @@
 
       // Hide subsequent steps
       locationStep.classList.add('hidden');
-      paymentBtn.classList.add('hidden');
-      paymentOptions.classList.add('hidden');
+      paymentStep.classList.add('hidden');
 
       // Reset total price
       totalPriceEl.textContent = 'Total: 0 €';
