@@ -105,7 +105,7 @@
       border: none;
       border-radius: var(--radius-lg);
       padding: 1.5rem;
-      height: 540px;
+      height: 440px;
       box-shadow: var(--shadow-md);
       display: flex;
       flex-direction: column;
@@ -119,10 +119,10 @@
 
     .option img {
       width: 100%;
-      height: 380px;
+      height: 180px;
       object-fit: cover;
       border-radius: var(--radius-md);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       cursor: pointer;
       flex-shrink: 0;
     }
@@ -130,7 +130,7 @@
     .option-title {
       font-weight: 600;
       font-size: 1.35rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       color: var(--zebra-black);
       flex-shrink: 0;
       line-height: 1.1;
@@ -139,16 +139,16 @@
     .description {
       color: var(--zebra-gray);
       flex-grow: 1;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       padding-right: 0.5rem;
       font-size: 1.1rem;
       line-height: 1.5;
-      max-height: 12em;
+      max-height: 10em;
       overflow: hidden;
       position: relative;
       cursor: pointer;
       transition: max-height 0.3s ease;
-      min-height: 48px;
+      min-height: 40px;
     }
 
     .description::after {
@@ -195,9 +195,9 @@
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      margin-top: 1rem;
+      margin-top: 0.75rem;
       background: var(--zebra-stripe);
-      padding: 0.5rem;
+      padding: 0.4rem;
       border-radius: var(--radius-lg);
       flex-shrink: 0;
     }
@@ -804,335 +804,7 @@
       font-size: 1.55rem;
     }
 
-    /* Tablet and Mobile Optimizations */
-    @media (max-width: 1024px) {
-      body {
-        padding: 1rem;
-      }
 
-      .meal-options {
-        gap: 1rem;
-      }
-
-      .option {
-        padding: 1rem;
-      }
-
-      .option img {
-        height: 227px;
-      }
-
-      .option-title {
-        font-size: 1.2rem;
-      }
-
-      .description {
-        font-size: 1.05rem;
-      }
-
-      .section-navigation {
-        margin: 1rem auto;
-        padding: 1rem;
-      }
-
-      .nav-buttons {
-        gap: 0.5rem;
-      }
-
-      .nav-button {
-        padding: 0.6rem 1rem;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--zebra-accent);
-        min-width: 100px;
-      }
-    }
-
-    /* Tablet landscape orientation - comprehensive coverage */
-    @media (orientation: landscape) and (max-height: 900px) {
-      .option img {
-        height: 160px;
-      }
-
-      .meal-options {
-        gap: 0.5rem;
-      }
-
-      .option {
-        padding: 0.5rem;
-      }
-
-      .option-title {
-        font-size: 1.1rem;
-        margin: 0.4rem 0;
-      }
-
-      .description {
-        font-size: 0.95rem;
-        line-height: 1.2;
-      }
-    }
-
-    /* Specific tablet landscape fixes for common resolutions */
-    @media (orientation: landscape) and (min-width: 1024px) and (max-width: 1400px) and (max-height: 900px) {
-      .option img {
-        height: 140px;
-      }
-      
-      .meal-options {
-        gap: 0.4rem;
-      }
-      
-      .option {
-        padding: 0.4rem;
-      }
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding: 0.5rem;
-        font-size: 14px;
-      }
-
-      h1 {
-        font-size: 1.8rem;
-        margin: 1rem 0;
-      }
-
-      .meal-options {
-        gap: 0.75rem;
-      }
-
-      .option {
-        padding: 0.75rem;
-        margin: 0.5rem 0;
-      }
-
-      .option img {
-        height: 240px;
-      }
-
-      .option-title {
-        font-size: 1.25rem;
-        margin: 0.5rem 0;
-      }
-
-      .price {
-        font-size: 1.1rem;
-      }
-
-      .description {
-        font-size: 1.05rem;
-        line-height: 1.3;
-      }
-
-      .quantity-control button {
-        width: 35px;
-        height: 35px;
-        font-size: 1.2rem;
-      }
-
-      .quantity {
-        font-size: 1rem;
-        min-width: 40px;
-      }
-
-      .section-navigation {
-        margin: 0.75rem auto;
-        padding: 0.75rem;
-      }
-
-      .nav-title {
-        font-size: 1.2rem;
-        margin-bottom: 0.75rem;
-      }
-
-      .nav-buttons {
-        gap: 0.4rem;
-      }
-
-      .nav-button {
-        padding: 0.5rem 0.75rem;
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--zebra-accent);
-        min-width: 80px;
-      }
-
-      #totalPrice {
-        font-size: 1.3rem;
-        padding: 0.75rem 1.5rem;
-        margin: 1rem auto;
-        bottom: 6rem;
-      }
-
-      .action-buttons {
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: 0.75rem;
-      }
-
-      .action-buttons button {
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-      }
-
-      #continueBtn {
-        font-size: 1.3rem;
-        padding: 0.75rem 1.5rem;
-      }
-
-      .section-label {
-        font-size: 1.3rem;
-        padding: 1rem 1.5rem;
-        margin-bottom: 0.75rem;
-      }
-
-      .payment-label {
-        font-size: 1.3rem;
-        padding: 1rem 1.5rem;
-        margin-bottom: 0.75rem;
-      }
-
-      .location-toggle {
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: 0.5rem;
-      }
-
-      .location-toggle button {
-        font-size: 1.2rem;
-        padding: 1rem 2rem;
-        min-width: auto;
-      }
-
-      .time-buttons {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 0.5rem;
-      }
-
-      .time-buttons button {
-        padding: 0.75rem 0.5rem;
-        font-size: 0.9rem;
-      }
-
-      .payment-options button {
-        margin: 0.25rem;
-        padding: 0.75rem 1.5rem;
-        font-size: 1.2rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .thanks-content {
-        margin: 5% 1rem;
-        padding: 1.5rem;
-      }
-
-      .thanks-timer {
-        font-size: 2rem;
-        padding: 0.75rem;
-      }
-
-      .receipt-content {
-        padding: 1.5rem;
-        margin: 1rem;
-      }
-
-      .receipt-header {
-        font-size: 1.5rem;
-      }
-
-      .pin-section input {
-        font-size: 1.2rem;
-        padding: 0.75rem;
-      }
-
-      .receipt-confirm {
-        font-size: 1.1rem;
-        padding: 0.75rem 1.5rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 0.25rem;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .meal-options {
-        gap: 0.5rem;
-      }
-
-      .option {
-        padding: 0.5rem;
-      }
-
-      .option img {
-        height: 200px;
-      }
-
-      .option-title {
-        font-size: 1.1rem;
-      }
-
-      .price {
-        font-size: 1rem;
-      }
-
-      .description {
-        font-size: 0.95rem;
-      }
-
-      #totalPrice {
-        font-size: 1.1rem;
-        padding: 0.5rem 1rem;
-        max-width: 280px;
-        bottom: 5.5rem;
-      }
-
-      .section-label {
-        font-size: 1.1rem;
-        padding: 0.75rem 1rem;
-      }
-
-      .payment-label {
-        font-size: 1.1rem;
-        padding: 0.75rem 1rem;
-      }
-
-      .location-toggle button {
-        font-size: 1rem;
-        padding: 0.75rem 1.5rem;
-      }
-
-      .time-buttons {
-        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-      }
-
-      .time-buttons button {
-        padding: 0.5rem 0.25rem;
-        font-size: 0.8rem;
-      }
-
-      .receipt-content {
-        margin: 0.5rem;
-        padding: 1rem;
-      }
-
-      #continueBtn {
-        font-size: 1.1rem;
-        padding: 0.5rem 1rem;
-      }
-
-      .version-info {
-        font-size: 0.7rem;
-      }
-    }
 
     /* Version display styling */
     .version-info {
@@ -1154,15 +826,6 @@
     .version-info:hover {
       opacity: 1;
       background: rgba(0, 0, 0, 0.9);
-    }
-
-    @media (max-width: 768px) {
-      .version-info {
-        font-size: 0.325rem;
-        bottom: 8px;
-        right: 8px;
-        padding: 3px 6px;
-      }
     }
   </style>
 </head>
@@ -1981,39 +1644,12 @@
     loadTimeButtons();
     loadRoomButtons();
 
-    // Version information function
-    function showVersionDetails() {
-      const buildDate = new Date().toLocaleDateString('en-GB');
-      const buildTime = new Date().toLocaleTimeString('en-GB', { 
-        hour: '2-digit', 
-        minute: '2-digit',
-        timeZone: 'Europe/Podgorica'
-      });
-      
-      alert(`🍽️ Zebra Meal Ordering System
-      
-Version: 2.1.1
-Build Date: ${buildDate}
-Last Update: ${buildTime} (Montenegro)
-
-Features:
-• Interactive Telegram Bot Integration  
-• Montenegro Timezone Support
-• Mobile & Tablet Optimized
-• Dinner Service from 12:01 PM
-• Enhanced Visual Design
-
-Recent Updates:
-• Fixed tablet landscape layout
-• Improved image sizing
-• Enhanced typography
-• Payment button styling consistency`);
-    }
+  
   </script>
 
   <!-- Version Display -->
-  <div class="version-info" onclick="showVersionDetails()" title="Click for build info">
-    v2.1.1
+  <div class="version-info">
+    v2.1.2
   </div>
 
 </body>
