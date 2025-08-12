@@ -1,4 +1,4 @@
-// Minimal Telegram webhook handler for interactive bot messages
+// Telegram webhook handler for interactive bot messages
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         return res.status(200).json({ 
@@ -23,6 +23,7 @@ export default async function handler(req, res) {
         const originalText = callback_query.message.text;
         const action = callback_query.data;
         const callbackQueryId = callback_query.id;
+        const botToken = process.env.BOT_TOKEN;
 
         console.log(`Processing callback: ${action} for message ${messageId}`);
 
@@ -34,7 +35,7 @@ export default async function handler(req, res) {
 
 ✅ **STATUS: APPROVED**
 ⏰ Confirmed at: ${new Date().toLocaleString('en-US', { 
-                timeZone: 'Europe/Kiev',
+                timeZone: 'Europe/Podgorica',
                 dateStyle: 'short',
                 timeStyle: 'medium'
             })}
@@ -46,14 +47,14 @@ ${originalText}
 
 🎉 **Order is being prepared!**`;
             
-            alertText = '✅ Order confirmed successfully! Customer will be notified.';
+            alertText = '✅ Order confirmed successfully!';
             
         } else if (action === 'reject_order') {
             newText = `🔴🔴🔴 ORDER REJECTED 🔴🔴🔴
 
-❌ **STATUS: DECLINED**
+❌ **STATUS: DECLINED**  
 ⏰ Rejected at: ${new Date().toLocaleString('en-US', { 
-                timeZone: 'Europe/Kiev',
+                timeZone: 'Europe/Podgorica',
                 dateStyle: 'short',
                 timeStyle: 'medium'
             })}
@@ -63,19 +64,23 @@ ${originalText}
 ${originalText}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💭 **Reason**: Please contact staff for details`;
+❌ **Order was declined.**`;
             
-            alertText = '❌ Order rejected. Customer will be notified.';
-        } else {
-            return res.status(400).json({ error: 'Unknown action' });
+            alertText = '❌ Order rejected successfully!';
         }
 
-        const botToken = process.env.BOT_TOKEN;
-        if (!botToken) {
-            throw new Error('BOT_TOKEN environment variable not set');
-        }
+        // Send callback answer (popup alert)
+        await fetch(`https://api.telegram.org/bot${botToken}/answerCallbackQuery`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                callback_query_id: callbackQueryId,
+                text: alertText,
+                show_alert: true
+            })
+        });
 
-        // Edit the original message
+        // Edit the message with visual feedback
         const editResponse = await fetch(`https://api.telegram.org/bot${botToken}/editMessageText`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -83,65 +88,43 @@ ${originalText}
                 chat_id: chatId,
                 message_id: messageId,
                 text: newText,
-                parse_mode: 'Markdown',
-                reply_markup: null // Remove the buttons
+                parse_mode: 'Markdown'
             })
         });
 
         if (!editResponse.ok) {
-            const errorText = await editResponse.text();
-            console.error('Error editing message:', errorText);
-            throw new Error(`Failed to edit message: ${errorText}`);
+            const errorData = await editResponse.text();
+            console.error('Failed to edit message:', errorData);
         }
 
-        // Answer the callback query with feedback
-        const callbackResponse = await fetch(`https://api.telegram.org/bot${botToken}/answerCallbackQuery`, {
+        // Send follow-up notification to kitchen
+        const kitchenStatus = action === 'confirm_order' ? '🟢 CONFIRMED' : '🔴 REJECTED';
+        const kitchenMessage = `🔔 **Kitchen Notification**
+
+Order Status Update: ${kitchenStatus}
+Time: ${new Date().toLocaleString('en-US', { 
+    timeZone: 'Europe/Podgorica',
+    dateStyle: 'short',
+    timeStyle: 'medium'
+})}
+
+Please check the updated order above.`;
+
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                callback_query_id: callbackQueryId,
-                text: alertText,
-                show_alert: true // Shows a popup alert
+                chat_id: chatId,
+                text: kitchenMessage,
+                parse_mode: 'Markdown'
             })
         });
 
-        if (!callbackResponse.ok) {
-            const errorText = await callbackResponse.text();
-            console.error('Error answering callback:', errorText);
-        }
-
-        // Optional: Send a follow-up message for additional actions
-        if (action === 'confirm_order') {
-            await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: `🔔 **Kitchen Notification**: New order confirmed and ready for preparation!`,
-                    parse_mode: 'Markdown',
-                    reply_markup: {
-                        inline_keyboard: [[
-                            { text: '👨‍🍳 Mark as Preparing', callback_data: 'mark_preparing' },
-                            { text: '✅ Mark as Ready', callback_data: 'mark_ready' }
-                        ]]
-                    }
-                })
-            });
-        }
-
         console.log(`Successfully processed ${action} for message ${messageId}`);
-        return res.status(200).json({ 
-            ok: true, 
-            action,
-            messageId,
-            timestamp: new Date().toISOString()
-        });
-
+        return res.status(200).json({ ok: true, message: 'Callback processed' });
+        
     } catch (error) {
-        console.error('Webhook error:', error);
-        return res.status(500).json({ 
-            error: 'Internal server error',
-            message: error.message 
-        });
+        console.error('Error processing callback:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 }
