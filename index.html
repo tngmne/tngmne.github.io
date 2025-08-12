@@ -1103,6 +1103,41 @@
         font-size: 1.1rem;
         padding: 0.5rem 1rem;
       }
+
+      .version-info {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* Version display styling */
+    .version-info {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.375rem;
+      font-family: 'Courier New', monospace;
+      z-index: 1000;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .version-info:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    @media (max-width: 768px) {
+      .version-info {
+        font-size: 0.325rem;
+        bottom: 8px;
+        right: 8px;
+        padding: 3px 6px;
+      }
     }
   </style>
 </head>
@@ -1920,6 +1955,41 @@
     loadMeals();
     loadTimeButtons();
     loadRoomButtons();
+
+    // Version information function
+    function showVersionDetails() {
+      const buildDate = new Date().toLocaleDateString('en-GB');
+      const buildTime = new Date().toLocaleTimeString('en-GB', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        timeZone: 'Europe/Podgorica'
+      });
+      
+      alert(`🍽️ Zebra Meal Ordering System
+      
+Version: 2.1.0
+Build Date: ${buildDate}
+Last Update: ${buildTime} (Montenegro)
+
+Features:
+• Interactive Telegram Bot Integration  
+• Montenegro Timezone Support
+• Mobile & Tablet Optimized
+• Dinner Service from 12:01 PM
+• Enhanced Visual Design
+
+Recent Updates:
+• Fixed tablet landscape layout
+• Improved image sizing
+• Enhanced typography
+• Payment button styling consistency`);
+    }
   </script>
+
+  <!-- Version Display -->
+  <div class="version-info" onclick="showVersionDetails()" title="Click for build info">
+    v2.1.0
+  </div>
+
 </body>
 </html>
