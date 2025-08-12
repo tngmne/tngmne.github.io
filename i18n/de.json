@@ -50,6 +50,7 @@
     "location": "Ort",
     "paymentMethod": "Zahlungsmethode",
     "adminPin": "PIN",
+    "passToAdmin": "Bitte übergeben Sie das Gerät an den Administrator, um die Bestellung abzuschließen.",
     "confirmOrder": "Bestellung bestätigen",
     "close": "×"
   },

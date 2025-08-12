@@ -887,7 +887,7 @@
       <div class="receipt-total" id="receiptTotal"></div>
       <div class="receipt-info" id="receiptInfo"></div>
       <div class="pin-section">
-        <label for="pinInput"><span style="color: #e74c3c; font-weight: bold;">Please, pass the device to administrator to complete the order.</span><br><span data-i18n="receipt.adminPin">Admin PIN (2606 for testing)</span>:</label>
+        <label for="pinInput"><span style="color: #e74c3c; font-weight: bold;" data-i18n="receipt.passToAdmin">Please, pass the device to administrator to complete the order.</span><br><span data-i18n="receipt.adminPin">Admin PIN (2606 for testing)</span>:</label>
         <input type="password" id="pinInput" maxlength="4" placeholder="****" oninput="validatePin(this.value)">
         <div class="error" id="pinError" data-i18n="validation.invalidPin">Incorrect PIN</div>
       </div>
@@ -1718,9 +1718,23 @@
   </div>
 
   <!-- Version Display -->
-  <div class="version-info">
-    v2.3.2
+  <div class="version-info" id="appVersion">
+    v1.0.0
   </div>
+
+  <script>
+    // Load version from package.json
+    async function loadVersion() {
+      try {
+        const response = await fetch('./package.json');
+        const packageData = await response.json();
+        document.getElementById('appVersion').textContent = `v${packageData.version}`;
+      } catch (error) {
+        console.log('Could not load version from package.json');
+      }
+    }
+    loadVersion();
+  </script>
 
 </body>
 </html>

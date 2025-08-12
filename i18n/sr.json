@@ -50,6 +50,7 @@
     "location": "Lokacija",
     "paymentMethod": "Način Plaćanja",
     "adminPin": "PIN",
+    "passToAdmin": "Molimo prosledite uređaj administratoru da završi narudžbinu.",
     "confirmOrder": "Potvrdi Narudžbinu",
     "close": "×"
   },

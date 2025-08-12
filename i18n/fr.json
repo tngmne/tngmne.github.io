@@ -50,6 +50,7 @@
     "location": "Lieu",
     "paymentMethod": "Méthode de Paiement",
     "adminPin": "PIN",
+    "passToAdmin": "Veuillez passer l'appareil à l'administrateur pour compléter la commande.",
     "confirmOrder": "Confirmer la Commande",
     "close": "×"
   },

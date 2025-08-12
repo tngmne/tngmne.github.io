@@ -4,9 +4,16 @@
   "description": "Meal ordering system with Telegram bot webhook",
   "main": "index.html",
   "scripts": {
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
+    "version:major": "npm version major --no-git-tag-version",
+    "prepare": "husky install"
   },
   "keywords": ["telegram", "bot", "webhook", "meal-ordering"],
   "author": "Your Name",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
 }

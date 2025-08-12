@@ -51,6 +51,7 @@
     "paymentMethod": "דרך תשלום",
     "adminPin": "קוד",
     "confirmOrder": "אשר הזמנה",
+    "passToAdmin": "אנא העבירו את המכשיר למנהל כדי להשלים את ההזמנה.",
     "close": "×"
   },
   "telegram": {

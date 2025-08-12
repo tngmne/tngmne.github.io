@@ -1,0 +1,37 @@
+name: Auto Version Bump
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'package.json'
+      - 'package-lock.json'
+
+jobs:
+  version-bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Bump version (patch)
+        run: |
+          npm version patch --no-git-tag-version
+          
+      - name: Commit version bump
+        run: |
+          git add package.json
+          git commit -m "chore: bump version to $(node -p "require('./package.json').version")" || exit 0
+          git push
