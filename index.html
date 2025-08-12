@@ -1308,6 +1308,15 @@
         <div><strong>${i18n.t('receipt.location')}:</strong> ${location}</div>
         ${location === "Room" ? `<div><strong>${i18n.t('location.room')}:</strong> ${room}</div>` : ''}
         <div><strong>${i18n.t('receipt.paymentMethod')}:</strong> ${method}</div>
+        ${i18n.getCurrentLanguage() !== 'en' ? `
+          <hr style="margin: 1rem 0; border: 1px solid #eee;">
+          <div style="color: #666; font-size: 0.9em;">
+            <div><strong>Delivery Time:</strong> ${time}</div>
+            <div><strong>Location:</strong> ${location}</div>
+            ${location === "Room" ? `<div><strong>Room:</strong> ${room}</div>` : ''}
+            <div><strong>Payment Method:</strong> ${method}</div>
+          </div>
+        ` : ''}
       `;
       
       // Store the receipt data for later use when sending to Telegram
@@ -1341,16 +1350,16 @@
       const receiptModal = document.getElementById('receiptModal');
       const receiptData = JSON.parse(receiptModal.dataset.receipt);
       
-      // Format receipt for Telegram
+      // Format receipt for Telegram (always in English)
       let receipt = `🧾 Receipt\nOrder #: ${receiptData.orderNumber}\n\n`;
       for (let [name, item] of Object.entries(receiptData.items)) {
         receipt += `${name} x${item.qty} = ${item.qty * item.price} €\n`;
       }
-      receipt += `\n${i18n.t('order.total')}: ${receiptData.total} €`;
-      receipt += `\n${i18n.t('receipt.deliveryTime')}: ${receiptData.time}`;
-      receipt += `\n${i18n.t('receipt.location')}: ${receiptData.location}`;
-      if (receiptData.location === "Room") receipt += `\n${i18n.t('location.room')}: ${receiptData.room}`;
-      receipt += `\n${i18n.t('receipt.paymentMethod')}: ${receiptData.method}`;
+      receipt += `\nTotal: ${receiptData.total} €`;
+      receipt += `\nDelivery Time: ${receiptData.time}`;
+      receipt += `\nLocation: ${receiptData.location}`;
+      if (receiptData.location === "Room") receipt += `\nRoom: ${receiptData.room}`;
+      receipt += `\nPayment Method: ${receiptData.method}`;
       
       // Close modal
       closeReceiptModal();
@@ -1371,11 +1380,11 @@
           reply_markup: JSON.stringify({
             inline_keyboard: [
               [{
-                text: i18n.t('telegram.confirmOrder'),
+                text: '✅ Confirm Order',
                 callback_data: 'confirm_order'
               }],
               [{
-                text: i18n.t('telegram.rejectOrder'),
+                text: '❌ Reject Order',
                 callback_data: 'reject_order'
               }]
             ]
@@ -1710,7 +1719,7 @@
 
   <!-- Version Display -->
   <div class="version-info">
-    v2.3.1
+    v2.3.2
   </div>
 
 </body>
