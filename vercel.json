@@ -4,6 +4,10 @@
   "outputDirectory": ".",
   "routes": [
     {
+      "src": "/api/telegram-webhook",
+      "dest": "/api/telegram-webhook"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/api/$1"
     },
