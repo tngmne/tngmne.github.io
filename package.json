@@ -1,0 +1,17 @@
+{
+  "name": "meal-ordering-system",
+  "version": "1.0.0",
+  "description": "Interactive meal ordering system with Telegram bot integration",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static site - no build required'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": ["telegram", "bot", "meal-ordering", "vercel"],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x"
+  }
+}
