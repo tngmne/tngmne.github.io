@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "בחירת ארוחות",
+     "version": "2.3.0"
+  },
+  "navigation": {
+    "quickNavigation": "ניווט מהיר"
+  },
+  "meal": {
+    "selectBreakfast": "בחר את ארוחת הבוקר שלך",
+    "selectMeal": "בחר את הארוחה שלך",
+    "unavailable": "בחירת ארוחות אינה זמינה כרגע.",
+    "workingHours": "שעות עבודה:",
+    "breakfast": "ארוחת בוקר",
+    "dinner": "ארוחת ערב",
+    "categories": {
+      "breakfastItems": "פריטי ארוחת בוקר",
+      "coldAppetizers": "מתאבנים קרים",
+      "salads": "סלטים",
+      "soup": "מרק",
+      "risotto": "ריזוטו",
+      "fish": "דג",
+      "meat": "בשר",
+      "desserts": "קינוחים"
+    }
+  },
+  "order": {
+    "total": "סך הכל",
+    "reset": "איפוס",
+    "continue": "המשך",
+    "orderNumber": "הזמנה #",
+    "success": "ההזמנה בוצעה בהצלחה!",
+    "error": "שגיאה בביצוע ההזמנה. אנא נסה שוב.",
+    "sendSuccess": "ההזמנה נשלחה בהצלחה! נעבד אותה בקרוב.",
+    "sendError": "שגיאה בשליחת ההזמנה. אנא נסה שוב או צור קשר ישירות."
+  },
+  "location": {
+    "whereToEat": "איפה לאכול:",
+    "selectTime": "בחר זמן אכילה / משלוח:",
+    "room": "חדר",
+    "restaurant": "מסעדה",
+    "selectRoom": "אנא בחר את מספר החדר שלך",
+    "roomNumber": "מספר חדר"
+  },
+  "payment": {
+    "selectOption": "בחר אפשרות תשלום",
+    "cash": "מזומן",
+    "card": "כרטיס",
+    "selectMethod": "אנא בחר דרך תשלום"
+  },
+  "receipt": {
+    "orderReceipt": "קבלת הזמנה",
+    "deliveryTime": "זמן משלוח",
+    "location": "מיקום",
+    "paymentMethod": "דרך תשלום",
+    "adminPin": "קוד מנהל (2606 לבדיקה)",
+    "confirmOrder": "אשר הזמנה",
+    "close": "×"
+  },
+  "telegram": {
+    "confirmOrder": "✅ אשר הזמנה",
+    "rejectOrder": "❌ דחה הזמנה"
+  },
+  "validation": {
+    "selectMeal": "אנא בחר סוג ארוחה",
+    "selectTime": "אנא בחר זמן",
+    "selectRoom": "אנא בחר את מספר החדר שלך",
+    "selectPayment": "אנא בחר דרך תשלום",
+    "invalidPin": "קוד לא תקין. אנא נסה שוב."
+  },
+  "admin": {
+    "mode": "מצב מנהל הופעל"
+  },
+  "thanks": {
+    "thankYou": "תודה!",
+    "message": "ההזמנה שלך התקבלה ומעובדת.",
+    "redirecting": "מפנה מחדש בעוד"
+  },
+  "room": {
+    "selectRoom": "בחר את החדר שלך",
+    "close": "סגור"
+  }
+}

@@ -830,71 +830,74 @@
   </style>
 </head>
 <body>
-  <h1 id="mealHeading">Meal Selection</h1>
+  <h1 id="mealHeading" data-i18n="app.title">Meal Selection</h1>
 
   <!-- Section Navigation Menu -->
   <div id="sectionNavigation" class="section-navigation" style="display: none;">
-    <div class="nav-title">Quick Navigation</div>
+    <div class="nav-title" data-i18n="navigation.quickNavigation">Quick Navigation</div>
     <div id="navButtons" class="nav-buttons"></div>
   </div>
 
   <div id="mealContainer" class="meal-options"></div>
-  <div id="totalPrice">Total: 0 €</div>
+  <div id="totalPrice"><span data-i18n="order.total">Total</span>: 0 €</div>
 
   <div class="action-buttons">
-    <button id="resetBtn" onclick="resetAll()">Reset</button>
-    <button id="continueBtn" disabled onclick="showNextStep()">Continue</button>
+    <button id="resetBtn" onclick="resetAll()" data-i18n="order.reset">Reset</button>
+    <button id="continueBtn" disabled onclick="showNextStep()" data-i18n="order.continue">Continue</button>
   </div>
 
   <div id="locationStep" class="step hidden">
-    <div class="section-label">Where to eat:</div>
+    <div class="section-label" data-i18n="location.whereToEat">Where to eat:</div>
     <div class="location-toggle">
-      <button id="roomBtn" onclick="selectLocation('Room')">🗝️ Room</button>
-      <button id="restaurantBtn" onclick="selectLocation('Restaurant')">🍽️ Restaurant</button>
+      <button id="roomBtn" onclick="selectLocation('Room')">🗝️ <span data-i18n="location.room">Room</span></button>
+      <button id="restaurantBtn" onclick="selectLocation('Restaurant')">🍽️ <span data-i18n="location.restaurant">Restaurant</span></button>
     </div>
 
     <div id="roomNumberContainer" class="hidden">
-      <label>Room Number:</label><br>
-      <input type="text" id="roomNumber" readonly placeholder="Select a room" onclick="showRoomPopup()">
+      <label><span data-i18n="location.roomNumber">Room Number</span>:</label><br>
+      <input type="text" id="roomNumber" readonly data-i18n="room.selectRoom" onclick="showRoomPopup()">
     </div>
 
-    <div class="section-label">Select Time to Eat / Deliver:</div>
+    <div class="section-label" data-i18n="location.selectTime">Select Time to Eat / Deliver:</div>
     <div id="timeButtonsContainer" class="time-buttons"></div>
   </div>
 
   <div id="paymentStep" class="step hidden">
-    <div class="payment-label">Select payment option</div>
+    <div class="payment-label" data-i18n="payment.selectOption">Select payment option</div>
     
     <div class="payment-options" id="paymentOptions">
-      <button onclick="showReceiptModal('Cash')">Cash</button>
-      <button onclick="showReceiptModal('Card')">Card</button>
+      <button onclick="showReceiptModal('Cash')" data-i18n="payment.cash">Cash</button>
+      <button onclick="showReceiptModal('Card')" data-i18n="payment.card">Card</button>
     </div>
   </div>
 
   <div id="roomPopup">
     <div class="popup-content">
-      <button class="room-close" onclick="closeRoomPopup()">×</button>
-      <h3>Select Room Number</h3>
+      <button class="room-close" onclick="closeRoomPopup()" data-i18n="receipt.close">×</button>
+      <h3 data-i18n="room.selectRoom">Select Room Number</h3>
       <div id="roomGrid" class="room-grid"></div>
     </div>
   </div>
 
   <div id="receiptModal">
     <div class="receipt-content">
-      <button class="receipt-close" onclick="closeReceiptModal()">×</button>
-      <div class="receipt-header">🧾 Receipt</div>
+      <button class="receipt-close" onclick="closeReceiptModal()" data-i18n="receipt.close">×</button>
+      <div class="receipt-header">🧾 <span data-i18n="receipt.orderReceipt">Receipt</span></div>
       <div class="receipt-items" id="receiptItems"></div>
       <div class="receipt-total" id="receiptTotal"></div>
       <div class="receipt-info" id="receiptInfo"></div>
       <div class="pin-section">
-        <label for="pinInput"><span style="color: #e74c3c; font-weight: bold;">Please, pass the device to administrator to complete the order.</span><br>PIN:</label>
+        <label for="pinInput"><span style="color: #e74c3c; font-weight: bold;">Please, pass the device to administrator to complete the order.</span><br><span data-i18n="receipt.adminPin">Admin PIN (2606 for testing)</span>:</label>
         <input type="password" id="pinInput" maxlength="4" placeholder="****" oninput="validatePin(this.value)">
-        <div class="error" id="pinError">Incorrect PIN</div>
+        <div class="error" id="pinError" data-i18n="validation.invalidPin">Incorrect PIN</div>
       </div>
-      <button class="receipt-confirm" id="confirmOrderBtn" onclick="confirmAndSendOrder()" disabled>Confirm Order</button>
+      <button class="receipt-confirm" id="confirmOrderBtn" onclick="confirmAndSendOrder()" disabled data-i18n="receipt.confirmOrder">Confirm Order</button>
     </div>
   </div>
 
+  <!-- Load i18n module -->
+  <script src="./i18n.js"></script>
+  
   <script>
     const mealContainer = document.getElementById('mealContainer');
     const totalPriceEl = document.getElementById('totalPrice');
@@ -965,19 +968,8 @@
       { floor: 13, start: 1, end: 3 }   // 1301-1303
     ];
 
-    // Application Messages
-    const MESSAGES = {
-      MEAL_UNAVAILABLE: 'Meal selection is currently unavailable.',
-      WORKING_HOURS_LABEL: 'Working Hours:',
-      ORDER_SUCCESS: 'Order placed successfully!',
-      ORDER_ERROR: 'Error placing order. Please try again.',
-      INVALID_PIN: 'Invalid PIN. Please try again.',
-      ADMIN_MODE: 'Admin Mode Activated',
-      SELECT_MEAL: 'Please select a meal type',
-      SELECT_TIME: 'Please select a time',
-      SELECT_ROOM: 'Please select your room number',
-      SELECT_PAYMENT: 'Please select payment method'
-    };
+    // Application Messages - Removed, now using i18n system
+    // const MESSAGES = { ... };
 
     // Meal Categories Configuration
     const MEAL_CATEGORIES = {
@@ -992,6 +984,24 @@
         "Desserts"
       ]
     };
+
+    // Category localization mapping
+    const CATEGORY_KEYS = {
+      'Breakfast Items': 'meal.categories.breakfastItems',
+      'Cold appetizers': 'meal.categories.coldAppetizers',
+      'Salads': 'meal.categories.salads',
+      'Soup': 'meal.categories.soup',
+      'Risotto': 'meal.categories.risotto',
+      'Fish': 'meal.categories.fish',
+      'Meat': 'meal.categories.meat',
+      'Desserts': 'meal.categories.desserts'
+    };
+
+    // Helper function to get localized category name
+    function getLocalizedCategory(categoryName) {
+      const key = CATEGORY_KEYS[categoryName];
+      return key ? i18n.t(key, categoryName) : categoryName;
+    }
 
     // Helper functions
     function formatTime12Hour(hour, minute) {
@@ -1016,7 +1026,8 @@
         categories.forEach(category => {
           const button = document.createElement('button');
           button.className = 'nav-button';
-          button.textContent = category;
+          button.setAttribute('data-i18n', CATEGORY_KEYS[category]);
+          button.textContent = getLocalizedCategory(category);
           button.onclick = () => scrollToSection(category);
           navButtons.appendChild(button);
         });
@@ -1183,7 +1194,7 @@
         total += item.qty * item.price;
       }
 
-      totalPriceEl.textContent = `Total: ${total} €`;
+      totalPriceEl.textContent = `${i18n.t('order.total')}: ${total} €`;
       continueBtn.disabled = total === 0;
     }
 
@@ -1274,7 +1285,7 @@
       receiptItems.innerHTML = '';
       
       // Add order number at the top
-      receiptItems.innerHTML = `<div style="font-weight: bold; margin-bottom: 10px;">Order #: ${orderNumber}</div>`;
+      receiptItems.innerHTML = `<div style="font-weight: bold; margin-bottom: 10px;">${i18n.t('receipt.orderReceipt')} #: ${orderNumber}</div>`;
       
       // Add items
       let total = 0;
@@ -1285,7 +1296,7 @@
       }
       
       // Add total
-      receiptTotal.textContent = `Total: ${total} €`;
+      receiptTotal.textContent = `${i18n.t('order.total')}: ${total} €`;
       
       // Add info
       const time = document.querySelector('.time-buttons button.selected')?.textContent || "N/A";
@@ -1293,10 +1304,10 @@
       const room = location === "Room" ? roomNumberInput.value : "N/A";
       
       receiptInfo.innerHTML = `
-        <div>Time: ${time}</div>
-        <div>Location: ${location}</div>
-        ${location === "Room" ? `<div>Room: ${room}</div>` : ''}
-        <div>Payment Method: ${method}</div>
+        <div><strong>${i18n.t('receipt.deliveryTime')}:</strong> ${time}</div>
+        <div><strong>${i18n.t('receipt.location')}:</strong> ${location}</div>
+        ${location === "Room" ? `<div><strong>${i18n.t('location.room')}:</strong> ${room}</div>` : ''}
+        <div><strong>${i18n.t('receipt.paymentMethod')}:</strong> ${method}</div>
       `;
       
       // Store the receipt data for later use when sending to Telegram
@@ -1335,11 +1346,11 @@
       for (let [name, item] of Object.entries(receiptData.items)) {
         receipt += `${name} x${item.qty} = ${item.qty * item.price} €\n`;
       }
-      receipt += `\nTotal: ${receiptData.total} €`;
-      receipt += `\nTime: ${receiptData.time}`;
-      receipt += `\nLocation: ${receiptData.location}`;
-      if (receiptData.location === "Room") receipt += `\nRoom: ${receiptData.room}`;
-      receipt += `\nPayment Method: ${receiptData.method}`;
+      receipt += `\n${i18n.t('order.total')}: ${receiptData.total} €`;
+      receipt += `\n${i18n.t('receipt.deliveryTime')}: ${receiptData.time}`;
+      receipt += `\n${i18n.t('receipt.location')}: ${receiptData.location}`;
+      if (receiptData.location === "Room") receipt += `\n${i18n.t('location.room')}: ${receiptData.room}`;
+      receipt += `\n${i18n.t('receipt.paymentMethod')}: ${receiptData.method}`;
       
       // Close modal
       closeReceiptModal();
@@ -1360,11 +1371,11 @@
           reply_markup: JSON.stringify({
             inline_keyboard: [
               [{
-                text: '✅ Confirm Order',
+                text: i18n.t('telegram.confirmOrder'),
                 callback_data: 'confirm_order'
               }],
               [{
-                text: '❌ Reject Order',
+                text: i18n.t('telegram.rejectOrder'),
                 callback_data: 'reject_order'
               }]
             ]
@@ -1374,16 +1385,16 @@
       .then(response => response.json())
       .then(data => {
         if (data.ok) {
-          alert('Order sent successfully! We will process it shortly.');
+          alert(i18n.t('order.sendSuccess'));
           // Reset the page after successful order
           resetAll();
         } else {
-          alert('Error sending order. Please try again or contact us directly.');
+          alert(i18n.t('order.sendError'));
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('Error sending order. Please try again or contact us directly.');
+        alert(i18n.t('order.sendError'));
       });
     }
 
@@ -1529,7 +1540,7 @@
       paymentStep.classList.add('hidden');
 
       // Reset total price
-      totalPriceEl.textContent = 'Total: 0 €';
+      totalPriceEl.textContent = `${i18n.t('order.total')}: 0 €`;
       
       // Disable continue button
       continueBtn.disabled = true;
@@ -1539,6 +1550,9 @@
     }
 
     function loadMeals() {
+      // Clear existing content to prevent duplicates
+      mealContainer.innerHTML = '';
+      
       const now = new Date();
       const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
@@ -1559,9 +1573,9 @@
         if (paymentStep) paymentStep.classList.add('hidden');
         
         const mealHeading = document.getElementById("mealHeading");
-        mealHeading.innerHTML = "Meal Selection";
+        mealHeading.innerHTML = i18n.t('app.title');
         
-        mealContainer.innerHTML = `<p style='text-align: center; font-size: 1.1rem; color: var(--zebra-gray); margin: 2rem 0; padding: 1rem;'>${MESSAGES.MEAL_UNAVAILABLE}<br><br><strong>${MESSAGES.WORKING_HOURS_LABEL}</strong><br>${getWorkingHoursText()}</p>`;
+        mealContainer.innerHTML = `<p style='text-align: center; font-size: 1.1rem; color: var(--zebra-gray); margin: 2rem 0; padding: 1rem;'>${i18n.t('meal.unavailable')}<br><br><strong>${i18n.t('meal.workingHours')}</strong><br>${getWorkingHoursText()}</p>`;
         return;
       }
 
@@ -1571,9 +1585,9 @@
 
       const mealHeading = document.getElementById("mealHeading");
       if (isBreakfast) {
-        mealHeading.innerHTML = `Select Your Breakfast<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>${getServingHoursText(true)}</small>`;
+        mealHeading.innerHTML = `${i18n.t('meal.selectBreakfast')}<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>${getServingHoursText(true)}</small>`;
       } else {
-        mealHeading.innerHTML = `Select Your Meal<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>${getServingHoursText(false)}</small>`;
+        mealHeading.innerHTML = `${i18n.t('meal.selectMeal')}<br><small style='font-size: 0.6em; color: var(--zebra-gray); font-weight: 400;'>${getServingHoursText(false)}</small>`;
       }
 
       // Create section navigation
@@ -1611,6 +1625,8 @@
             // Add category header
             const categoryHeader = document.createElement('div');
             categoryHeader.id = `category-${category.toLowerCase().replace(/\s+/g, '-')}`;
+            categoryHeader.className = 'category-header';
+            categoryHeader.setAttribute('data-i18n', CATEGORY_KEYS[category]);
             categoryHeader.style.cssText = `
               grid-column: 1 / -1;
               font-size: 1.5rem;
@@ -1624,7 +1640,7 @@
               box-shadow: var(--shadow-sm);
               scroll-margin-top: 100px;
             `;
-            categoryHeader.textContent = category;
+            categoryHeader.textContent = getLocalizedCategory(category);
             mealContainer.appendChild(categoryHeader);
             
             // Add items in this category
@@ -1656,12 +1672,45 @@
     loadTimeButtons();
     loadRoomButtons();
 
+    // Language switching function
+    async function switchLanguage(language) {
+      await i18n.switchLanguage(language);
+      loadMeals(); // Refresh meals with new language (includes navigation)
+      
+      // Update language selector
+      const languageSelect = document.getElementById('languageSelect');
+      languageSelect.value = language;
+    }
+
+    // Initialize i18n system
+    document.addEventListener('DOMContentLoaded', async () => {
+      await i18n.init();
+      // Set the language selector to current language
+      const languageSelect = document.getElementById('languageSelect');
+      languageSelect.value = i18n.getCurrentLanguage();
+      // Refresh the page content after i18n is loaded
+      loadMeals();
+    });
+
   
   </script>
 
+  <!-- Language Selector -->
+  <div class="language-selector" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+    <select id="languageSelect" onchange="switchLanguage(this.value)" style="padding: 1rem 1.5rem; font-size: 1.1rem; border-radius: 8px; border: 2px solid var(--zebra-accent); background: var(--zebra-white); color: var(--zebra-accent); min-width: 180px; cursor: pointer;">
+      <option value="en">🇺🇸 English</option>
+      <option value="de">🇩🇪 Deutsch</option>
+      <option value="fr">🇫🇷 Français</option>
+      <option value="sr">🇷🇸 Српски</option>
+      <option value="uk">🇺🇦 Українська</option>
+      <option value="ru">🇷🇺 Русский</option>
+      <option value="he">🇮🇱 עברית</option>
+    </select>
+  </div>
+
   <!-- Version Display -->
-  <div class="version-info">
-    v2.1.4
+  <div class="version-info" data-i18n="app.version">
+    v2.3.0
   </div>
 
 </body>

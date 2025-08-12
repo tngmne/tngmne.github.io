@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Essensauswahl",
+     "version": "2.3.0"
+  },
+  "navigation": {
+    "quickNavigation": "Schnellnavigation"
+  },
+  "meal": {
+    "selectBreakfast": "Wählen Sie Ihr Frühstück",
+    "selectMeal": "Wählen Sie Ihr Essen",
+    "unavailable": "Essensauswahl ist derzeit nicht verfügbar.",
+    "workingHours": "Arbeitszeiten:",
+    "breakfast": "Frühstück",
+    "dinner": "Abendessen",
+    "categories": {
+      "breakfastItems": "Frühstücksgerichte",
+      "coldAppetizers": "Kalte Vorspeisen",
+      "salads": "Salate",
+      "soup": "Suppe",
+      "risotto": "Risotto",
+      "fish": "Fisch",
+      "meat": "Fleisch",
+      "desserts": "Desserts"
+    }
+  },
+  "order": {
+    "total": "Gesamt",
+    "reset": "Zurücksetzen",
+    "continue": "Weiter",
+    "orderNumber": "Bestellung #",
+    "success": "Bestellung erfolgreich aufgegeben!",
+    "error": "Fehler beim Aufgeben der Bestellung. Bitte versuchen Sie es erneut.",
+    "sendSuccess": "Bestellung erfolgreich gesendet! Wir werden sie in Kürze bearbeiten.",
+    "sendError": "Fehler beim Senden der Bestellung. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt."
+  },
+  "location": {
+    "whereToEat": "Wo essen:",
+    "selectTime": "Wählen Sie die Essens-/Lieferzeit:",
+    "room": "Zimmer",
+    "restaurant": "Restaurant",
+    "selectRoom": "Bitte wählen Sie Ihre Zimmernummer",
+    "roomNumber": "Zimmernummer"
+  },
+  "payment": {
+    "selectOption": "Zahlungsoption wählen",
+    "cash": "Bargeld",
+    "card": "Karte",
+    "selectMethod": "Bitte wählen Sie eine Zahlungsmethode"
+  },
+  "receipt": {
+    "orderReceipt": "Bestellquittung",
+    "deliveryTime": "Lieferzeit",
+    "location": "Ort",
+    "paymentMethod": "Zahlungsmethode",
+    "adminPin": "Admin-PIN (2606 zum Testen)",
+    "confirmOrder": "Bestellung bestätigen",
+    "close": "×"
+  },
+  "telegram": {
+    "confirmOrder": "✅ Bestellung bestätigen",
+    "rejectOrder": "❌ Bestellung ablehnen"
+  },
+  "validation": {
+    "selectMeal": "Bitte wählen Sie einen Essenstyp",
+    "selectTime": "Bitte wählen Sie eine Zeit",
+    "selectRoom": "Bitte wählen Sie Ihre Zimmernummer",
+    "selectPayment": "Bitte wählen Sie eine Zahlungsmethode",
+    "invalidPin": "Ungültige PIN. Bitte versuchen Sie es erneut."
+  },
+  "admin": {
+    "mode": "Admin-Modus aktiviert"
+  },
+  "thanks": {
+    "thankYou": "Vielen Dank!",
+    "message": "Ihre Bestellung wurde erhalten und wird bearbeitet.",
+    "redirecting": "Weiterleitung in"
+  },
+  "room": {
+    "selectRoom": "Wählen Sie Ihr Zimmer",
+    "close": "Schließen"
+  }
+}

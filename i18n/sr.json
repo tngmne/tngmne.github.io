@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Izbor Jela",
+     "version": "2.3.0"
+  },
+  "navigation": {
+    "quickNavigation": "Brza Navigacija"
+  },
+  "meal": {
+    "selectBreakfast": "Izaberite Vaš Doručak",
+    "selectMeal": "Izaberite Vaše Jelo",
+    "unavailable": "Izbor jela trenutno nije dostupan.",
+    "workingHours": "Radno vreme:",
+    "breakfast": "Doručak",
+    "dinner": "Večera",
+    "categories": {
+      "breakfastItems": "Stavke za Doručak",
+      "coldAppetizers": "Hladna predjela",
+      "salads": "Salate",
+      "soup": "Supa",
+      "risotto": "Rižoto",
+      "fish": "Riba",
+      "meat": "Meso",
+      "desserts": "Deserti"
+    }
+  },
+  "order": {
+    "total": "Ukupno",
+    "reset": "Resetuj",
+    "continue": "Nastavi",
+    "orderNumber": "Narudžbina #",
+    "success": "Narudžbina je uspešno napravljena!",
+    "error": "Greška pri pravljenju narudžbine. Pokušajte ponovo.",
+    "sendSuccess": "Narudžbina uspešno poslata! Uskoro ćemo je obraditi.",
+    "sendError": "Greška pri slanju narudžbine. Pokušajte ponovo ili nas kontaktirajte direktno."
+  },
+  "location": {
+    "whereToEat": "Gde jesti:",
+    "selectTime": "Izaberite vreme za jelo / dostavljanje:",
+    "room": "Soba",
+    "restaurant": "Restoran",
+    "selectRoom": "Molimo izaberite broj vaše sobe",
+    "roomNumber": "Broj Sobe"
+  },
+  "payment": {
+    "selectOption": "Izaberite opciju plaćanja",
+    "cash": "Gotovina",
+    "card": "Kartica",
+    "selectMethod": "Molimo izaberite način plaćanja"
+  },
+  "receipt": {
+    "orderReceipt": "Račun za Narudžbinu",
+    "deliveryTime": "Vreme Dostavljanja",
+    "location": "Lokacija",
+    "paymentMethod": "Način Plaćanja",
+    "adminPin": "Admin PIN (2606 za testiranje)",
+    "confirmOrder": "Potvrdi Narudžbinu",
+    "close": "×"
+  },
+  "telegram": {
+    "confirmOrder": "✅ Potvrdi Narudžbinu",
+    "rejectOrder": "❌ Odbaci Narudžbinu"
+  },
+  "validation": {
+    "selectMeal": "Molimo izaberite tip jela",
+    "selectTime": "Molimo izaberite vreme",
+    "selectRoom": "Molimo izaberite broj vaše sobe",
+    "selectPayment": "Molimo izaberite način plaćanja",
+    "invalidPin": "Nevažeći PIN. Pokušajte ponovo."
+  },
+  "admin": {
+    "mode": "Admin režim aktiviran"
+  },
+  "thanks": {
+    "thankYou": "Hvala Vam!",
+    "message": "Vaša narudžbina je primljena i obrađuje se.",
+    "redirecting": "Preusmeravanje za"
+  },
+  "room": {
+    "selectRoom": "Izaberite Vašu Sobu",
+    "close": "Zatvori"
+  }
+}

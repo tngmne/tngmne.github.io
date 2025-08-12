@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Sélection de Repas",
+     "version": "2.3.0"
+  },
+  "navigation": {
+    "quickNavigation": "Navigation Rapide"
+  },
+  "meal": {
+    "selectBreakfast": "Sélectionnez Votre Petit-déjeuner",
+    "selectMeal": "Sélectionnez Votre Repas",
+    "unavailable": "La sélection de repas n'est actuellement pas disponible.",
+    "workingHours": "Heures de Travail:",
+    "breakfast": "Petit-déjeuner",
+    "dinner": "Dîner",
+    "categories": {
+      "breakfastItems": "Articles de Petit-déjeuner",
+      "coldAppetizers": "Hors-d'œuvres froids",
+      "salads": "Salades",
+      "soup": "Soupe",
+      "risotto": "Risotto",
+      "fish": "Poisson",
+      "meat": "Viande",
+      "desserts": "Desserts"
+    }
+  },
+  "order": {
+    "total": "Total",
+    "reset": "Réinitialiser",
+    "continue": "Continuer",
+    "orderNumber": "Commande #",
+    "success": "Commande passée avec succès!",
+    "error": "Erreur lors de la passation de commande. Veuillez réessayer.",
+    "sendSuccess": "Commande envoyée avec succès! Nous la traiterons sous peu.",
+    "sendError": "Erreur lors de l'envoi de la commande. Veuillez réessayer ou nous contacter directement."
+  },
+  "location": {
+    "whereToEat": "Où manger:",
+    "selectTime": "Sélectionnez l'Heure de Repas / Livraison:",
+    "room": "Chambre",
+    "restaurant": "Restaurant",
+    "selectRoom": "Veuillez sélectionner votre numéro de chambre",
+    "roomNumber": "Numéro de Chambre"
+  },
+  "payment": {
+    "selectOption": "Sélectionnez l'option de paiement",
+    "cash": "Espèces",
+    "card": "Carte",
+    "selectMethod": "Veuillez sélectionner une méthode de paiement"
+  },
+  "receipt": {
+    "orderReceipt": "Reçu de Commande",
+    "deliveryTime": "Heure de Livraison",
+    "location": "Lieu",
+    "paymentMethod": "Méthode de Paiement",
+    "adminPin": "PIN Admin (2606 pour les tests)",
+    "confirmOrder": "Confirmer la Commande",
+    "close": "×"
+  },
+  "telegram": {
+    "confirmOrder": "✅ Confirmer Commande",
+    "rejectOrder": "❌ Rejeter Commande"
+  },
+  "validation": {
+    "selectMeal": "Veuillez sélectionner un type de repas",
+    "selectTime": "Veuillez sélectionner une heure",
+    "selectRoom": "Veuillez sélectionner votre numéro de chambre",
+    "selectPayment": "Veuillez sélectionner une méthode de paiement",
+    "invalidPin": "PIN invalide. Veuillez réessayer."
+  },
+  "admin": {
+    "mode": "Mode Admin Activé"
+  },
+  "thanks": {
+    "thankYou": "Merci!",
+    "message": "Votre commande a été reçue et est en cours de traitement.",
+    "redirecting": "Redirection dans"
+  },
+  "room": {
+    "selectRoom": "Sélectionnez Votre Chambre",
+    "close": "Fermer"
+  }
+}

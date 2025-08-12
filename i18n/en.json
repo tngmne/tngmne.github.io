@@ -1,0 +1,83 @@
+{
+  "app": {
+    "title": "Meal Selection",
+     "version": "2.3.0"
+  },
+  "navigation": {
+    "quickNavigation": "Quick Navigation"
+  },
+  "meal": {
+    "selectBreakfast": "Select Your Breakfast",
+    "selectMeal": "Select Your Meal",
+    "unavailable": "Meal selection is currently unavailable.",
+    "workingHours": "Working Hours:",
+    "breakfast": "Breakfast",
+    "dinner": "Dinner",
+    "categories": {
+      "breakfastItems": "Breakfast Items",
+      "coldAppetizers": "Cold appetizers",
+      "salads": "Salads",
+      "soup": "Soup",
+      "risotto": "Risotto",
+      "fish": "Fish",
+      "meat": "Meat",
+      "desserts": "Desserts"
+    }
+  },
+  "order": {
+    "total": "Total",
+    "reset": "Reset",
+    "continue": "Continue",
+    "orderNumber": "Order #",
+    "success": "Order placed successfully!",
+    "error": "Error placing order. Please try again.",
+    "sendSuccess": "Order sent successfully! We will process it shortly.",
+    "sendError": "Error sending order. Please try again or contact us directly."
+  },
+  "location": {
+    "whereToEat": "Where to eat:",
+    "selectTime": "Select Time to Eat / Deliver:",
+    "room": "Room",
+    "restaurant": "Restaurant",
+    "selectRoom": "Please select your room number",
+    "roomNumber": "Room Number"
+  },
+  "payment": {
+    "selectOption": "Select payment option",
+    "cash": "Cash",
+    "card": "Card",
+    "selectMethod": "Please select payment method"
+  },
+  "receipt": {
+    "orderReceipt": "Order Receipt",
+    "deliveryTime": "Delivery Time",
+    "location": "Location",
+    "paymentMethod": "Payment Method",
+    "adminPin": "Admin PIN (2606 for testing)",
+    "confirmOrder": "Confirm Order",
+    "close": "×"
+  },
+  "telegram": {
+    "confirmOrder": "✅ Confirm Order",
+    "rejectOrder": "❌ Reject Order"
+  },
+  "validation": {
+    "selectMeal": "Please select a meal type",
+    "selectTime": "Please select a time",
+    "selectRoom": "Please select your room number",
+    "selectPayment": "Please select payment method",
+    "invalidPin": "Invalid PIN. Please try again."
+  },
+  "admin": {
+    "mode": "Admin Mode Activated"
+  },
+  "thanks": {
+    "thankYou": "Thank You!",
+    "message": "Your order has been received and is being processed.",
+    "redirecting": "Redirecting in"
+  },
+  "room": {
+    "selectRoom": "Select Your Room",
+    "close": "Close"
+  }
+}
