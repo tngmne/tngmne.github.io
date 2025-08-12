@@ -1410,12 +1410,24 @@
       const dinnerSlots = [];
       for (let h = DINNER_START_HOUR; h <= DINNER_END_HOUR; h++) {
         for (let m of TIME_SLOTS) {
+          // For the first hour (12pm), only include the time if it's >= DINNER_START_MINUTE (31)
+          if (h === DINNER_START_HOUR && m < DINNER_START_MINUTE) continue;
+          
           if (h === DINNER_END_HOUR && m === DINNER_END_MINUTE) {
             dinnerSlots.push({ hour: h, minute: m, minutes: h * MINUTES_PER_HOUR + m });
             break; // Include end time and stop
           }
           dinnerSlots.push({ hour: h, minute: m, minutes: h * MINUTES_PER_HOUR + m });
         }
+      }
+      
+      // Add the specific 12:31 time slot
+      if (DINNER_START_MINUTE !== 0 && DINNER_START_MINUTE !== 30) {
+        dinnerSlots.unshift({ 
+          hour: DINNER_START_HOUR, 
+          minute: DINNER_START_MINUTE, 
+          minutes: DINNER_START_HOUR * MINUTES_PER_HOUR + DINNER_START_MINUTE 
+        });
       }
       
       // Determine which slots to show based on current time
@@ -1649,7 +1661,7 @@
 
   <!-- Version Display -->
   <div class="version-info">
-    v2.1.3
+    v2.1.4
   </div>
 
 </body>
