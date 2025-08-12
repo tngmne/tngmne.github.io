@@ -830,7 +830,7 @@
   </style>
 </head>
 <body>
-  <h1 id="mealHeading" data-i18n="app.title">Meal Selection</h1>
+  <h1 id="mealHeading">Meal Selection</h1>
 
   <!-- Section Navigation Menu -->
   <div id="sectionNavigation" class="section-navigation" style="display: none;">
@@ -1573,7 +1573,7 @@
         if (paymentStep) paymentStep.classList.add('hidden');
         
         const mealHeading = document.getElementById("mealHeading");
-        mealHeading.innerHTML = i18n.t('app.title');
+        mealHeading.innerHTML = 'Meal Selection';
         
         mealContainer.innerHTML = `<p style='text-align: center; font-size: 1.1rem; color: var(--zebra-gray); margin: 2rem 0; padding: 1rem;'>${i18n.t('meal.unavailable')}<br><br><strong>${i18n.t('meal.workingHours')}</strong><br>${getWorkingHoursText()}</p>`;
         return;
@@ -1709,8 +1709,8 @@
   </div>
 
   <!-- Version Display -->
-  <div class="version-info" data-i18n="app.version">
-    v2.3.0
+  <div class="version-info">
+    v2.3.1
   </div>
 
 </body>

@@ -1,8 +1,4 @@
 {
-  "app": {
-    "title": "Meal Selection",
-     "version": "2.3.0"
-  },
   "navigation": {
     "quickNavigation": "Quick Navigation"
   },
@@ -53,7 +49,7 @@
     "deliveryTime": "Delivery Time",
     "location": "Location",
     "paymentMethod": "Payment Method",
-    "adminPin": "Admin PIN (2606 for testing)",
+    "adminPin": "PIN",
     "confirmOrder": "Confirm Order",
     "close": "×"
   },

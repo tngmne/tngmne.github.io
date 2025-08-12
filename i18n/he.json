@@ -1,8 +1,4 @@
 {
-  "app": {
-    "title": "בחירת ארוחות",
-     "version": "2.3.0"
-  },
   "navigation": {
     "quickNavigation": "ניווט מהיר"
   },
@@ -53,7 +49,7 @@
     "deliveryTime": "זמן משלוח",
     "location": "מיקום",
     "paymentMethod": "דרך תשלום",
-    "adminPin": "קוד מנהל (2606 לבדיקה)",
+    "adminPin": "קוד",
     "confirmOrder": "אשר הזמנה",
     "close": "×"
   },

@@ -1,8 +1,4 @@
 {
-  "app": {
-    "title": "Izbor Jela",
-     "version": "2.3.0"
-  },
   "navigation": {
     "quickNavigation": "Brza Navigacija"
   },
@@ -53,7 +49,7 @@
     "deliveryTime": "Vreme Dostavljanja",
     "location": "Lokacija",
     "paymentMethod": "Način Plaćanja",
-    "adminPin": "Admin PIN (2606 za testiranje)",
+    "adminPin": "PIN",
     "confirmOrder": "Potvrdi Narudžbinu",
     "close": "×"
   },

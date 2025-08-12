@@ -1,8 +1,4 @@
 {
-  "app": {
-    "title": "Sélection de Repas",
-     "version": "2.3.0"
-  },
   "navigation": {
     "quickNavigation": "Navigation Rapide"
   },
@@ -53,7 +49,7 @@
     "deliveryTime": "Heure de Livraison",
     "location": "Lieu",
     "paymentMethod": "Méthode de Paiement",
-    "adminPin": "PIN Admin (2606 pour les tests)",
+    "adminPin": "PIN",
     "confirmOrder": "Confirmer la Commande",
     "close": "×"
   },

@@ -1,8 +1,4 @@
 {
-  "app": {
-    "title": "Выбор Еды",
-     "version": "2.3.0"
-  },
   "navigation": {
     "quickNavigation": "Быстрая Навигация"
   },
@@ -53,7 +49,7 @@
     "deliveryTime": "Время Доставки",
     "location": "Местоположение",
     "paymentMethod": "Способ Оплаты",
-    "adminPin": "Админ ПИН (2606 для тестирования)",
+    "adminPin": "ПИН",
     "confirmOrder": "Подтвердить Заказ",
     "close": "×"
   },

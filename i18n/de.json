@@ -1,8 +1,4 @@
 {
-  "app": {
-    "title": "Essensauswahl",
-     "version": "2.3.0"
-  },
   "navigation": {
     "quickNavigation": "Schnellnavigation"
   },
@@ -53,7 +49,7 @@
     "deliveryTime": "Lieferzeit",
     "location": "Ort",
     "paymentMethod": "Zahlungsmethode",
-    "adminPin": "Admin-PIN (2606 zum Testen)",
+    "adminPin": "PIN",
     "confirmOrder": "Bestellung bestätigen",
     "close": "×"
   },

@@ -1,8 +1,4 @@
 {
-  "app": {
-    "title": "Вибір Їжі",
-    "version": "2.3.0"
-  },
   "navigation": {
     "quickNavigation": "Швидка Навігація"
   },
@@ -53,7 +49,7 @@
     "deliveryTime": "Час Доставки",
     "location": "Розташування",
     "paymentMethod": "Спосіб Оплати",
-    "adminPin": "Адмін ПІН (2606 для тестування)",
+    "adminPin": "ПІН",
     "confirmOrder": "Підтвердити Замовлення",
     "close": "×"
   },
