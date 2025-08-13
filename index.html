@@ -1189,12 +1189,12 @@
         delete selectedMeals[name];
       }
 
+      updateTotalDisplay(); // Use the new function that respects current language
+      
       let total = 0;
       for (let item of Object.values(selectedMeals)) {
         total += item.qty * item.price;
       }
-
-      totalPriceEl.textContent = `${i18n.t('order.total')}: ${total} €`;
       continueBtn.disabled = total === 0;
     }
 
@@ -1549,7 +1549,7 @@
       paymentStep.classList.add('hidden');
 
       // Reset total price
-      totalPriceEl.textContent = `${i18n.t('order.total')}: 0 €`;
+      updateTotalDisplay(); // Use the new function for consistency
       
       // Disable continue button
       continueBtn.disabled = true;
@@ -1685,10 +1685,20 @@
     async function switchLanguage(language) {
       await i18n.switchLanguage(language);
       loadMeals(); // Refresh meals with new language (includes navigation)
+      updateTotalDisplay(); // Update total price label with new language
       
       // Update language selector
       const languageSelect = document.getElementById('languageSelect');
       languageSelect.value = language;
+    }
+
+    // Function to update total display with current language
+    function updateTotalDisplay() {
+      let total = 0;
+      for (let item of Object.values(selectedMeals)) {
+        total += item.qty * item.price;
+      }
+      totalPriceEl.textContent = `${i18n.t('order.total')}: ${total} €`;
     }
 
     // Initialize i18n system
