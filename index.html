@@ -6,15 +6,15 @@
   <title>Meal Selection</title>
   <style>
     :root {
-      --zebra-black: #222222;
+      --zebra-black: #000000;
       --zebra-white: #ffffff;
-      --zebra-stripe: #f8f9fa;
-      --zebra-accent: #3d7dca;
-      --zebra-success: #2ecc71;
-      --zebra-danger: #e74c3c;
-      --zebra-gray: #6c757d;
-      --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-      --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
+      --zebra-stripe: #f0f0f0;
+      --zebra-accent: #333333;
+      --zebra-success: #666666;
+      --zebra-danger: #999999;
+      --zebra-gray: #888888;
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.25);
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
@@ -24,7 +24,7 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       text-align: center;
       padding: 20px;
-      background: var(--zebra-stripe);
+      background: var(--zebra-white);
       color: var(--zebra-black);
       line-height: 1.6;
     }
@@ -33,8 +33,28 @@
       margin-bottom: 2rem;
       font-size: 2.5rem;
       font-weight: 700;
-      color: var(--zebra-accent);
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+      color: var(--zebra-black);
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+      border-bottom: 3px solid var(--zebra-black);
+      padding-bottom: 1rem;
+    }
+
+    .logo {
+      display: block;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 2rem auto;
+      background: var(--zebra-white);
+      border-radius: 50%;
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
     }
 
     .meal-options {
@@ -236,10 +256,10 @@
     #totalPrice {
       position: sticky;
       bottom: 7rem;
-      background: linear-gradient(135deg, var(--zebra-accent), #4facfe);
+      background: linear-gradient(135deg, var(--zebra-black), var(--zebra-gray));
       padding: 1.25rem 2.5rem;
       border-radius: var(--radius-lg);
-      box-shadow: 0 8px 32px rgba(61, 125, 202, 0.3), 0 4px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.1);
       margin: 1.5rem auto;
       max-width: 320px;
       font-size: 1.6rem;
@@ -787,7 +807,7 @@
     }
 
     .location-toggle button.active {
-      background: linear-gradient(135deg, var(--zebra-white) 0%, #f8f9fa 100%);
+      background: linear-gradient(135deg, var(--zebra-white) 0%, var(--zebra-stripe) 100%);
       color: var(--zebra-accent);
       box-shadow: 0 6px 20px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
       font-weight: 700;
@@ -830,6 +850,11 @@
   </style>
 </head>
 <body>
+  <!-- Zebra Logo -->
+  <div class="logo">
+    <img src="logo.jpeg" alt="Zebra Restaurant Logo">
+  </div>
+
   <h1 id="mealHeading">Meal Selection</h1>
 
   <!-- Section Navigation Menu -->
@@ -887,7 +912,7 @@
       <div class="receipt-total" id="receiptTotal"></div>
       <div class="receipt-info" id="receiptInfo"></div>
       <div class="pin-section">
-        <label for="pinInput"><span style="color: #e74c3c; font-weight: bold;" data-i18n="receipt.passToAdmin">Please, pass the device to administrator to complete the order.</span><br><span data-i18n="receipt.adminPin">Admin PIN (2606 for testing)</span>:</label>
+        <label for="pinInput"><span style="color: var(--zebra-black); font-weight: bold;" data-i18n="receipt.passToAdmin">Please, pass the device to administrator to complete the order.</span><br><span data-i18n="receipt.adminPin">Admin PIN (2606 for testing)</span>:</label>
         <input type="password" id="pinInput" maxlength="4" placeholder="****" oninput="validatePin(this.value)">
         <div class="error" id="pinError" data-i18n="validation.invalidPin">Incorrect PIN</div>
       </div>
@@ -1313,8 +1338,8 @@
         ${location === "Room" ? `<div><strong>${i18n.t('location.room')}:</strong> ${room}</div>` : ''}
         <div><strong>${i18n.t('receipt.paymentMethod')}:</strong> ${method}</div>
         ${i18n.getCurrentLanguage() !== 'en' ? `
-          <hr style="margin: 1rem 0; border: 1px solid #eee;">
-          <div style="color: #666; font-size: 0.9em;">
+          <hr style="margin: 1rem 0; border: 1px solid var(--zebra-gray);">
+          <div style="color: var(--zebra-gray); font-size: 0.9em;">
             <div><strong>Delivery Time:</strong> ${time}</div>
             <div><strong>Location:</strong> ${location}</div>
             ${location === "Room" ? `<div><strong>Room:</strong> ${room}</div>` : ''}
