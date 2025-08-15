@@ -1078,47 +1078,51 @@
     const selectedMeals = {};
 
     const breakfastMeals = [
-      { name: "Scramble with shrimp and hoisin cream", desc: "Delicate scrambled eggs with butter, juicy shrimp with a hint of garlic, and a tangy hoisin cream. Served with a mix of greens in a honey-balsamic dressing, cherry tomatoes, and a brioche bun", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/ryTRiQJ-aOFwAiH-TjvYkWa_prepare.jpeg", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/skrembl-s-krevetkoy-i-avokado" },
-      { name: "Benedict with bacon and hollandaise sauce", desc: "Delicate English muffin with poached eggs, crispy bacon, and airy hollandaise sauce with a hint of nutmeg. Served with a mix of greens and spicy arugula in a honey-balsamic dressing and cherry tomatoes", price: 10, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/IgoPOfX-OgMIJbM-HGylJRl.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/yaichnica-glazunya-s-kolbaskami-i-syrom" },
-      { name: "Montenegrian breakfast", desc: "Hearty Balkan-style set: grilled sausages, sunny-side-up eggs, crispy bacon, young potatoes in garlic oil, and farmhouse cheese.", price: 11, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/VBDefRv-fWwMKVy-OQjfLXl.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/fruktovaya-tarelka" },
-      { name: "Pancakes with honey and seasonal fruits", desc: "Pancakes with honey and fresh fruits.", price: 7, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/AqINVvH-PeERgoe-OsSIokL.webp", link:"https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/syrniki-klubnika-smetana-karamel" }
+      { name: "Scramble with shrimp and hoisin cream", desc: "Delicate scrambled eggs with butter, juicy shrimp with a hint of garlic, and a tangy hoisin cream. Served with a mix of greens in a honey-balsamic dressing, cherry tomatoes, and a brioche bun", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/ryTRiQJ-aOFwAiH-TjvYkWa_prepare.jpeg", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/skrembl-s-krevetkoy-i-avokado", translationKey: "scrambleShrimp" },
+      { name: "Benedict with bacon and hollandaise sauce", desc: "Delicate English muffin with poached eggs, crispy bacon, and airy hollandaise sauce with a hint of nutmeg. Served with a mix of greens and spicy arugula in a honey-balsamic dressing and cherry tomatoes", price: 10, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/IgoPOfX-OgMIJbM-HGylJRl.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/yaichnica-glazunya-s-kolbaskami-i-syrom", translationKey: "benedictBacon" },
+      { name: "Montenegrian breakfast", desc: "Hearty Balkan-style set: grilled sausages, sunny-side-up eggs, crispy bacon, young potatoes in garlic oil, and farmhouse cheese.", price: 11, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/VBDefRv-fWwMKVy-OQjfLXl.webp", link: "https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/fruktovaya-tarelka", translationKey: "montenegrianBreakfast" },
+      { name: "Pancakes with honey and seasonal fruits", desc: "Pancakes with honey and fresh fruits.", price: 7, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/AqINVvH-PeERgoe-OsSIokL.webp", link:"https://zebra.choiceqr.com/takeaway/section:menu/osnovnye-blyuda/syrniki-klubnika-smetana-karamel", translationKey: "pancakesHoney" },
+      { name: "Chia pudding", desc: "Chia pudding with homemade granola and nuts (cherry or strawberry of your choice).", price: 8, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/vJklJEJ-hWQFGTA-DvDWfur.webp", link: "", translationKey: "chiaPudding" },
+      { name: "Oatmeal", desc: "Oatmeal with baked pear mousse and caramelized hazelnuts.", price: 10, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/lIhUyGe-cAanBCv-IkjlXFP.webp", link: "", translationKey: "oatmeal" },
+      { name: "Chicken sandwich", desc: "Sous-vide chicken sandwich with homemade mayonnaise.", price: 8, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/HdeSvLF-bSovlky-POtnkTF.webp", link: "", translationKey: "chickenSandwich" },
+      { name: "French toast", desc: "French toast with seasonal fruits and cherry sauce.", price: 10, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/aKoJUZC-YzrwyDv-sQEuegd.webp", link: "", translationKey: "frenchToast" }
     ];
 
     const dinnerMeals = [
       // Cold appetizers - 4 meals
-      { name: "Bruschetta with marinated pear, gorgonzola sauce, and smoked salmon", desc: "A delicate combination of sweet pear with a hint of wine, tangy gorgonzola cream with basil, and tender house-cured smoked salmon.", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/bkOlGMH-kjnelHM-mfDtHSU.webp", category: "Cold appetizers" },
-      { name: "Bruschetta with squid, hoisin cream, and chuka seaweed", desc: "Exotic bruschetta with squid, marinated chukka seaweed, mildly sweet hoisin cream, paprika oil and marinated edamame beans", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/kPlIlIr-RIoylBS-MdRJeyy.webp", category: "Cold appetizers" },
-      { name: "Bruschetta with roast beef and aioli cream", desc: "Juicy roast beef on a crispy toast with a smooth cream rich in roasted garlic aroma, spicy arugula, whole grain mustard, and parmesan", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/klbgUfl-sZAFEqw-ELGpaXb.webp", category: "Cold appetizers" },
-      { name: "Beef carpaccio with roasted peach", desc: "Tender slices of beef combined with fragrant peach and a balsamic-based dressing.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/hQJrjLD-FCUeSOl-SwubRJb.webp", category: "Cold appetizers" },
+      { name: "Bruschetta with marinated pear, gorgonzola sauce, and smoked salmon", desc: "A delicate combination of sweet pear with a hint of wine, tangy gorgonzola cream with basil, and tender house-cured smoked salmon.", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/bkOlGMH-kjnelHM-mfDtHSU.webp", category: "Cold appetizers", translationKey: "bruschettaPear" },
+      { name: "Bruschetta with squid, hoisin cream, and chuka seaweed", desc: "Exotic bruschetta with squid, marinated chukka seaweed, mildly sweet hoisin cream, paprika oil and marinated edamame beans", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/kPlIlIr-RIoylBS-MdRJeyy.webp", category: "Cold appetizers", translationKey: "bruschettaSquid" },
+      { name: "Bruschetta with roast beef and aioli cream", desc: "Juicy roast beef on a crispy toast with a smooth cream rich in roasted garlic aroma, spicy arugula, whole grain mustard, and parmesan", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/klbgUfl-sZAFEqw-ELGpaXb.webp", category: "Cold appetizers", translationKey: "bruschettaBeef" },
+      { name: "Beef carpaccio with roasted peach", desc: "Tender slices of beef combined with fragrant peach and a balsamic-based dressing.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/hQJrjLD-FCUeSOl-SwubRJb.webp", category: "Cold appetizers", translationKey: "carpaccioBeef" },
       
       // Salads - 3 meals
-      { name: "Salad with roast beef, roasted bell pepper, and pimento sauce", desc: "A salad mix with homemade roast beef, dressed with a sauce made from roasted peppers, sun-dried tomatoes, cilantro, honey and grated roasted walnut.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/gIlCFdO-JqsCDsD-yuVJCVA.webp", category: "Salads" },
-      { name: "Seafood salad with coconut dressing", desc: "Young squid and fresh shrimp with a salad mix in a coconut-lime dressing based on mascarpone and paprika oil", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/rHCZwwl-tKeXDxy-JvqnwpH.webp", category: "Salads" },
-      { name: "Seasonal vegetable salad with Pomorosso dressing", desc: "A mix of seasonal vegetables with a signature sun-dried tomato-based dressing. The freshness of the vegetables is balanced by delicate farmhouse feta cheese and piquant notes of the dressing.", price: 8, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/uXGkxVe-EhzYAYC-VkkDRml.webp", category: "Salads" },
+      { name: "Salad with roast beef, roasted bell pepper, and pimento sauce", desc: "A salad mix with homemade roast beef, dressed with a sauce made from roasted peppers, sun-dried tomatoes, cilantro, honey and grated roasted walnut.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/gIlCFdO-JqsCDsD-yuVJCVA.webp", category: "Salads", translationKey: "saladRoastBeef" },
+      { name: "Seafood salad with coconut dressing", desc: "Young squid and fresh shrimp with a salad mix in a coconut-lime dressing based on mascarpone and paprika oil", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/rHCZwwl-tKeXDxy-JvqnwpH.webp", category: "Salads", translationKey: "saladSeafood" },
+      { name: "Seasonal vegetable salad with Pomorosso dressing", desc: "A mix of seasonal vegetables with a signature sun-dried tomato-based dressing. The freshness of the vegetables is balanced by delicate farmhouse feta cheese and piquant notes of the dressing.", price: 8, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/uXGkxVe-EhzYAYC-VkkDRml.webp", category: "Salads", translationKey: "saladVegetable" },
       
       // Soup - 2 meals
-      { name: "Fish soup with seafood", desc: "A rich signature-style soup with cilantro and parsley oil, squid, shrimp, and salmon.", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MFCywVG-yDbTKpF-AHdmJzF.webp", category: "Soup" },
-      { name: "Cold beetroot soup with kefir and baby potatoes", desc: "Refreshing cold kefir-based soup with beetroot, presented in a signature style. Served with sautéed young potatoes.", price: 10, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/DznPacA-DkDuqoH-XkKHkMV.webp", category: "Soup" },
+      { name: "Fish soup with seafood", desc: "A rich signature-style soup with cilantro and parsley oil, squid, shrimp, and salmon.", price: 13, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MFCywVG-yDbTKpF-AHdmJzF.webp", category: "Soup", translationKey: "soupFish" },
+      { name: "Cold beetroot soup with kefir and baby potatoes", desc: "Refreshing cold kefir-based soup with beetroot, presented in a signature style. Served with sautéed young potatoes.", price: 10, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/DznPacA-DkDuqoH-XkKHkMV.webp", category: "Soup", translationKey: "soupBeetroot" },
       
       // Risotto - 3 meals
-      { name: "Purple risotto with meatballs and parmesan sauce", desc: "A vibrant dish with veal meatballs, prepared using the classic risotto technique and served with a rich cheese sauce.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/LHnLwxt-rlewSoJ-IiFeJGj.webp", category: "Risotto" },
-      { name: "Risotto with porcini mushrooms", desc: "Creamy risotto in a mushroom broth with porcini mushrooms, parmesan, and dill oil.", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/uDvjFrW-lTwPIvh-woGUzqJ.webp", category: "Risotto" },
-      { name: "Tom Yum risotto with shrimp and squid", desc: "An Asian twist on a classic Italian recipe with squid and shrimp. Infused with coconut notes, lime and the tang of Tom Yum.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/qBCShfD-qVSMPLy-MlyJTPi.webp", category: "Risotto" },
+      { name: "Purple risotto with meatballs and parmesan sauce", desc: "A vibrant dish with veal meatballs, prepared using the classic risotto technique and served with a rich cheese sauce.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/LHnLwxt-rlewSoJ-IiFeJGj.webp", category: "Risotto", translationKey: "risottoPurple" },
+      { name: "Risotto with porcini mushrooms", desc: "Creamy risotto in a mushroom broth with porcini mushrooms, parmesan, and dill oil.", price: 14, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/uDvjFrW-lTwPIvh-woGUzqJ.webp", category: "Risotto", translationKey: "risottoMushroom" },
+      { name: "Tom Yum risotto with shrimp and squid", desc: "An Asian twist on a classic Italian recipe with squid and shrimp. Infused with coconut notes, lime and the tang of Tom Yum.", price: 16, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/qBCShfD-qVSMPLy-MlyJTPi.webp", category: "Risotto", translationKey: "risottoTomYum" },
       
       // Fish - 3 meals
-      { name: "Grilled dorado with vegetable sauté", desc: "Tender grilled dorado paired with a crispy sauté of seasonal vegetables.", price: 25, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/oWXFZBg-QVTFAYS-YVlSlOX.webp", category: "Fish" },
-      { name: "Sea bass fillet with celery root cream and Basoro sauce", desc: "Tender sea bass fillet, pan-seared to a golden crust, served on a velvety celery cream with refined Basoro sauce made from white wine, orange, and aromatic spices. Marinated fennel adds the necessary freshness to the dish.", price: 23, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR.webp", category: "Fish" },
-      { name: "Bourbon salmon", desc: "Tender salmon fillet with mashed potatoes and a sweet-and-sour sauce made from bourbon, honey, and chili pepper.", price: 17, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/CDbjitD-DTYXssC-IwVErjL.webp", category: "Fish" },
+      { name: "Grilled dorado with vegetable sauté", desc: "Tender grilled dorado paired with a crispy sauté of seasonal vegetables.", price: 25, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/oWXFZBg-QVTFAYS-YVlSlOX.webp", category: "Fish", translationKey: "fishDorado" },
+      { name: "Sea bass fillet with celery root cream and Basoro sauce", desc: "Tender sea bass fillet, pan-seared to a golden crust, served on a velvety celery cream with refined Basoro sauce made from white wine, orange, and aromatic spices. Marinated fennel adds the necessary freshness to the dish.", price: 23, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/iIukBbz-aGWrkjI-FxqSzNR.webp", category: "Fish", translationKey: "fishSeaBass" },
+      { name: "Bourbon salmon", desc: "Tender salmon fillet with mashed potatoes and a sweet-and-sour sauce made from bourbon, honey, and chili pepper.", price: 17, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/CDbjitD-DTYXssC-IwVErjL.webp", category: "Fish", translationKey: "fishSalmon" },
       
       // Meat - 4 meals
-      { name: "Beef medallions with mashed potatoes and porcini mushroom sauce", desc: "Juicy beef medallions with tender mashed potatoes and a rich creamy sauce made from aromatic wild mushrooms and thyme.", price: 24, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/IzKbeVG-VuCjJFC-XAhJoAT.webp", category: "Meat" },
-      { name: "Sous-vide chicken with egg noodles and anise teriyaki sauce", desc: "Juicy sous-vide chicken fillet served with egg noodles in a signature anise teriyaki sauce.", price: 15, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/OebmNKU-FJYnCSH-RbAeXIC.webp", category: "Meat" },
-      { name: "Pork tenderloin with young potatoes and mashroom sauce", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce.", price: 17, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Meat" },
-      { name: "Signature Pljeskavitsa", desc: "A Balkan classic made from a blend of beef and spices, grilled to perfection. Served with homemade pickles and French fries.", price: 15, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/QrinGlH-oDvCCcR-DMymsiH.webp", category: "Meat" },
+      { name: "Beef medallions with mashed potatoes and porcini mushroom sauce", desc: "Juicy beef medallions with tender mashed potatoes and a rich creamy sauce made from aromatic wild mushrooms and thyme.", price: 24, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/IzKbeVG-VuCjJFC-XAhJoAT.webp", category: "Meat", translationKey: "meatBeefMedallions" },
+      { name: "Sous-vide chicken with egg noodles and anise teriyaki sauce", desc: "Juicy sous-vide chicken fillet served with egg noodles in a signature anise teriyaki sauce.", price: 15, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/OebmNKU-FJYnCSH-RbAeXIC.webp", category: "Meat", translationKey: "meatChicken" },
+      { name: "Pork tenderloin with young potatoes and mashroom sauce", desc: "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce.", price: 17, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/MTDKfku-iJCHCgl-GjEcePk.webp", category: "Meat", translationKey: "meatPork" },
+      { name: "Signature Pljeskavitsa", desc: "A Balkan classic made from a blend of beef and spices, grilled to perfection. Served with homemade pickles and French fries.", price: 15, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/QrinGlH-oDvCCcR-DMymsiH.webp", category: "Meat", translationKey: "meatPljeskavitsa" },
       
       // Desserts - 2 meals
-      { name: "Brownie with dulce de leche cream and caramelized hazelnuts", desc: "Rich chocolate brownie with the most delicate cream made from boiled condensed milk, soaked cherries, and caramelized hazelnuts.", price: 9, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/GRCFMgJ-WVZeYDn-wbmdTQY.webp", category: "Desserts" },
-      { name: "Tiramisu", desc: "A classic Italian dessert. Airy mascarpone cream with notes of lime and orange, sponge cake soaked in coffee and amaretto.", price: 9, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz.webp", category: "Desserts" }
+      { name: "Brownie with dulce de leche cream and caramelized hazelnuts", desc: "Rich chocolate brownie with the most delicate cream made from boiled condensed milk, soaked cherries, and caramelized hazelnuts.", price: 9, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/GRCFMgJ-WVZeYDn-wbmdTQY.webp", category: "Desserts", translationKey: "dessertBrownie" },
+      { name: "Tiramisu", desc: "A classic Italian dessert. Airy mascarpone cream with notes of lime and orange, sponge cake soaked in coffee and amaretto.", price: 9, img: "https://cdn-media.choiceqr.com/prod-eat-zebra/menu/zDiykLg-VklFnkh-BLUdtTz.webp", category: "Desserts", translationKey: "dessertTiramisu" }
     ];
 
     function selectLocation(location) {
@@ -1559,6 +1563,13 @@
     }
 
     function loadMeals() {
+      // Check if i18n is properly initialized
+      if (!window.i18n || !window.i18n.translations || Object.keys(window.i18n.translations).length === 0) {
+        console.warn('i18n not ready, delaying loadMeals');
+        setTimeout(loadMeals, 100);
+        return;
+      }
+      
       // Clear existing content to prevent duplicates
       mealContainer.innerHTML = '';
       
@@ -1607,13 +1618,27 @@
         breakfastMeals.forEach(item => {
           const div = document.createElement('div');
           div.className = 'option';
-          const imgHTML = item.link
-            ? `<img src="${item.img}" alt="${item.name}" onclick="window.open('${item.link}', '_blank')">`
-            : `<img src="${item.img}" alt="${item.name}">`;
+          
+              // Get translated name and description using translationKey
+              let itemName = item.name; // fallback
+              let itemDesc = item.desc; // fallback
+              
+              if (item.translationKey) {
+                const nameKey = `meals.breakfast.${item.translationKey}.name`;
+                const descKey = `meals.breakfast.${item.translationKey}.desc`;
+                const translatedName = i18n.t(nameKey);
+                const translatedDesc = i18n.t(descKey);
+                
+                // Only use translation if it's not the same as the key (meaning translation was found)
+                itemName = (translatedName && translatedName !== nameKey) ? translatedName : item.name;
+                itemDesc = (translatedDesc && translatedDesc !== descKey) ? translatedDesc : item.desc;
+              }          const imgHTML = item.link
+            ? `<img src="${item.img}" alt="${itemName}" onclick="window.open('${item.link}', '_blank')">`
+            : `<img src="${item.img}" alt="${itemName}">`;
           div.innerHTML = `
             ${imgHTML}
-            <div class="option-title">${item.name}</div>
-            <div class="description" onclick="toggleDescription(this)">${item.desc}</div>
+            <div class="option-title">${itemName}</div>
+            <div class="description" onclick="toggleDescription(this)">${itemDesc}</div>
             <div class="price">${item.price} €</div>
             <div class="quantity-control">
               <button onclick="updateQuantity('${item.name}', ${item.price}, 'decrease', this)">−</button>
@@ -1656,13 +1681,29 @@
             categoryItems.forEach(item => {
               const div = document.createElement('div');
               div.className = 'option';
+              
+              // Get translated name and description using translationKey
+              let itemName = item.name; // fallback
+              let itemDesc = item.desc; // fallback
+              
+              if (item.translationKey) {
+                const nameKey = `meals.dinner.${item.translationKey}.name`;
+                const descKey = `meals.dinner.${item.translationKey}.desc`;
+                const translatedName = i18n.t(nameKey);
+                const translatedDesc = i18n.t(descKey);
+                
+                // Only use translation if it's not the same as the key (meaning translation was found)
+                itemName = (translatedName && translatedName !== nameKey) ? translatedName : item.name;
+                itemDesc = (translatedDesc && translatedDesc !== descKey) ? translatedDesc : item.desc;
+              }
+              
               const imgHTML = item.link
-                ? `<img src="${item.img}" alt="${item.name}" onclick="window.open('${item.link}', '_blank')">`
-                : `<img src="${item.img}" alt="${item.name}">`;
+                ? `<img src="${item.img}" alt="${itemName}" onclick="window.open('${item.link}', '_blank')">`
+                : `<img src="${item.img}" alt="${itemName}">`;
               div.innerHTML = `
                 ${imgHTML}
-                <div class="option-title">${item.name}</div>
-                <div class="description" onclick="toggleDescription(this)">${item.desc}</div>
+                <div class="option-title">${itemName}</div>
+                <div class="description" onclick="toggleDescription(this)">${itemDesc}</div>
                 <div class="price">${item.price} €</div>
                 <div class="quantity-control">
                   <button onclick="updateQuantity('${item.name}', ${item.price}, 'decrease', this)">−</button>
@@ -1677,7 +1718,6 @@
       }
     }
 
-    loadMeals();
     loadTimeButtons();
     loadRoomButtons();
 

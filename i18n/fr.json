@@ -3,15 +3,15 @@
     "quickNavigation": "Navigation Rapide"
   },
   "meal": {
-    "selectBreakfast": "Sélectionnez Votre Petit-déjeuner",
-    "selectMeal": "Sélectionnez Votre Repas",
+    "selectBreakfast": "Choisissez votre petit-déjeuner",
+    "selectMeal": "Choisissez votre repas",
     "unavailable": "La sélection de repas n'est actuellement pas disponible.",
-    "workingHours": "Heures de Travail:",
+    "workingHours": "Heures d'ouverture :",
     "breakfast": "Petit-déjeuner",
     "dinner": "Dîner",
     "categories": {
-      "breakfastItems": "Articles de Petit-déjeuner",
-      "coldAppetizers": "Hors-d'œuvres froids",
+      "breakfastItems": "Articles du petit-déjeuner",
+      "coldAppetizers": "Entrées froides",
       "salads": "Salades",
       "soup": "Soupe",
       "risotto": "Risotto",
@@ -24,57 +24,179 @@
     "total": "Total",
     "reset": "Réinitialiser",
     "continue": "Continuer",
-    "orderNumber": "Commande #",
-    "success": "Commande passée avec succès!",
-    "error": "Erreur lors de la passation de commande. Veuillez réessayer.",
-    "sendSuccess": "Commande envoyée avec succès! Nous la traiterons sous peu.",
+    "orderNumber": "Commande n°",
+    "success": "Commande passée avec succès !",
+    "error": "Erreur lors de la commande. Veuillez réessayer.",
+    "sendSuccess": "Commande envoyée avec succès ! Nous la traiterons sous peu.",
     "sendError": "Erreur lors de l'envoi de la commande. Veuillez réessayer ou nous contacter directement."
   },
   "location": {
-    "whereToEat": "Où manger:",
-    "selectTime": "Sélectionnez l'Heure de Repas / Livraison:",
+    "whereToEat": "Où manger :",
+    "selectTime": "Sélectionnez l'heure pour manger / livrer :",
     "room": "Chambre",
     "restaurant": "Restaurant",
     "selectRoom": "Veuillez sélectionner votre numéro de chambre",
-    "roomNumber": "Numéro de Chambre"
+    "roomNumber": "Numéro de chambre"
   },
   "payment": {
     "selectOption": "Sélectionnez l'option de paiement",
     "cash": "Espèces",
     "card": "Carte",
-    "selectMethod": "Veuillez sélectionner une méthode de paiement"
+    "selectMethod": "Veuillez sélectionner la méthode de paiement"
   },
   "receipt": {
-    "orderReceipt": "Reçu de Commande",
-    "deliveryTime": "Heure de Livraison",
-    "location": "Lieu",
-    "paymentMethod": "Méthode de Paiement",
+    "orderReceipt": "Reçu de commande",
+    "deliveryTime": "Heure de livraison",
+    "location": "Emplacement",
+    "paymentMethod": "Méthode de paiement",
     "adminPin": "PIN",
-    "passToAdmin": "Veuillez passer l'appareil à l'administrateur pour compléter la commande.",
-    "confirmOrder": "Confirmer la Commande",
+    "passToAdmin": "Veuillez passer l'appareil à l'administrateur pour terminer la commande.",
+    "confirmOrder": "Confirmer la commande",
     "close": "×"
   },
   "telegram": {
-    "confirmOrder": "✅ Confirmer Commande",
-    "rejectOrder": "❌ Rejeter Commande"
+    "confirmOrder": "✅ Confirmer la commande",
+    "rejectOrder": "❌ Rejeter la commande"
   },
   "validation": {
     "selectMeal": "Veuillez sélectionner un type de repas",
     "selectTime": "Veuillez sélectionner une heure",
     "selectRoom": "Veuillez sélectionner votre numéro de chambre",
-    "selectPayment": "Veuillez sélectionner une méthode de paiement",
+    "selectPayment": "Veuillez sélectionner la méthode de paiement",
     "invalidPin": "PIN invalide. Veuillez réessayer."
   },
   "admin": {
-    "mode": "Mode Admin Activé"
+    "mode": "Mode administrateur activé"
   },
   "thanks": {
-    "thankYou": "Merci!",
+    "thankYou": "Merci !",
     "message": "Votre commande a été reçue et est en cours de traitement.",
     "redirecting": "Redirection dans"
   },
   "room": {
-    "selectRoom": "Sélectionnez Votre Chambre",
+    "selectRoom": "Sélectionnez votre chambre",
     "close": "Fermer"
+  },
+  "meals": {
+    "breakfast": {
+      "scrambleShrimp": {
+        "name": "Œufs brouillés aux crevettes et crème hoisin",
+        "desc": "Œufs brouillés délicats au beurre, crevettes juteuses à l'ail et crème hoisin piquante. Servis avec un mélange de verdures en vinaigrette miel-balsamique, tomates cerises et brioche"
+      },
+      "benedictBacon": {
+        "name": "Œufs Bénédicte au bacon et sauce hollandaise",
+        "desc": "Muffin anglais délicat aux œufs pochés, bacon croustillant et sauce hollandaise aérée à la muscade. Servi avec un mélange de verdures et roquette épicée en vinaigrette miel-balsamique et tomates cerises"
+      },
+      "montenegrianBreakfast": {
+        "name": "Petit-déjeuner monténégrin",
+        "desc": "Set copieux style balkanique : saucisses grillées, œufs au plat, bacon croustillant, pommes de terre nouvelles à l'huile d'ail et fromage fermier."
+      },
+      "pancakesHoney": {
+        "name": "Crêpes au miel et fruits de saison",
+        "desc": "Crêpes au miel et fruits frais."
+      },
+      "chiaPudding": {
+        "name": "Pudding de chia",
+        "desc": "Pudding de chia au granola maison et noix (cerise ou fraise au choix)."
+      },
+      "oatmeal": {
+        "name": "Porridge d'avoine",
+        "desc": "Porridge d'avoine à la mousse de poire cuite et noisettes caramélisées."
+      },
+      "chickenSandwich": {
+        "name": "Sandwich au poulet",
+        "desc": "Sandwich au poulet sous-vide avec mayonnaise maison."
+      },
+      "frenchToast": {
+        "name": "Pain perdu français",
+        "desc": "Pain perdu français aux fruits de saison et sauce aux cerises."
+      }
+    },
+    "dinner": {
+      "bruschettaPear": {
+        "name": "Bruschetta à la poire marinée, sauce gorgonzola et saumon fumé",
+        "desc": "Combinaison délicate de poire douce au vin, crème gorgonzola piquante au basilic et saumon fumé maison tendre."
+      },
+      "bruschettaSquid": {
+        "name": "Bruschetta au calmar, crème hoisin et algues chuka",
+        "desc": "Bruschetta exotique au calmar, algues chukka marinées, crème hoisin légèrement sucrée, huile de paprika et edamame marinés"
+      },
+      "bruschettaBeef": {
+        "name": "Bruschetta au roastbeef et crème aioli",
+        "desc": "Roastbeef juteux sur toast croustillant avec crème onctueuse riche en arôme d'ail rôti, roquette épicée, moutarde à grains et parmesan"
+      },
+      "carpaccioBeef": {
+        "name": "Carpaccio de bœuf à la pêche rôtie",
+        "desc": "Tranches tendres de bœuf combinées avec pêche parfumée et vinaigrette à base de balsamique."
+      },
+      "saladRoastBeef": {
+        "name": "Salade au roastbeef, poivron grillé et sauce pimento",
+        "desc": "Mélange de salade avec roastbeef maison, assaisonnée d'une sauce aux poivrons grillés, tomates séchées, coriandre, miel et noix grillées râpées."
+      },
+      "saladSeafood": {
+        "name": "Salade de fruits de mer à la vinaigrette coco",
+        "desc": "Jeune calmar et crevettes fraîches avec mélange de salade dans une vinaigrette coco-citron vert à base de mascarpone et huile de paprika"
+      },
+      "saladVegetable": {
+        "name": "Salade de légumes de saison à la vinaigrette Pomorosso",
+        "desc": "Mélange de légumes de saison avec vinaigrette signature aux tomates séchées. La fraîcheur des légumes est équilibrée par le délicat fromage feta fermier et les notes piquantes de la vinaigrette."
+      },
+      "soupFish": {
+        "name": "Soupe de poisson aux fruits de mer",
+        "desc": "Soupe riche de style signature avec huile de coriandre et persil, calmar, crevettes et saumon."
+      },
+      "soupBeetroot": {
+        "name": "Soupe froide de betterave au kéfir et pommes de terre nouvelles",
+        "desc": "Soupe froide rafraîchissante à base de kéfir avec betterave, présentée dans un style signature. Servie avec pommes de terre nouvelles sautées."
+      },
+      "risottoPurple": {
+        "name": "Risotto violet aux boulettes de viande et sauce parmesan",
+        "desc": "Plat vibrant avec boulettes de veau, préparé selon la technique classique du risotto et servi avec riche sauce au fromage."
+      },
+      "risottoMushroom": {
+        "name": "Risotto aux champignons porcini",
+        "desc": "Risotto crémeux dans bouillon de champignons avec porcinis, parmesan et huile d'aneth."
+      },
+      "risottoTomYum": {
+        "name": "Risotto Tom Yum aux crevettes et calmar",
+        "desc": "Touche asiatique sur recette italienne classique avec calmar et crevettes. Infusé de notes de coco, citron vert et piquant du Tom Yum."
+      },
+      "fishDorado": {
+        "name": "Dorade grillée au sauté de légumes",
+        "desc": "Dorade tendre grillée accompagnée d'un sauté croustillant de légumes de saison."
+      },
+      "fishSeaBass": {
+        "name": "Filet de bar au velouté de céleri-rave et sauce Basoro",
+        "desc": "Filet de bar tendre, saisi à la poêle jusqu'à croûte dorée, servi sur velouté de céleri avec raffinée sauce Basoro au vin blanc, orange et épices aromatiques. Le fenouil mariné ajoute la fraîcheur nécessaire au plat."
+      },
+      "fishSalmon": {
+        "name": "Saumon bourbon",
+        "desc": "Filet de saumon tendre avec purée de pommes de terre et sauce aigre-douce au bourbon, miel et piment."
+      },
+      "meatBeefMedallions": {
+        "name": "Médaillons de bœuf à la purée et sauce aux cèpes",
+        "desc": "Médaillons de bœuf juteux avec purée tendre et riche sauce crémeuse aux champignons sauvages aromatiques et thym."
+      },
+      "meatChicken": {
+        "name": "Poulet sous-vide aux nouilles aux œufs et sauce teriyaki à l'anis",
+        "desc": "Filet de poulet juteux sous-vide servi avec nouilles aux œufs dans sauce teriyaki signature à l'anis."
+      },
+      "meatPork": {
+        "name": "Filet de porc aux pommes de terre nouvelles et sauce aux champignons",
+        "desc": "Porc tendre et juteux avec pommes de terre nouvelles rôties. Servi avec sauce aux champignons."
+      },
+      "meatPljeskavitsa": {
+        "name": "Pljeskavitsa signature",
+        "desc": "Classique balkanique fait d'un mélange de bœuf et d'épices, grillé à la perfection. Servi avec cornichons maison et frites."
+      },
+      "dessertBrownie": {
+        "name": "Brownie à la crème dulce de leche et noisettes caramélisées",
+        "desc": "Riche brownie au chocolat avec la plus délicate crème au lait concentré bouilli, cerises imbibées et noisettes caramélisées."
+      },
+      "dessertTiramisu": {
+        "name": "Tiramisu",
+        "desc": "Dessert italien classique. Crème mascarpone aérée aux notes de citron vert et orange, génoise imbibée de café et amaretto."
+      }
+    }
   }
 }

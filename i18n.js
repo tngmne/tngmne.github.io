@@ -148,6 +148,12 @@ class I18n {
     return this.supportedLanguages;
   }
 
+  // Clear language cache and reset to browser default
+  clearLanguageCache() {
+    localStorage.removeItem('language');
+    console.log('Language cache cleared');
+  }
+
   // Format message with variables (simple template)
   format(keyPath, variables = {}) {
     let message = this.t(keyPath);

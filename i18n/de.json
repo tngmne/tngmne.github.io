@@ -76,5 +76,127 @@
   "room": {
     "selectRoom": "Wählen Sie Ihr Zimmer",
     "close": "Schließen"
+  },
+  "meals": {
+    "breakfast": {
+      "scrambleShrimp": {
+        "name": "Rührei mit Garnelen und Hoisin-Creme",
+        "desc": "Zartes Rührei mit Butter, saftige Garnelen mit einem Hauch von Knoblauch und würzige Hoisin-Creme. Serviert mit einem Salatmix in Honig-Balsamico-Dressing, Kirschtomaten und einem Brioche-Brötchen"
+      },
+      "benedictBacon": {
+        "name": "Benedict mit Speck und Hollandaise-Sauce",
+        "desc": "Zartes englisches Muffin mit pochierten Eiern, knusprigem Speck und luftiger Hollandaise-Sauce mit einem Hauch von Muskatnuss. Serviert mit einem Salatmix und würziger Rucola in Honig-Balsamico-Dressing und Kirschtomaten"
+      },
+      "montenegrianBreakfast": {
+        "name": "Montenegrinisches Frühstück",
+        "desc": "Herzhaftes Balkan-Set: gegrillte Würstchen, Spiegeleier, knuspriger Speck, junge Kartoffeln in Knoblauchöl und Bauernkäse."
+      },
+      "pancakesHoney": {
+        "name": "Pfannkuchen mit Honig und saisonalen Früchten",
+        "desc": "Pfannkuchen mit Honig und frischen Früchten."
+      },
+      "chiaPudding": {
+        "name": "Chia-Pudding",
+        "desc": "Chia-Pudding mit hausgemachtem Granola und Nüssen (Kirsche oder Erdbeere nach Wahl)."
+      },
+      "oatmeal": {
+        "name": "Haferbrei",
+        "desc": "Haferbrei mit gebackenem Birnenmousse und karamellisierten Haselnüssen."
+      },
+      "chickenSandwich": {
+        "name": "Hähnchen-Sandwich",
+        "desc": "Sous-vide Hähnchen-Sandwich mit hausgemachter Mayonnaise."
+      },
+      "frenchToast": {
+        "name": "Französischer Toast",
+        "desc": "Französischer Toast mit saisonalen Früchten und Kirschsauce."
+      }
+    },
+    "dinner": {
+      "bruschettaPear": {
+        "name": "Bruschetta mit marinierter Birne, Gorgonzola-Sauce und geräuchertem Lachs",
+        "desc": "Eine zarte Kombination aus süßer Birne mit einem Hauch von Wein, würziger Gorgonzola-Creme mit Basilikum und zartem hausgeräuchertem Lachs."
+      },
+      "bruschettaSquid": {
+        "name": "Bruschetta mit Tintenfisch, Hoisin-Creme und Chuka-Algen",
+        "desc": "Exotische Bruschetta mit Tintenfisch, marinierten Chuka-Algen, mild süßer Hoisin-Creme, Paprikaöl und marinierten Edamame-Bohnen"
+      },
+      "bruschettaBeef": {
+        "name": "Bruschetta mit Roastbeef und Aioli-Creme",
+        "desc": "Saftiges Roastbeef auf knusprigem Toast mit einer cremigen Sauce voller geröstetem Knoblauch-Aroma, würziger Rucola, grobem Senf und Parmesan"
+      },
+      "carpaccioBeef": {
+        "name": "Rindfleisch-Carpaccio mit geröstetem Pfirsich",
+        "desc": "Zarte Rindfleisch-Scheiben kombiniert mit duftendem Pfirsich und einem Balsamico-basierten Dressing."
+      },
+      "saladRoastBeef": {
+        "name": "Salat mit Roastbeef, gerösteter Paprika und Pimento-Sauce",
+        "desc": "Ein Salatmix mit hausgemachtem Roastbeef, angemacht mit einer Sauce aus gerösteten Paprika, getrockneten Tomaten, Koriander, Honig und geriebenen gerösteten Walnüssen."
+      },
+      "saladSeafood": {
+        "name": "Meeresfrüchte-Salat mit Kokosnuss-Dressing",
+        "desc": "Junger Tintenfisch und frische Garnelen mit Salatmix in einem Kokos-Limetten-Dressing auf Mascarpone-Basis und Paprikaöl"
+      },
+      "saladVegetable": {
+        "name": "Saisonaler Gemüsesalat mit Pomorosso-Dressing",
+        "desc": "Eine Mischung aus saisonalem Gemüse mit einem charakteristischen Dressing auf Basis getrockneter Tomaten. Die Frische des Gemüses wird durch zarten Bauernhof-Feta-Käse und pikante Noten des Dressings ausbalanciert."
+      },
+      "soupFish": {
+        "name": "Fischsuppe mit Meeresfrüchten",
+        "desc": "Eine reichhaltige Suppe im Hausstil mit Koriander- und Petersilienöl, Tintenfisch, Garnelen und Lachs."
+      },
+      "soupBeetroot": {
+        "name": "Kalte Rote-Bete-Suppe mit Kefir und Babykartoffeln",
+        "desc": "Erfrischende kalte Kefir-basierte Suppe mit Rote Bete, im Hausstil präsentiert. Serviert mit gebratenen jungen Kartoffeln."
+      },
+      "risottoPurple": {
+        "name": "Violettes Risotto mit Fleischbällchen und Parmesan-Sauce",
+        "desc": "Ein lebendiges Gericht mit Kalbsfleischbällchen, zubereitet nach der klassischen Risotto-Technik und serviert mit einer reichhaltigen Käsesauce."
+      },
+      "risottoMushroom": {
+        "name": "Risotto mit Steinpilzen",
+        "desc": "Cremiges Risotto in Pilzbrühe mit Steinpilzen, Parmesan und Dillöl."
+      },
+      "risottoTomYum": {
+        "name": "Tom Yum Risotto mit Garnelen und Tintenfisch",
+        "desc": "Eine asiatische Variante eines klassischen italienischen Rezepts mit Tintenfisch und Garnelen. Durchzogen von Kokosnoten, Limette und der Würze von Tom Yum."
+      },
+      "fishDorado": {
+        "name": "Gegrillte Dorade mit Gemüse-Sauté",
+        "desc": "Zarte gegrillte Dorade gepaart mit einem knusprigen Sauté aus saisonalem Gemüse."
+      },
+      "fishSeaBass": {
+        "name": "Wolfsbarsch-Filet mit Sellerie-Creme und Basoro-Sauce",
+        "desc": "Zartes Wolfsbarsch-Filet, goldbraun angebraten, serviert auf einer samtigen Sellerie-Creme mit raffinierter Basoro-Sauce aus Weißwein, Orange und aromatischen Gewürzen. Marinierter Fenchel verleiht dem Gericht die nötige Frische."
+      },
+      "fishSalmon": {
+        "name": "Bourbon-Lachs",
+        "desc": "Zartes Lachs-Filet mit Kartoffelpüree und einer süß-sauren Sauce aus Bourbon, Honig und Chilischote."
+      },
+      "meatBeefMedallions": {
+        "name": "Rindermedaillons mit Kartoffelpüree und Steinpilz-Sauce",
+        "desc": "Saftige Rindermedaillons mit zartem Kartoffelpüree und einer reichhaltigen cremigen Sauce aus aromatischen Waldpilzen und Thymian."
+      },
+      "meatChicken": {
+        "name": "Sous-vide Hähnchen mit Eiernudeln und Anis-Teriyaki-Sauce",
+        "desc": "Saftiges Sous-vide Hähnchenfilet serviert mit Eiernudeln in einer charakteristischen Anis-Teriyaki-Sauce."
+      },
+      "meatPork": {
+        "name": "Schweinefilet mit jungen Kartoffeln und Pilzsauce",
+        "desc": "Zartes, saftiges Schweinefleisch mit gerösteten jungen Kartoffeln. Serviert mit Pilzsauce."
+      },
+      "meatPljeskavitsa": {
+        "name": "Signature Pljeskavitsa",
+        "desc": "Ein Balkan-Klassiker aus einer Mischung von Rindfleisch und Gewürzen, perfekt gegrillt. Serviert mit hausgemachten Gewürzgurken und Pommes frites."
+      },
+      "dessertBrownie": {
+        "name": "Brownie mit Dulce de Leche-Creme und karamellisierten Haselnüssen",
+        "desc": "Reichhaltiger Schokoladen-Brownie mit der zartesten Creme aus gekochter Kondensmilch, getränkten Kirschen und karamellisierten Haselnüssen."
+      },
+      "dessertTiramisu": {
+        "name": "Tiramisu",
+        "desc": "Ein klassisches italienisches Dessert. Luftige Mascarpone-Creme mit Noten von Limette und Orange, Biskuitkuchen getränkt in Kaffee und Amaretto."
+      }
+    }
   }
 }

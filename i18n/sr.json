@@ -4,17 +4,17 @@
   },
   "meal": {
     "selectBreakfast": "Izaberite Vaš Doručak",
-    "selectMeal": "Izaberite Vaše Jelo",
-    "unavailable": "Izbor jela trenutno nije dostupan.",
+    "selectMeal": "Izaberite Vaš Obrok",
+    "unavailable": "Izbor obroka trenutno nije dostupan.",
     "workingHours": "Radno vreme:",
     "breakfast": "Doručak",
     "dinner": "Večera",
     "categories": {
       "breakfastItems": "Stavke za Doručak",
-      "coldAppetizers": "Hladna predjela",
+      "coldAppetizers": "Hladni predjeli",
       "salads": "Salate",
-      "soup": "Supa",
-      "risotto": "Rižoto",
+      "soup": "Supe",
+      "risotto": "Rizoto",
       "fish": "Riba",
       "meat": "Meso",
       "desserts": "Deserti"
@@ -24,19 +24,19 @@
     "total": "Ukupno",
     "reset": "Resetuj",
     "continue": "Nastavi",
-    "orderNumber": "Narudžbina #",
-    "success": "Narudžbina je uspešno napravljena!",
-    "error": "Greška pri pravljenju narudžbine. Pokušajte ponovo.",
-    "sendSuccess": "Narudžbina uspešno poslata! Uskoro ćemo je obraditi.",
-    "sendError": "Greška pri slanju narudžbine. Pokušajte ponovo ili nas kontaktirajte direktno."
+    "orderNumber": "Porudžbina br.",
+    "success": "Porudžbina uspešno poslata!",
+    "error": "Greška pri slanju porudžbine. Pokušajte ponovo.",
+    "sendSuccess": "Porudžbina uspešno poslata! Obradiće je uskoro.",
+    "sendError": "Greška pri slanju porudžbine. Pokušajte ponovo ili nas kontaktirajte direktno."
   },
   "location": {
     "whereToEat": "Gde jesti:",
-    "selectTime": "Izaberite vreme za jelo / dostavljanje:",
+    "selectTime": "Izaberite vreme za jelo / dostavu:",
     "room": "Soba",
     "restaurant": "Restoran",
-    "selectRoom": "Molimo izaberite broj vaše sobe",
-    "roomNumber": "Broj Sobe"
+    "selectRoom": "Molimo izaberite broj Vaše sobe",
+    "roomNumber": "Broj sobe"
   },
   "payment": {
     "selectOption": "Izaberite opciju plaćanja",
@@ -45,36 +45,158 @@
     "selectMethod": "Molimo izaberite način plaćanja"
   },
   "receipt": {
-    "orderReceipt": "Račun za Narudžbinu",
-    "deliveryTime": "Vreme Dostavljanja",
+    "orderReceipt": "Račun za Porudžbinu",
+    "deliveryTime": "Vreme dostave",
     "location": "Lokacija",
-    "paymentMethod": "Način Plaćanja",
+    "paymentMethod": "Način plaćanja",
     "adminPin": "PIN",
-    "passToAdmin": "Molimo prosledite uređaj administratoru da završi narudžbinu.",
-    "confirmOrder": "Potvrdi Narudžbinu",
+    "passToAdmin": "Molimo predajte uređaj administratoru da završi porudžbinu.",
+    "confirmOrder": "Potvrdi Porudžbinu",
     "close": "×"
   },
   "telegram": {
-    "confirmOrder": "✅ Potvrdi Narudžbinu",
-    "rejectOrder": "❌ Odbaci Narudžbinu"
+    "confirmOrder": "✅ Potvrdi Porudžbinu",
+    "rejectOrder": "❌ Odbaci Porudžbinu"
   },
   "validation": {
-    "selectMeal": "Molimo izaberite tip jela",
+    "selectMeal": "Molimo izaberite tip obroka",
     "selectTime": "Molimo izaberite vreme",
-    "selectRoom": "Molimo izaberite broj vaše sobe",
+    "selectRoom": "Molimo izaberite broj Vaše sobe",
     "selectPayment": "Molimo izaberite način plaćanja",
-    "invalidPin": "Nevažeći PIN. Pokušajte ponovo."
+    "invalidPin": "Neispravni PIN. Pokušajte ponovo."
   },
   "admin": {
-    "mode": "Admin režim aktiviran"
+    "mode": "Admin Režim Aktiviran"
   },
   "thanks": {
     "thankYou": "Hvala Vam!",
-    "message": "Vaša narudžbina je primljena i obrađuje se.",
+    "message": "Vaša porudžbina je primljena i obrađuje se.",
     "redirecting": "Preusmeravanje za"
   },
   "room": {
     "selectRoom": "Izaberite Vašu Sobu",
-    "close": "Zatvori"
+    "close": "Zatvorite"
+  },
+  "meals": {
+    "breakfast": {
+      "scrambleShrimp": {
+        "name": "Kajgana sa škampima i hoisin kremom",
+        "desc": "Nežna kajgana sa puterom, sočni škampi sa notama belog luka i pikantni hoisin krem. Služi se sa miksom zelenih salata u medeno-balzamiko dresingu, cherry paradajzom i briosh pecivom"
+      },
+      "benedictBacon": {
+        "name": "Benedikt sa slaninom i holandez sosom",
+        "desc": "Nežan engleski mafin sa poširanim jajima, hrskavom slaninom i luftastim holandez sosom sa notom muškatnog oraha. Služi se sa miksom zelenih salata i ljutom rukolom u medeno-balzamiko dresingu i cherry paradajzom"
+      },
+      "montenegrianBreakfast": {
+        "name": "Crnogorski doručak",
+        "desc": "Obilatan balkanski set: grilovane kobasice, jaja na oko, hrskava slanina, mladi krompir u belom luku i seljački sir."
+      },
+      "pancakesHoney": {
+        "name": "Palačinke sa medom i sezonskim voćem",
+        "desc": "Palačinke sa medom i svežim voćem."
+      },
+      "chiaPudding": {
+        "name": "Chia puding",
+        "desc": "Chia puding sa domaćom granolom i orasima (višnja ili jagoda po izboru)."
+      },
+      "oatmeal": {
+        "name": "Zobena kaša",
+        "desc": "Zobena kaša sa pečenim musom od kruške i karamelizovanim lešnicima."
+      },
+      "chickenSandwich": {
+        "name": "Sendvič sa pilećim mesom",
+        "desc": "Sendvič sa pilećim mesom pripravljenim sous-vide tehnikom sa domaćim majonezom."
+      },
+      "frenchToast": {
+        "name": "Francuski tost",
+        "desc": "Francuski tost sa sezonskim voćem i sosom od višnja."
+      }
+    },
+    "dinner": {
+      "bruschettaPear": {
+        "name": "Brusketa sa marinovanom kruškom, gorgonzola sosom i dimljenim lososom",
+        "desc": "Delikatna kombinacija slatke kruške sa notom vina, pikantni gorgonzola krem sa bosiljkom i nežni domaći dimljeni losos."
+      },
+      "bruschettaSquid": {
+        "name": "Brusketa sa lignjom, hoisin kremom i chuka algama",
+        "desc": "Egzotična brusketa sa lignjom, marinovanim chukka algama, blago slatkim hoisin kremom, paprika uljem i marinovanim edamame pasuljem"
+      },
+      "bruschettaBeef": {
+        "name": "Brusketa sa rostbifom i aioli kremom",
+        "desc": "Sočni rostbif na hrskavom tostu sa glatkim kremom bogatim aromom pečenog belog luka, ljutom rukolom, senf sa zrnima i parmezanom"
+      },
+      "carpaccioBeef": {
+        "name": "Goveđi karpačo sa pečenom breskvom",
+        "desc": "Nežne šnicle govedine kombinovane sa mirisnom breskvom i dresingom na balzamiko bazi."
+      },
+      "saladRoastBeef": {
+        "name": "Salata sa rostbifom, pečenom paprikom i pimento sosom",
+        "desc": "Miks salata sa domaćim rostbifom, začinjen sosom od pečenih paprika, sušenih paradajza, korijandera, meda i rendanog pečenog oraha."
+      },
+      "saladSeafood": {
+        "name": "Salata sa morskim plodovima i kokos dresingom",
+        "desc": "Mlada lignja i sveže škampi sa miksom salata u kokos-lime dresingu na bazi maskarpone i paprika ulje"
+      },
+      "saladVegetable": {
+        "name": "Salata od sezonskog povrća sa Pomorosso dresingom",
+        "desc": "Miks sezonskog povrća sa prepoznatljivim dresingom na bazi sušenih paradajza. Svežina povrća je balansirana nežnim seljačkim feta sirom i pikantnim notama dresinga."
+      },
+      "soupFish": {
+        "name": "Riblja čorba sa morskim plodovima",
+        "desc": "Bogata čorba u prepoznatljivom stilu sa uljem od korijandera i persuna, lignja, škampi i losos."
+      },
+      "soupBeetroot": {
+        "name": "Hladna čorba od cvekle sa kefirom i mladim krompirom",
+        "desc": "Osvežavajuća hladna čorba na bazi kefira sa cveklom, predstavljena u prepoznatljivom stilu. Služi se sa sautiranim mladim krompirom."
+      },
+      "risottoPurple": {
+        "name": "Ljubičasti rizoto sa ćuftama i parmezan sosom",
+        "desc": "Živo jelo sa telećim ćuftama, pripremljeno klasičnom rizoto tehnikom i služeno sa bogatim sosom od sira."
+      },
+      "risottoMushroom": {
+        "name": "Rizoto sa vrganjima",
+        "desc": "Kremast rizoto u čorbici od gljiva sa vrganjima, parmezanom i uljem od mirođije."
+      },
+      "risottoTomYum": {
+        "name": "Tom Yum rizoto sa škampima i lignjom",
+        "desc": "Azijski twist na klasičan italijanski recept sa lignjom i škampima. Prožet kokos notama, lime i pikantnost Tom Yum-a."
+      },
+      "fishDorado": {
+        "name": "Grilovana orada sa povrćem u wok-u",
+        "desc": "Nežna grilovana orada u paru sa hrskavim wok-om od sezonskog povrća."
+      },
+      "fishSeaBass": {
+        "name": "File morskog basa sa kremom od celer korena i Basoro sosom",
+        "desc": "Nežan file morskog basa, pečen na tiganju do zlatne kore, služen na baršunastoj kremi od celera sa rafiniranim Basoro sosom od belog vina, narandže i aromatičnih začina. Marinirani komorač dodaje potrebnu svežinu jelu."
+      },
+      "fishSalmon": {
+        "name": "Bourbon losos",
+        "desc": "Nežan file lososa sa pireom od krompira i slatko-kiselim sosom od bourbon-a, meda i ljute papričice."
+      },
+      "meatBeefMedallions": {
+        "name": "Goveđi medaljoni sa pireom i sosom od vrganja",
+        "desc": "Sočni goveđi medaljoni sa nežnim pireom od krompira i bogatim kremastim sosom od aromatičnih divljih gljiva i timijana."
+      },
+      "meatChicken": {
+        "name": "Sous-vide piletina sa rezancima i anis teriyaki sosom",
+        "desc": "Sočan file pilećeg mesa pripremljen sous-vide tehnikom služen sa rezancima u prepoznatljivom anis teriyaki sosu."
+      },
+      "meatPork": {
+        "name": "Svinjski file sa mladim krompirom i sosom od gljiva",
+        "desc": "Nežno, sočno svinjsko meso sa pečenim mladim krompirom. Služi se sa sosom od gljiva."
+      },
+      "meatPljeskavitsa": {
+        "name": "Prepoznatljiva Pljeskavica",
+        "desc": "Balkanski klasik napravljen od mešavine govedine i začina, grillovan do savršenstva. Služi se sa domaćim turšijama i pomfritom."
+      },
+      "dessertBrownie": {
+        "name": "Brownie sa dulce de leche kremom i karamelizovanim lešnicima",
+        "desc": "Bogat čokoladni brownie sa najnežnijom kremom od kuvanog kondenzovanog mleka, natopljene višnje i karamelizovani lešnici."
+      },
+      "dessertTiramisu": {
+        "name": "Tiramisu",
+        "desc": "Klasični italijanski desert. Luftasta maskarpone krema sa notama lime i narandže, biskvit natoplan kafom i amaretom."
+      }
+    }
   }
 }

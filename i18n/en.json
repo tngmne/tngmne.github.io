@@ -76,5 +76,127 @@
   "room": {
     "selectRoom": "Select Your Room",
     "close": "Close"
+  },
+  "meals": {
+    "breakfast": {
+      "scrambleShrimp": {
+        "name": "Scramble with shrimp and hoisin cream",
+        "desc": "Delicate scrambled eggs with butter, juicy shrimp with a hint of garlic, and a tangy hoisin cream. Served with a mix of greens in a honey-balsamic dressing, cherry tomatoes, and a brioche bun"
+      },
+      "benedictBacon": {
+        "name": "Benedict with bacon and hollandaise sauce",
+        "desc": "Delicate English muffin with poached eggs, crispy bacon, and airy hollandaise sauce with a hint of nutmeg. Served with a mix of greens and spicy arugula in a honey-balsamic dressing and cherry tomatoes"
+      },
+      "montenegrianBreakfast": {
+        "name": "Montenegrian breakfast",
+        "desc": "Hearty Balkan-style set: grilled sausages, sunny-side-up eggs, crispy bacon, young potatoes in garlic oil, and farmhouse cheese."
+      },
+      "pancakesHoney": {
+        "name": "Pancakes with honey and seasonal fruits",
+        "desc": "Pancakes with honey and fresh fruits."
+      },
+      "chiaPudding": {
+        "name": "Chia pudding",
+        "desc": "Chia pudding with homemade granola and nuts (cherry or strawberry of your choice)."
+      },
+      "oatmeal": {
+        "name": "Oatmeal",
+        "desc": "Oatmeal with baked pear mousse and caramelized hazelnuts."
+      },
+      "chickenSandwich": {
+        "name": "Chicken sandwich",
+        "desc": "Sous-vide chicken sandwich with homemade mayonnaise."
+      },
+      "frenchToast": {
+        "name": "French toast",
+        "desc": "French toast with seasonal fruits and cherry sauce."
+      }
+    },
+    "dinner": {
+      "bruschettaPear": {
+        "name": "Bruschetta with marinated pear, gorgonzola sauce, and smoked salmon",
+        "desc": "A delicate combination of sweet pear with a hint of wine, tangy gorgonzola cream with basil, and tender house-cured smoked salmon."
+      },
+      "bruschettaSquid": {
+        "name": "Bruschetta with squid, hoisin cream, and chuka seaweed",
+        "desc": "Exotic bruschetta with squid, marinated chukka seaweed, mildly sweet hoisin cream, paprika oil and marinated edamame beans"
+      },
+      "bruschettaBeef": {
+        "name": "Bruschetta with roast beef and aioli cream",
+        "desc": "Juicy roast beef on a crispy toast with a smooth cream rich in roasted garlic aroma, spicy arugula, whole grain mustard, and parmesan"
+      },
+      "carpaccioBeef": {
+        "name": "Beef carpaccio with roasted peach",
+        "desc": "Tender slices of beef combined with fragrant peach and a balsamic-based dressing."
+      },
+      "saladRoastBeef": {
+        "name": "Salad with roast beef, roasted bell pepper, and pimento sauce",
+        "desc": "A salad mix with homemade roast beef, dressed with a sauce made from roasted peppers, sun-dried tomatoes, cilantro, honey and grated roasted walnut."
+      },
+      "saladSeafood": {
+        "name": "Seafood salad with coconut dressing",
+        "desc": "Young squid and fresh shrimp with a salad mix in a coconut-lime dressing based on mascarpone and paprika oil"
+      },
+      "saladVegetable": {
+        "name": "Seasonal vegetable salad with Pomorosso dressing",
+        "desc": "A mix of seasonal vegetables with a signature sun-dried tomato-based dressing. The freshness of the vegetables is balanced by delicate farmhouse feta cheese and piquant notes of the dressing."
+      },
+      "soupFish": {
+        "name": "Fish soup with seafood",
+        "desc": "A rich signature-style soup with cilantro and parsley oil, squid, shrimp, and salmon."
+      },
+      "soupBeetroot": {
+        "name": "Cold beetroot soup with kefir and baby potatoes",
+        "desc": "Refreshing cold kefir-based soup with beetroot, presented in a signature style. Served with sautéed young potatoes."
+      },
+      "risottoPurple": {
+        "name": "Purple risotto with meatballs and parmesan sauce",
+        "desc": "A vibrant dish with veal meatballs, prepared using the classic risotto technique and served with a rich cheese sauce."
+      },
+      "risottoMushroom": {
+        "name": "Risotto with porcini mushrooms",
+        "desc": "Creamy risotto in a mushroom broth with porcini mushrooms, parmesan, and dill oil."
+      },
+      "risottoTomYum": {
+        "name": "Tom Yum risotto with shrimp and squid",
+        "desc": "An Asian twist on a classic Italian recipe with squid and shrimp. Infused with coconut notes, lime and the tang of Tom Yum."
+      },
+      "fishDorado": {
+        "name": "Grilled dorado with vegetable sauté",
+        "desc": "Tender grilled dorado paired with a crispy sauté of seasonal vegetables."
+      },
+      "fishSeaBass": {
+        "name": "Sea bass fillet with celery root cream and Basoro sauce",
+        "desc": "Tender sea bass fillet, pan-seared to a golden crust, served on a velvety celery cream with refined Basoro sauce made from white wine, orange, and aromatic spices. Marinated fennel adds the necessary freshness to the dish."
+      },
+      "fishSalmon": {
+        "name": "Bourbon salmon",
+        "desc": "Tender salmon fillet with mashed potatoes and a sweet-and-sour sauce made from bourbon, honey, and chili pepper."
+      },
+      "meatBeefMedallions": {
+        "name": "Beef medallions with mashed potatoes and porcini mushroom sauce",
+        "desc": "Juicy beef medallions with tender mashed potatoes and a rich creamy sauce made from aromatic wild mushrooms and thyme."
+      },
+      "meatChicken": {
+        "name": "Sous-vide chicken with egg noodles and anise teriyaki sauce",
+        "desc": "Juicy sous-vide chicken fillet served with egg noodles in a signature anise teriyaki sauce."
+      },
+      "meatPork": {
+        "name": "Pork tenderloin with young potatoes and mashroom sauce",
+        "desc": "Tender, juicy pork with roasted young potatoes. Served with mushroom sauce."
+      },
+      "meatPljeskavitsa": {
+        "name": "Signature Pljeskavitsa",
+        "desc": "A Balkan classic made from a blend of beef and spices, grilled to perfection. Served with homemade pickles and French fries."
+      },
+      "dessertBrownie": {
+        "name": "Brownie with dulce de leche cream and caramelized hazelnuts",
+        "desc": "Rich chocolate brownie with the most delicate cream made from boiled condensed milk, soaked cherries, and caramelized hazelnuts."
+      },
+      "dessertTiramisu": {
+        "name": "Tiramisu",
+        "desc": "A classic Italian dessert. Airy mascarpone cream with notes of lime and orange, sponge cake soaked in coffee and amaretto."
+      }
+    }
   }
 }
