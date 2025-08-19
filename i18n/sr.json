@@ -1,4 +1,8 @@
 {
+  "header": {
+    "welcome": "ZEBRA gastrobar Vas pozdravlja!",
+    "description": "Pripremili smo ukusan izbor jela za goste SkyLine hotela koji mogu biti dostavljeni u Vašu sobu!"
+  },
   "navigation": {
     "quickNavigation": "Brza Navigacija"
   },
@@ -7,6 +11,8 @@
     "selectMeal": "Izaberite Vaš Obrok",
     "unavailable": "Izbor obroka trenutno nije dostupan.",
     "workingHours": "Radno vreme:",
+    "servedFrom": "služi se od",
+    "till": "do",
     "breakfast": "Doručak",
     "dinner": "Večera",
     "categories": {

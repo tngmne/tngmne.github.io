@@ -1,4 +1,8 @@
 {
+  "header": {
+    "welcome": "ZEBRA гастробар вітає Вас!",
+    "description": "Ми приготували смачний вибір страв для гостей готелю SkyLine, які можуть бути доставлені до Вашої кімнати!"
+  },
   "navigation": {
     "quickNavigation": "Швидка Навігація"
   },
@@ -7,6 +11,8 @@
     "selectMeal": "Оберіть Вашу Їжу",
     "unavailable": "Вибір їжі наразі недоступний.",
     "workingHours": "Робочі години:",
+    "servedFrom": "подається з",
+    "till": "до",
     "breakfast": "Сніданок",
     "dinner": "Вечеря",
     "categories": {

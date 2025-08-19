@@ -39,22 +39,96 @@
       padding-bottom: 1rem;
     }
 
+    /* Header Styles */
+    .sticky-header {
+      position: relative;
+      width: calc(100% - 2rem);
+      max-width: 1400px;
+      height: 240px;
+      background: #000000;
+      border: 2px solid #000000;
+      border-radius: 15px;
+      margin: 1rem auto 2rem auto;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .header-icon {
+      width: 120px;
+      height: 120px;
+      background: transparent;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .header-icon.zebra-logo {
+      width: 240px;
+      height: 240px;
+    }
+
+    .header-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .header-icon svg {
+      width: 80px;
+      height: 80px;
+      fill: #ffffff;
+    }
+
+    /* Header Text Styles */
+    .header-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .header-text-large {
+      color: #ffffff;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      line-height: 1.2;
+    }
+
+    .header-text-small {
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 400;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      line-height: 1.4;
+      max-width: 600px;
+    }
+
+    /* Remove body padding since header is no longer sticky */
+    body {
+      padding-top: 0;
+    }
+
     .logo {
-      display: block;
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 2rem auto;
-      background: var(--zebra-white);
-      border-radius: 50%;
-      padding: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none; /* Hide the old logo since we'll use the header */
     }
 
     .logo img {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      border-radius: 50%;
+      border-radius: 0;
     }
 
     .meal-options {
@@ -861,7 +935,26 @@
   </style>
 </head>
 <body>
-  <!-- Zebra Logo -->
+  <!-- Sticky Header -->
+  <header class="sticky-header">
+    <!-- Left Icon (Zebra Logo) -->
+    <div class="header-icon zebra-logo">
+      <img src="logo.jpeg" alt="Zebra Restaurant Logo">
+    </div>
+    
+    <!-- Center Text Content -->
+    <div class="header-text">
+      <div class="header-text-large" id="headerWelcome">ZEBRA gastrobar welcomes you!</div>
+      <div class="header-text-small" id="headerDescription">We have prepared a delicious selection of meals for guests of SkyLine hotel that could be delivered to your room!</div>
+    </div>
+    
+    <!-- Right Icon (Flame Icon) -->
+    <div class="header-icon">
+      <img src="flame_logo.jpg" alt="Flame Icon">
+    </div>
+  </header>
+
+  <!-- Zebra Logo (Hidden - replaced by header) -->
   <div class="logo">
     <img src="logo.jpeg" alt="Zebra Restaurant Logo">
   </div>
@@ -1100,14 +1193,35 @@
     }
 
     function getServingHoursText(isBreakfast) {
+      // Safety check to ensure i18n is ready
+      if (!window.i18n || !window.i18n.t || typeof window.i18n.t !== 'function') {
+        console.warn('i18n.t not available in getServingHoursText');
+        return isBreakfast ? 'served from 07:00 till 11:30' : 'served from 18:00 till 22:30';
+      }
+      
+      // Get translations with fallbacks
+      let servedFromKey, tillKey;
+      try {
+        servedFromKey = window.i18n.t('meal.servedFrom');
+        tillKey = window.i18n.t('meal.till');
+        
+        // If we get back the key instead of the translation, use fallback
+        if (servedFromKey === 'meal.servedFrom') servedFromKey = 'served from';
+        if (tillKey === 'meal.till') tillKey = 'till';
+      } catch (error) {
+        console.warn('Error getting translations in getServingHoursText:', error);
+        servedFromKey = 'served from';
+        tillKey = 'till';
+      }
+      
       if (isBreakfast) {
         const start = formatTime24Hour(BREAKFAST_START_HOUR, BREAKFAST_START_MINUTE);
         const end = formatTime24Hour(BREAKFAST_END_HOUR, BREAKFAST_END_MINUTE);
-        return `served from ${start} till ${end}`;
+        return `${servedFromKey} ${start} ${tillKey} ${end}`;
       } else {
         const start = formatTime24Hour(DINNER_START_HOUR, DINNER_START_MINUTE);
         const end = formatTime24Hour(DINNER_END_HOUR, DINNER_END_MINUTE);
-        return `served from ${start} till ${end}`;
+        return `${servedFromKey} ${start} ${tillKey} ${end}`;
       }
     }
     const roomGrid = document.getElementById('roomGrid');
@@ -1627,6 +1741,69 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function updateHeaderTexts() {
+      // Check if i18n is available
+      if (!window.i18n || !window.i18n.t || typeof window.i18n.t !== 'function') {
+        console.warn('i18n.t not available in updateHeaderTexts');
+        return;
+      }
+
+      try {
+        const welcomeElement = document.getElementById('headerWelcome');
+        const descriptionElement = document.getElementById('headerDescription');
+        
+        if (welcomeElement) {
+          let welcomeText = window.i18n.t('header.welcome');
+          // Check if we got a key back instead of translation
+          if (welcomeText === 'header.welcome') {
+            console.warn('Header welcome translation failed, attempting hard reload');
+            // Try hard reload for problematic languages
+            if (window.i18n.hardReloadTranslations) {
+              window.i18n.hardReloadTranslations(window.i18n.currentLanguage).then(() => {
+                const reloadedText = window.i18n.t('header.welcome');
+                if (reloadedText !== 'header.welcome') {
+                  welcomeElement.textContent = reloadedText;
+                } else {
+                  welcomeElement.textContent = 'ZEBRA gastrobar welcomes you!'; // English fallback
+                }
+              });
+            } else {
+              welcomeText = 'ZEBRA gastrobar welcomes you!'; // English fallback
+            }
+          }
+          if (welcomeText !== 'header.welcome') {
+            welcomeElement.textContent = welcomeText;
+          }
+        }
+        
+        if (descriptionElement) {
+          let descriptionText = window.i18n.t('header.description');
+          // Check if we got a key back instead of translation
+          if (descriptionText === 'header.description') {
+            console.warn('Header description translation failed, attempting hard reload');
+            // Try hard reload for problematic languages
+            if (window.i18n.hardReloadTranslations) {
+              window.i18n.hardReloadTranslations(window.i18n.currentLanguage).then(() => {
+                const reloadedText = window.i18n.t('header.description');
+                if (reloadedText !== 'header.description') {
+                  descriptionElement.textContent = reloadedText;
+                } else {
+                  descriptionElement.textContent = 'We have prepared a delicious selection of meals for guests of SkyLine hotel that could be delivered to your room!'; // English fallback
+                }
+              });
+            } else {
+              descriptionText = 'We have prepared a delicious selection of meals for guests of SkyLine hotel that could be delivered to your room!'; // English fallback
+            }
+          }
+          if (descriptionText !== 'header.description') {
+            descriptionElement.textContent = descriptionText;
+          }
+        }
+      } catch (error) {
+        console.warn('Error updating header texts:', error);
+      }
+    }
+
     function loadMeals() {
       // Check if i18n is properly initialized
       if (!window.i18n || !window.i18n.translations || Object.keys(window.i18n.translations).length === 0) {
@@ -1634,6 +1811,11 @@
         setTimeout(loadMeals, 100);
         return;
       }
+      
+      console.log('loadMeals starting with language:', window.i18n.currentLanguage);
+      
+      // Update header texts with current language
+      updateHeaderTexts();
       
       // Clear existing content to prevent duplicates
       mealContainer.innerHTML = '';

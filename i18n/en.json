@@ -1,4 +1,8 @@
 {
+  "header": {
+    "welcome": "ZEBRA gastrobar welcomes you!",
+    "description": "We have prepared a delicious selection of meals for guests of SkyLine hotel that could be delivered to your room!"
+  },
   "navigation": {
     "quickNavigation": "Quick Navigation"
   },
@@ -7,6 +11,8 @@
     "selectMeal": "Select Your Meal",
     "unavailable": "Meal selection is currently unavailable.",
     "workingHours": "Working Hours:",
+    "servedFrom": "served from",
+    "till": "till",
     "breakfast": "Breakfast",
     "dinner": "Dinner",
     "categories": {

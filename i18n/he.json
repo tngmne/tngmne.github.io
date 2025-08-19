@@ -1,4 +1,8 @@
 {
+  "header": {
+    "welcome": "ZEBRA גסטרובאר מברך אתכם!",
+    "description": "הכנו מבחר טעים של ארוחות לאורחי מלון SkyLine שיכולות להימסר לחדרכם!"
+  },
   "navigation": {
     "quickNavigation": "ניווט מהיר"
   },
@@ -129,6 +133,8 @@
     "selectMeal": "בחר את הארוחה שלך",
     "unavailable": "בחירת ארוחות אינה זמינה כרגע.",
     "workingHours": "שעות עבודה:",
+    "servedFrom": "מוגש מ",
+    "till": "עד",
     "breakfast": "ארוחת בוקר",
     "dinner": "ארוחת ערב",
     "categories": {
