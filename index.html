@@ -107,6 +107,17 @@
       text-align: center;
     }
 
+    .zebra-highlight {
+      font-weight: 900;
+      color: #ffffff;
+    }
+
+    .narrow-text {
+      font-weight: 300;
+      color: #cccccc;
+      letter-spacing: -0.5px;
+    }
+
     .header-text-small {
       color: #ffffff;
       font-size: 1.1rem;
@@ -115,6 +126,16 @@
       line-height: 1.4;
       max-width: 600px;
       text-align: center;
+    }
+
+    .skyline-highlight {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .light-gray-text {
+      color: #cccccc;
+      font-weight: 300;
     }
 
     /* Remove body padding since header is no longer sticky */
@@ -945,8 +966,8 @@
     
     <!-- Center Text Content -->
     <div class="header-text">
-      <div class="header-text-large" id="headerWelcome">ZEBRA gastrobar welcomes you!</div>
-      <div class="header-text-small" id="headerDescription">We have prepared a delicious selection of meals for guests of SkyLine hotel that could be delivered to your room!</div>
+      <div class="header-text-large" id="headerWelcome"><span class="zebra-highlight">ZEBRA</span><span class="narrow-text"> gastrobar welcomes you!</span></div>
+      <div class="header-text-small" id="headerDescription"><span class="light-gray-text">We have prepared a delicious selection of meals for guests of </span><span class="skyline-highlight">SkyLine</span><span class="light-gray-text"> hotel that could be delivered to your room!</span></div>
     </div>
     
     <!-- Right Icon (Flame Icon) -->
@@ -1742,6 +1763,46 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function formatWelcomeText(text) {
+      // Format the welcome text to highlight ZEBRA and make the rest narrower
+      // This works for all languages by looking for the word "ZEBRA" or "ЗЕБРА"
+      const zebraPattern = /(ZEBRA|ЗЕБРА)/i;
+      if (zebraPattern.test(text)) {
+        // Split by ZEBRA/ЗЕБРА and rebuild with proper styling
+        const parts = text.split(zebraPattern);
+        let result = '';
+        for (let i = 0; i < parts.length; i++) {
+          if (parts[i] && parts[i].match(/^(ZEBRA|ЗЕБРА)$/i)) {
+            result += `<span class="zebra-highlight">${parts[i]}</span>`;
+          } else if (parts[i]) {
+            result += `<span class="narrow-text">${parts[i]}</span>`;
+          }
+        }
+        return result;
+      }
+      return `<span class="narrow-text">${text}</span>`;
+    }
+
+    function formatDescriptionText(text) {
+      // Format the description text to highlight SkyLine and make the rest light gray
+      // This works for all languages by looking for the word "SkyLine"
+      const skylinePattern = /(SkyLine)/i;
+      if (skylinePattern.test(text)) {
+        // Split by SkyLine and rebuild with proper styling
+        const parts = text.split(skylinePattern);
+        let result = '';
+        for (let i = 0; i < parts.length; i++) {
+          if (parts[i] && parts[i].match(/^(SkyLine)$/i)) {
+            result += `<span class="skyline-highlight">${parts[i]}</span>`;
+          } else if (parts[i]) {
+            result += `<span class="light-gray-text">${parts[i]}</span>`;
+          }
+        }
+        return result;
+      }
+      return `<span class="light-gray-text">${text}</span>`;
+    }
+
     function updateHeaderTexts() {
       // Check if i18n is available
       if (!window.i18n || !window.i18n.t || typeof window.i18n.t !== 'function') {
@@ -1763,17 +1824,18 @@
               window.i18n.hardReloadTranslations(window.i18n.currentLanguage).then(() => {
                 const reloadedText = window.i18n.t('header.welcome');
                 if (reloadedText !== 'header.welcome') {
-                  welcomeElement.textContent = reloadedText;
+                  welcomeElement.innerHTML = formatWelcomeText(reloadedText);
                 } else {
-                  welcomeElement.textContent = 'ZEBRA gastrobar welcomes you!'; // English fallback
+                  welcomeElement.innerHTML = formatWelcomeText('ZEBRA gastrobar welcomes you!'); // English fallback
                 }
               });
             } else {
               welcomeText = 'ZEBRA gastrobar welcomes you!'; // English fallback
+              welcomeElement.innerHTML = formatWelcomeText(welcomeText);
             }
           }
           if (welcomeText !== 'header.welcome') {
-            welcomeElement.textContent = welcomeText;
+            welcomeElement.innerHTML = formatWelcomeText(welcomeText);
           }
         }
         
@@ -1787,17 +1849,18 @@
               window.i18n.hardReloadTranslations(window.i18n.currentLanguage).then(() => {
                 const reloadedText = window.i18n.t('header.description');
                 if (reloadedText !== 'header.description') {
-                  descriptionElement.textContent = reloadedText;
+                  descriptionElement.innerHTML = formatDescriptionText(reloadedText);
                 } else {
-                  descriptionElement.textContent = 'We have prepared a delicious selection of meals for guests of SkyLine hotel that could be delivered to your room!'; // English fallback
+                  descriptionElement.innerHTML = formatDescriptionText('We have prepared a delicious selection of meals for guests of SkyLine hotel that could be delivered to your room!'); // English fallback
                 }
               });
             } else {
               descriptionText = 'We have prepared a delicious selection of meals for guests of SkyLine hotel that could be delivered to your room!'; // English fallback
+              descriptionElement.innerHTML = formatDescriptionText(descriptionText);
             }
           }
           if (descriptionText !== 'header.description') {
-            descriptionElement.textContent = descriptionText;
+            descriptionElement.innerHTML = formatDescriptionText(descriptionText);
           }
         }
       } catch (error) {
