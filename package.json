@@ -1,6 +1,6 @@
 {
   "name": "meal-ordering-telegram-bot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Meal ordering system with Telegram bot webhook",
   "main": "index.html",
   "scripts": {
@@ -10,7 +10,12 @@
     "version:major": "npm version major --no-git-tag-version",
     "prepare": "husky install"
   },
-  "keywords": ["telegram", "bot", "webhook", "meal-ordering"],
+  "keywords": [
+    "telegram",
+    "bot",
+    "webhook",
+    "meal-ordering"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "devDependencies": {
