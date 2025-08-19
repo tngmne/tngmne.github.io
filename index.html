@@ -256,10 +256,10 @@
     #totalPrice {
       position: sticky;
       bottom: 7rem;
-      background: linear-gradient(135deg, var(--zebra-black), var(--zebra-gray));
+      background: linear-gradient(135deg, #FF2F10, #E02810);
       padding: 1.25rem 2.5rem;
       border-radius: var(--radius-lg);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 32px rgba(255, 47, 16, 0.3), 0 4px 16px rgba(0, 0, 0, 0.1);
       margin: 1.5rem auto;
       max-width: 320px;
       font-size: 1.6rem;
@@ -275,7 +275,18 @@
 
     #totalPrice:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(61, 125, 202, 0.4), 0 6px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 12px 40px rgba(255, 47, 16, 0.4), 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    #totalPrice.disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      background: linear-gradient(135deg, var(--zebra-gray), #999999);
+    }
+
+    #totalPrice.disabled:hover {
+      transform: none;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
     .action-buttons {
@@ -864,7 +875,7 @@
   </div>
 
   <div id="mealContainer" class="meal-options"></div>
-  <div id="totalPrice"><span data-i18n="order.total">Total</span>: 0 €</div>
+  <div id="totalPrice" class="disabled" onclick="handleTotalClick()" style="cursor: pointer;"><span data-i18n="order.total">Total</span>: 0 €</div>
 
   <div class="action-buttons">
     <button id="resetBtn" onclick="resetAll()" data-i18n="order.reset">Reset</button>
@@ -936,7 +947,7 @@
     const roomPopup = document.getElementById('roomPopup');
 
     // Service Hours Configuration
-    const BREAKFAST_START_HOUR = 8;
+    const BREAKFAST_START_HOUR = 7;
     const BREAKFAST_START_MINUTE = 30;
     const BREAKFAST_END_HOUR = 12;
     const BREAKFAST_END_MINUTE = 30;
@@ -1225,6 +1236,32 @@
         total += item.qty * item.price;
       }
       continueBtn.disabled = total === 0;
+      
+      // Update total button appearance based on total amount
+      const totalPriceElement = document.getElementById('totalPrice');
+      if (total === 0) {
+        totalPriceElement.classList.add('disabled');
+      } else {
+        totalPriceElement.classList.remove('disabled');
+      }
+    }
+
+    function calculateTotal() {
+      let total = 0;
+      for (let item of Object.values(selectedMeals)) {
+        total += item.qty * item.price;
+      }
+      return total;
+    }
+
+    function handleTotalClick() {
+      const totalPriceElement = document.getElementById('totalPrice');
+      const total = calculateTotal();
+      
+      // Only proceed if not disabled and total > 0
+      if (total > 0 && !totalPriceElement.classList.contains('disabled')) {
+        showNextStep();
+      }
     }
 
     function showNextStep() {
@@ -1546,14 +1583,13 @@
     }
 
     function resetAll() {
-      // Reset meal selections
+      // Reset meal selections - clear the entire selectedMeals object
+      Object.keys(selectedMeals).forEach(key => delete selectedMeals[key]);
+      
+      // Reset quantity displays to 0
       const quantitySpans = document.querySelectorAll('.quantity-control .quantity');
       quantitySpans.forEach(span => {
         span.textContent = '0';
-        const optionDiv = span.closest('.option');
-        const name = optionDiv.querySelector('.option-title').textContent;
-        const price = parseFloat(optionDiv.querySelector('.price').textContent);
-        delete selectedMeals[name];
       });
 
       // Reset location selection
@@ -1579,6 +1615,10 @@
 
       // Reset total price
       updateTotalDisplay(); // Use the new function for consistency
+      
+      // Explicitly set total button to disabled state since total is now 0
+      const totalPriceElement = document.getElementById('totalPrice');
+      totalPriceElement.classList.add('disabled');
       
       // Disable continue button
       continueBtn.disabled = true;
@@ -1764,6 +1804,14 @@
         total += item.qty * item.price;
       }
       totalPriceEl.textContent = `${i18n.t('order.total')}: ${total} €`;
+      
+      // Update total button appearance based on total amount
+      const totalPriceElement = document.getElementById('totalPrice');
+      if (total === 0) {
+        totalPriceElement.classList.add('disabled');
+      } else {
+        totalPriceElement.classList.remove('disabled');
+      }
     }
 
     // Initialize i18n system
