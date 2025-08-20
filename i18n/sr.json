@@ -57,6 +57,7 @@
     "paymentMethod": "Način plaćanja",
     "adminPin": "PIN",
     "passToAdmin": "Molimo predajte uređaj administratoru da završi porudžbinu.",
+    "callWaiter": "Pozovi Konobara",
     "confirmOrder": "Potvrdi Porudžbinu",
     "close": "×"
   },

@@ -67,6 +67,36 @@ ${originalText}
 ❌ **Order was declined.**`;
             
             alertText = '❌ Order rejected successfully!';
+            
+        } else if (action === 'waiter_sent') {
+            newText = `🫅 WAITER REQUEST ✅ HANDLED
+
+A guest has requested waiter assistance.
+${originalText.split('\n').slice(2).join('\n')}
+
+✅ **Waiter dispatched by ${callback_query.from.first_name || 'Admin'}**
+⏰ Handled at: ${new Date().toLocaleString('en-US', { 
+                timeZone: 'Europe/Podgorica',
+                dateStyle: 'short',
+                timeStyle: 'medium'
+            })}`;
+            
+            alertText = '👨‍🍳 Waiter has been dispatched!';
+            
+        } else if (action === 'waiter_ignore') {
+            newText = `🫅 WAITER REQUEST ❌ IGNORED
+
+A guest has requested waiter assistance.
+${originalText.split('\n').slice(2).join('\n')}
+
+❌ **Request ignored by ${callback_query.from.first_name || 'Admin'}**
+⏰ Ignored at: ${new Date().toLocaleString('en-US', { 
+                timeZone: 'Europe/Podgorica',
+                dateStyle: 'short',
+                timeStyle: 'medium'
+            })}`;
+            
+            alertText = '❌ Waiter request ignored.';
         }
 
         // Send callback answer (popup alert)
@@ -97,9 +127,11 @@ ${originalText}
             console.error('Failed to edit message:', errorData);
         }
 
-        // Send follow-up notification to kitchen
-        const kitchenStatus = action === 'confirm_order' ? '🟢 CONFIRMED' : '🔴 REJECTED';
-        const kitchenMessage = `🔔 **Kitchen Notification**
+        // Send follow-up notification based on action type
+        if (action === 'confirm_order' || action === 'reject_order') {
+            // Kitchen notification for orders
+            const kitchenStatus = action === 'confirm_order' ? '🟢 CONFIRMED' : '🔴 REJECTED';
+            const kitchenMessage = `🔔 **Kitchen Notification**
 
 Order Status Update: ${kitchenStatus}
 Time: ${new Date().toLocaleString('en-US', { 
@@ -110,15 +142,40 @@ Time: ${new Date().toLocaleString('en-US', {
 
 Please check the updated order above.`;
 
-        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: kitchenMessage,
-                parse_mode: 'Markdown'
-            })
-        });
+            await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: kitchenMessage,
+                    parse_mode: 'Markdown'
+                })
+            });
+            
+        } else if (action === 'waiter_sent') {
+            // Service notification for waiter dispatch
+            const serviceMessage = `🏃‍♂️ **Service Update**
+
+Waiter dispatched to guest location.
+Staff member: ${callback_query.from.first_name || 'Admin'}
+Time: ${new Date().toLocaleString('en-US', { 
+    timeZone: 'Europe/Podgorica',
+    dateStyle: 'short',
+    timeStyle: 'medium'
+})}
+
+✅ Guest assistance in progress.`;
+
+            await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: serviceMessage,
+                    parse_mode: 'Markdown'
+                })
+            });
+        }
 
         console.log(`Successfully processed ${action} for message ${messageId}`);
         return res.status(200).json({ ok: true, message: 'Callback processed' });

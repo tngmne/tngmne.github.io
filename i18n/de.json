@@ -57,6 +57,7 @@
     "paymentMethod": "Zahlungsmethode",
     "adminPin": "PIN",
     "passToAdmin": "Bitte übergeben Sie das Gerät an den Administrator, um die Bestellung abzuschließen.",
+    "callWaiter": "Kellner rufen",
     "confirmOrder": "Bestellung bestätigen",
     "close": "×"
   },

@@ -789,6 +789,33 @@
       box-shadow: var(--shadow-sm);
     }
 
+    .receipt-waiter {
+      background: var(--zebra-accent);
+      color: var(--zebra-white);
+      padding: 0.875rem 2rem;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      width: 100%;
+      font-weight: 500;
+    }
+
+    .receipt-waiter:hover {
+      background: #d4751a;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .receipt-waiter:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
     .thanks-modal {
       display: none;
       position: fixed;
@@ -1043,6 +1070,7 @@
         <input type="password" id="pinInput" maxlength="4" placeholder="****" oninput="validatePin(this.value)">
         <div class="error" id="pinError" data-i18n="validation.invalidPin">Incorrect PIN</div>
       </div>
+      <button class="receipt-waiter" onclick="callWaiter()" data-i18n="receipt.callWaiter">🫅 Call Waiter</button>
       <button class="receipt-confirm" id="confirmOrderBtn" onclick="confirmAndSendOrder()" disabled data-i18n="receipt.confirmOrder">Confirm Order</button>
     </div>
   </div>
@@ -1547,6 +1575,65 @@
       pinInput.value = '';
       pinError.style.display = 'none';
       confirmBtn.disabled = true;
+    }
+    
+    function callWaiter() {
+      // Send waiter call to Telegram
+      const BOT_TOKEN = TELEGRAM_CONFIG.BOT_TOKEN;
+      const CHAT_ID = TELEGRAM_CONFIG.CHAT_ID;
+      
+      // Get order data from receipt modal
+      const receiptModal = document.getElementById('receiptModal');
+      let orderInfo = '';
+      
+      if (receiptModal.dataset.receipt) {
+        try {
+          const receiptData = JSON.parse(receiptModal.dataset.receipt);
+          orderInfo = `\nOrder #: ${receiptData.orderNumber}`;
+        } catch (e) {
+          console.log('No order data available for waiter request');
+        }
+      }
+      
+      const waiterMessage = `🫅 WAITER REQUEST\n\nA guest has requested waiter assistance.${orderInfo}\nTime: ${new Date().toLocaleString()}\nLocation: Restaurant/Guest Room`;
+      
+      fetch(`${TELEGRAM_CONFIG.API_URL}${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: waiterMessage,
+          parse_mode: 'HTML',
+          reply_markup: JSON.stringify({
+            inline_keyboard: [
+              [
+                {
+                  text: '👨‍🍳 Waiter Sent',
+                  callback_data: 'waiter_sent'
+                },
+                {
+                  text: '❌ Ignore',
+                  callback_data: 'waiter_ignore'
+                }
+              ]
+            ]
+          })
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.ok) {
+          alert('Waiter has been notified! They will be with you shortly.');
+        } else {
+          alert('Error calling waiter. Please try again or call directly.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error calling waiter. Please try again or call directly.');
+      });
     }
     
     function confirmAndSendOrder() {

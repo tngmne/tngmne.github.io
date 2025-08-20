@@ -57,6 +57,7 @@
     "paymentMethod": "Payment Method",
     "adminPin": "PIN",
     "passToAdmin": "Please, pass the device to administrator to complete the order.",
+    "callWaiter": "Call Waiter",
     "confirmOrder": "Confirm Order",
     "close": "×"
   },

@@ -57,6 +57,7 @@
     "paymentMethod": "Méthode de paiement",
     "adminPin": "PIN",
     "passToAdmin": "Veuillez passer l'appareil à l'administrateur pour terminer la commande.",
+    "callWaiter": "Appeler le serveur",
     "confirmOrder": "Confirmer la commande",
     "close": "×"
   },

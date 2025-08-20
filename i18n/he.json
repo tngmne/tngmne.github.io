@@ -178,8 +178,9 @@
     "location": "מיקום",
     "paymentMethod": "דרך תשלום",
     "adminPin": "קוד",
-    "confirmOrder": "אשר הזמנה",
     "passToAdmin": "אנא העבירו את המכשיר למנהל כדי להשלים את ההזמנה.",
+    "callWaiter": "קרא למלצר",
+    "confirmOrder": "אשר הזמנה",
     "close": "×"
   },
   "telegram": {
