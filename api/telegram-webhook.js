@@ -97,7 +97,15 @@ ${originalText.split('\n').slice(2).join('\n')}
             })}`;
             
             alertText = '❌ Waiter request ignored.';
+            
+        } else {
+            // Handle unknown actions
+            console.log(`Unknown action received: ${action}`);
+            newText = `❓ UNKNOWN ACTION: ${action}\n\n${originalText}`;
+            alertText = `❓ Unknown action: ${action}`;
         }
+
+        console.log(`Alert text for ${action}: ${alertText}`);
 
         // Send callback answer (popup alert)
         await fetch(`https://api.telegram.org/bot${botToken}/answerCallbackQuery`, {
