@@ -26,6 +26,13 @@ export default async function handler(req, res) {
         const botToken = process.env.BOT_TOKEN;
 
         console.log(`Processing callback: ${action} for message ${messageId}`);
+        console.log(`Full callback_query.data: "${callback_query.data}"`);
+        console.log(`Action comparison check:`);
+        console.log(`- action === 'waiter_sent': ${action === 'waiter_sent'}`);
+        console.log(`- action === 'waiter_ignore': ${action === 'waiter_ignore'}`);
+        console.log(`- typeof action: ${typeof action}`);
+        console.log(`- action.length: ${action.length}`);
+        console.log(`- action char codes: ${Array.from(action).map(c => c.charCodeAt(0)).join(', ')}`);
 
         let newText;
         let alertText;
@@ -69,6 +76,7 @@ ${originalText}
             alertText = '❌ Order rejected successfully!';
             
         } else if (action === 'waiter_sent') {
+            console.log('✅ WAITER_SENT action detected - processing waiter dispatch');
             newText = `🫅 WAITER REQUEST ✅ HANDLED
 
 A guest has requested waiter assistance.
@@ -84,6 +92,7 @@ ${originalText.split('\n').slice(2).join('\n')}
             alertText = '👨‍🍳 Waiter has been dispatched!';
             
         } else if (action === 'waiter_ignore') {
+            console.log('❌ WAITER_IGNORE action detected - processing waiter ignore');
             newText = `🫅 WAITER REQUEST ❌ IGNORED
 
 A guest has requested waiter assistance.
@@ -100,7 +109,9 @@ ${originalText.split('\n').slice(2).join('\n')}
             
         } else {
             // Handle unknown actions
-            console.log(`Unknown action received: ${action}`);
+            console.log(`❓ UNKNOWN ACTION received: "${action}"`);
+            console.log(`Action details: length=${action.length}, type=${typeof action}`);
+            console.log(`Char codes: ${Array.from(action).map(c => c.charCodeAt(0)).join(', ')}`);
             newText = `❓ UNKNOWN ACTION: ${action}\n\n${originalText}`;
             alertText = `❓ Unknown action: ${action}`;
         }
