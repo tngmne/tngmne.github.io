@@ -15,6 +15,10 @@
     "till": "do",
     "breakfast": "Doručak",
     "dinner": "Večera",
+    "serviceHours": {
+      "breakfast": "9:00 - 12:30",
+      "dinner": "12:31 - 23:00"
+    },
     "categories": {
       "breakfastItems": "Stavke za Doručak",
       "coldAppetizers": "Hladni predjeli",

@@ -15,6 +15,10 @@
     "till": "à",
     "breakfast": "Petit-déjeuner",
     "dinner": "Dîner",
+    "serviceHours": {
+      "breakfast": "9h00 - 12h30",
+      "dinner": "12h31 - 23h00"
+    },
     "categories": {
       "breakfastItems": "Articles du petit-déjeuner",
       "coldAppetizers": "Entrées froides",

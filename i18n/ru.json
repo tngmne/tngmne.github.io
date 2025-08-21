@@ -15,6 +15,10 @@
     "till": "до",
     "breakfast": "Завтрак",
     "dinner": "Ужин",
+    "serviceHours": {
+      "breakfast": "9:00 - 12:30",
+      "dinner": "12:31 - 23:00"
+    },
     "categories": {
       "breakfastItems": "Блюда для Завтрака",
       "coldAppetizers": "Холодные закуски",

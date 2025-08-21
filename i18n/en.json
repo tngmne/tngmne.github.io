@@ -15,6 +15,10 @@
     "till": "till",
     "breakfast": "Breakfast",
     "dinner": "Dinner",
+    "serviceHours": {
+      "breakfast": "9:00 AM - 12:30 PM",
+      "dinner": "12:31 PM - 11:00 PM"
+    },
     "categories": {
       "breakfastItems": "Breakfast Items",
       "coldAppetizers": "Cold appetizers",

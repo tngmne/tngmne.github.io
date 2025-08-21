@@ -137,6 +137,10 @@
     "till": "עד",
     "breakfast": "ארוחת בוקר",
     "dinner": "ארוחת ערב",
+    "serviceHours": {
+      "breakfast": "9:00 - 12:30",
+      "dinner": "12:31 - 23:00"
+    },
     "categories": {
       "breakfastItems": "פריטי ארוחת בוקר",
       "coldAppetizers": "מתאבנים קרים",

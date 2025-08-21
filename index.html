@@ -608,6 +608,24 @@
       margin-top: 1rem;
     }
 
+    .building-header {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, var(--zebra-black), var(--zebra-accent));
+      color: var(--zebra-white);
+      padding: 0.75rem 1rem;
+      font-weight: bold;
+      font-size: 0.9rem;
+      text-align: center;
+      border-radius: var(--radius-sm);
+      margin: 1rem 0 0.5rem 0;
+      letter-spacing: 1px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .building-header:first-child {
+      margin-top: 0;
+    }
+
     .room-grid button {
       padding: 1rem;
       font-size: 1rem;
@@ -616,6 +634,7 @@
       background: var(--zebra-white);
       color: var(--zebra-accent);
       transition: all 0.2s ease;
+      font-weight: 600;
     }
 
     .room-grid button:hover {
@@ -1171,22 +1190,22 @@
     const roomPopup = document.getElementById('roomPopup');
 
     // Service Hours Configuration
-    const BREAKFAST_START_HOUR = 8;
-    const BREAKFAST_START_MINUTE = 30;
+    const BREAKFAST_START_HOUR = 9;
+    const BREAKFAST_START_MINUTE = 0;
     const BREAKFAST_END_HOUR = 12;
     const BREAKFAST_END_MINUTE = 30;
     const DINNER_START_HOUR = 12;
     const DINNER_START_MINUTE = 31;
-    const DINNER_END_HOUR = 22;
-    const DINNER_END_MINUTE = 30;
+    const DINNER_END_HOUR = 23;
+    const DINNER_END_MINUTE = 0;
     
     // Convert to minutes for easy comparison
     const MINUTES_PER_HOUR = 60; // Minutes conversion factor
-    const BREAKFAST_START_MINUTES = BREAKFAST_START_HOUR * MINUTES_PER_HOUR + BREAKFAST_START_MINUTE; // 510
+    const BREAKFAST_START_MINUTES = BREAKFAST_START_HOUR * MINUTES_PER_HOUR + BREAKFAST_START_MINUTE; // 540
     const BREAKFAST_END_MINUTES = BREAKFAST_END_HOUR * MINUTES_PER_HOUR + BREAKFAST_END_MINUTE; // 750
-    const DINNER_START_MINUTES = DINNER_START_HOUR * MINUTES_PER_HOUR + DINNER_START_MINUTE; // 780
-    const DINNER_END_MINUTES = DINNER_END_HOUR * MINUTES_PER_HOUR + DINNER_END_MINUTE; // 1350
-    const DINNER_SERVICE_END_MINUTES = DINNER_END_HOUR * MINUTES_PER_HOUR + DINNER_END_MINUTE; // 1350 - Service available until 22:30
+    const DINNER_START_MINUTES = DINNER_START_HOUR * MINUTES_PER_HOUR + DINNER_START_MINUTE; // 751
+    const DINNER_END_MINUTES = DINNER_END_HOUR * MINUTES_PER_HOUR + DINNER_END_MINUTE; // 1380
+    const DINNER_SERVICE_END_MINUTES = DINNER_END_HOUR * MINUTES_PER_HOUR + DINNER_END_MINUTE; // 1380 - Service available until 23:00
 
     // UI Configuration Constants
     const ADMIN_PIN = '2606';
@@ -1230,21 +1249,59 @@
     console.log(`🔧 Using ${isTestEnvironment ? 'TEST' : 'PRODUCTION'} environment`);
     console.log(`📱 Bot Token: ${TELEGRAM_CONFIG.BOT_TOKEN.substring(0, 10)}...`);
 
-    // Room Configuration
+    // Room Configuration - LAMELA I & II Apartments
     const ROOM_FLOORS = [
-      { floor: 1, start: 1, end: 6 },   // 101-106
-      { floor: 2, start: 1, end: 14 },  // 201-214
-      { floor: 3, start: 1, end: 14 },  // 301-314
-      { floor: 4, start: 1, end: 14 },  // 401-414
-      { floor: 5, start: 1, end: 14 },  // 501-514
-      { floor: 6, start: 1, end: 14 },  // 601-614
-      { floor: 7, start: 1, end: 14 },  // 701-714
-      { floor: 8, start: 1, end: 14 },  // 801-814
-      { floor: 9, start: 1, end: 14 },  // 901-914
-      { floor: 10, start: 1, end: 14 }, // 1001-1014
-      { floor: 11, start: 1, end: 14 }, // 1101-1114
-      { floor: 12, start: 1, end: 14 }, // 1201-1214
-      { floor: 13, start: 1, end: 3 }   // 1301-1303
+      // Floor 1
+      { floor: 1, start: 1, end: 6, building: "LAMELA I" },   // 101-106
+      { floor: 1, start: 7, end: 15, building: "LAMELA II" }, // 107-115
+      
+      // Floor 2  
+      { floor: 2, start: 1, end: 6, building: "LAMELA I" },   // 201-206
+      { floor: 2, start: 7, end: 15, building: "LAMELA II" }, // 207-215
+      
+      // Floor 3
+      { floor: 3, start: 1, end: 6, building: "LAMELA I" },   // 301-306
+      { floor: 3, start: 7, end: 14, building: "LAMELA II" }, // 307-314
+      
+      // Floor 4
+      { floor: 4, start: 1, end: 6, building: "LAMELA I" },   // 401-406
+      { floor: 4, start: 7, end: 14, building: "LAMELA II" }, // 407-414
+      
+      // Floor 5
+      { floor: 5, start: 1, end: 6, building: "LAMELA I" },   // 501-506
+      { floor: 5, start: 7, end: 13, building: "LAMELA II" }, // 507-513
+      
+      // Floor 6
+      { floor: 6, start: 1, end: 6, building: "LAMELA I" },   // 601-606
+      { floor: 6, start: 7, end: 13, building: "LAMELA II" }, // 607-613
+      
+      // Floor 7
+      { floor: 7, start: 1, end: 6, building: "LAMELA I" },   // 701-706
+      { floor: 7, start: 7, end: 13, building: "LAMELA II" }, // 707-713
+      
+      // Floor 8
+      { floor: 8, start: 1, end: 6, building: "LAMELA I" },   // 801-806
+      { floor: 8, start: 7, end: 13, building: "LAMELA II" }, // 807-813
+      
+      // Floor 9
+      { floor: 9, start: 1, end: 4, building: "LAMELA I" },   // 901-904
+      { floor: 9, start: 5, end: 7, building: "LAMELA II" },  // 905-907
+      
+      // Floor 10
+      { floor: 10, start: 1, end: 4, building: "LAMELA I" },  // 1001-1004
+      { floor: 10, start: 5, end: 7, building: "LAMELA II" }, // 1005-1007
+      
+      // Floor 11
+      { floor: 11, start: 1, end: 6, building: "LAMELA I" },  // 1101-1106
+      { floor: 11, start: 7, end: 10, building: "LAMELA II" }, // 1107-1110
+      
+      // Floor 12
+      { floor: 12, start: 1, end: 6, building: "LAMELA I" },  // 1201-1206
+      { floor: 12, start: 7, end: 7, building: "LAMELA II" }, // 1207
+      
+      // Floor 13 - Penthouse
+      { floor: 13, start: 1, end: 2, building: "LAMELA I" },  // 1301-1302
+      { floor: 13, start: 3, end: 3, building: "LAMELA II" }  // 1303
     ];
 
     // Application Messages - Removed, now using i18n system
@@ -1335,11 +1392,52 @@
     }
 
     function getWorkingHoursText() {
-      const breakfastStart = formatTime12Hour(BREAKFAST_START_HOUR, BREAKFAST_START_MINUTE);
-      const breakfastEnd = formatTime12Hour(BREAKFAST_END_HOUR, BREAKFAST_END_MINUTE);
-      const dinnerStart = formatTime12Hour(DINNER_START_HOUR, DINNER_START_MINUTE);
-      const dinnerEnd = formatTime12Hour(DINNER_END_HOUR, DINNER_END_MINUTE);
-      return `Breakfast: ${breakfastStart} - ${breakfastEnd}<br>Dinner: ${dinnerStart} - ${dinnerEnd}`;
+      // Safety check to ensure i18n is ready
+      if (!window.i18n || !window.i18n.t || typeof window.i18n.t !== 'function') {
+        console.warn('i18n.t not available in getWorkingHoursText');
+        const breakfastStart = formatTime12Hour(BREAKFAST_START_HOUR, BREAKFAST_START_MINUTE);
+        const breakfastEnd = formatTime12Hour(BREAKFAST_END_HOUR, BREAKFAST_END_MINUTE);
+        const dinnerStart = formatTime12Hour(DINNER_START_HOUR, DINNER_START_MINUTE);
+        const dinnerEnd = formatTime12Hour(DINNER_END_HOUR, DINNER_END_MINUTE);
+        return `Breakfast: ${breakfastStart} - ${breakfastEnd}<br>Dinner: ${dinnerStart} - ${dinnerEnd}`;
+      }
+      
+      try {
+        // Get localized labels and service hours
+        const breakfastLabel = window.i18n.t('meal.breakfast');
+        const dinnerLabel = window.i18n.t('meal.dinner');
+        const breakfastHours = window.i18n.t('meal.serviceHours.breakfast');
+        const dinnerHours = window.i18n.t('meal.serviceHours.dinner');
+        
+        // Check if translations are available, use fallback if not
+        const breakfast = breakfastLabel !== 'meal.breakfast' ? breakfastLabel : 'Breakfast';
+        const dinner = dinnerLabel !== 'meal.dinner' ? dinnerLabel : 'Dinner';
+        
+        let breakfastTime, dinnerTime;
+        if (breakfastHours !== 'meal.serviceHours.breakfast' && dinnerHours !== 'meal.serviceHours.dinner') {
+          // Use localized service hours
+          breakfastTime = breakfastHours;
+          dinnerTime = dinnerHours;
+        } else {
+          // Use fallback formatting
+          const breakfastStart = formatTime12Hour(BREAKFAST_START_HOUR, BREAKFAST_START_MINUTE);
+          const breakfastEnd = formatTime12Hour(BREAKFAST_END_HOUR, BREAKFAST_END_MINUTE);
+          const dinnerStart = formatTime12Hour(DINNER_START_HOUR, DINNER_START_MINUTE);
+          const dinnerEnd = formatTime12Hour(DINNER_END_HOUR, DINNER_END_MINUTE);
+          breakfastTime = `${breakfastStart} - ${breakfastEnd}`;
+          dinnerTime = `${dinnerStart} - ${dinnerEnd}`;
+        }
+        
+        return `${breakfast}: ${breakfastTime}<br>${dinner}: ${dinnerTime}`;
+      } catch (error) {
+        console.warn('Error getting translations in getWorkingHoursText:', error);
+        // Fallback to original hardcoded version
+        const breakfastStart = formatTime12Hour(BREAKFAST_START_HOUR, BREAKFAST_START_MINUTE);
+        const breakfastEnd = formatTime12Hour(BREAKFAST_END_HOUR, BREAKFAST_END_MINUTE);
+        const dinnerStart = formatTime12Hour(DINNER_START_HOUR, DINNER_START_MINUTE);
+        const dinnerEnd = formatTime12Hour(DINNER_END_HOUR, DINNER_END_MINUTE);
+        return `Breakfast: ${breakfastStart} - ${breakfastEnd}<br>Dinner: ${dinnerStart} - ${dinnerEnd}`;
+      }
     }
 
     function getServingHoursText(isBreakfast) {
@@ -1463,16 +1561,57 @@
     }
 
     function loadRoomButtons() {
-      // Use the centralized room configuration
+      // Group rooms by building for better organization
+      const lamelaI = [];
+      const lamelaII = [];
+      
       ROOM_FLOORS.forEach(range => {
         for (let i = range.start; i <= range.end; i++) {
           const roomNumber = range.floor * 100 + i;
-          const btn = document.createElement('button');
-          btn.textContent = roomNumber;
-          btn.onclick = () => selectRoom(roomNumber);
-          roomGrid.appendChild(btn);
+          const roomInfo = {
+            number: roomNumber,
+            building: range.building,
+            floor: range.floor
+          };
+          
+          if (range.building === "LAMELA I") {
+            lamelaI.push(roomInfo);
+          } else {
+            lamelaII.push(roomInfo);
+          }
         }
       });
+      
+      // Create building sections
+      if (lamelaI.length > 0) {
+        const lamelaIHeader = document.createElement('div');
+        lamelaIHeader.className = 'building-header';
+        lamelaIHeader.textContent = 'LAMELA I APARTMENTS';
+        roomGrid.appendChild(lamelaIHeader);
+        
+        lamelaI.forEach(room => {
+          const btn = document.createElement('button');
+          btn.textContent = room.number;
+          btn.title = `${room.building} - Floor ${room.floor}`;
+          btn.onclick = () => selectRoom(room.number);
+          roomGrid.appendChild(btn);
+        });
+      }
+      
+      if (lamelaII.length > 0) {
+        const lamelaIIHeader = document.createElement('div');
+        lamelaIIHeader.className = 'building-header';
+        lamelaIIHeader.textContent = 'LAMELA II APARTMENTS';
+        roomGrid.appendChild(lamelaIIHeader);
+        
+        lamelaII.forEach(room => {
+          const btn = document.createElement('button');
+          btn.textContent = room.number;
+          btn.title = `${room.building} - Floor ${room.floor}`;
+          btn.onclick = () => selectRoom(room.number);
+          roomGrid.appendChild(btn);
+        });
+      }
     }
 
     function updateQuantity(name, price, action, button) {
