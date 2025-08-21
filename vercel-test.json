@@ -1,0 +1,22 @@
+{
+  "name": "building-ordering-test",
+  "version": 2,
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "env": {
+    "NODE_ENV": "test",
+    "USE_TEST_BOT": "true",
+    "TEST_BOT_TOKEN": "@test-bot-token",
+    "TEST_CHAT_ID": "@test-chat-id",
+    "BOT_TOKEN": "@test-bot-token",
+    "CHAT_ID": "@test-chat-id"
+  },
+  "build": {
+    "env": {
+      "NODE_ENV": "test"
+    }
+  }
+}

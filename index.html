@@ -976,15 +976,95 @@
       opacity: 0.8;
       transition: opacity 0.3s ease;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
     .version-info:hover {
       opacity: 1;
       background: rgba(0, 0, 0, 0.9);
     }
+
+    .version-info.test-mode {
+      background: rgba(255, 152, 0, 0.8);
+      color: white;
+      border: 1px solid #ff9800;
+    }
+
+    .version-info.test-mode:hover {
+      background: rgba(255, 152, 0, 0.95);
+    }
+
+    .env-indicator {
+      font-weight: bold;
+      font-size: 0.4rem;
+      padding: 1px 3px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .env-indicator.test {
+      background: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    .env-indicator.production {
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    /* Test mode banner */
+    .test-mode-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(45deg, #ff9800, #f57c00);
+      color: white;
+      text-align: center;
+      padding: 8px;
+      font-weight: bold;
+      font-size: 0.85rem;
+      z-index: 10000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+      border-bottom: 2px solid #e65100;
+    }
+
+    .test-mode-banner.visible {
+      transform: translateY(0);
+    }
+
+    .test-mode-banner .close-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    /* Adjust body padding when test banner is visible */
+    body.test-mode-active {
+      padding-top: 44px;
+    }
   </style>
 </head>
 <body>
+  <!-- Test Mode Banner -->
+  <div id="testModeBanner" class="test-mode-banner">
+    🧪 TEST MODE ACTIVE - Using test bot for safe testing
+    <button class="close-btn" onclick="hideTestBanner()" title="Hide banner">×</button>
+  </div>
+
   <!-- Sticky Header -->
   <header class="sticky-header">
     <!-- Left Icon (Zebra Logo) -->
@@ -1124,12 +1204,31 @@
       NONE: 'none'
     };
 
-    // Telegram Bot Configuration
-    const TELEGRAM_CONFIG = {
-      BOT_TOKEN: '8071098931:AAFz_EOIJDp7RrJczbimuIE-sZmXnMPjOi0',
-      CHAT_ID: '7741980082',
-      API_URL: 'https://api.telegram.org/bot'
+    // Environment Configuration
+    const ENV_CONFIG = {
+      production: {
+        BOT_TOKEN: '8071098931:AAFz_EOIJDp7RrJczbimuIE-sZmXnMPjOi0',
+        CHAT_ID: '7741980082',
+        API_URL: 'https://api.telegram.org/bot'
+      },
+      test: {
+        BOT_TOKEN: '8381791930:AAHJpF3MPWJP455DOOkR5yy8vYHGbc3yKoI',
+        CHAT_ID: '1138899345',
+        API_URL: 'https://api.telegram.org/bot'
+      }
     };
+
+    // Determine environment (check URL or use localStorage for testing)
+    const isTestEnvironment = window.location.hostname.includes('test') || 
+                              localStorage.getItem('useTestBot') === 'true' ||
+                              window.location.search.includes('test=true');
+    
+    // Use appropriate configuration
+    const TELEGRAM_CONFIG = isTestEnvironment ? ENV_CONFIG.test : ENV_CONFIG.production;
+    
+    // Log current environment (for debugging)
+    console.log(`🔧 Using ${isTestEnvironment ? 'TEST' : 'PRODUCTION'} environment`);
+    console.log(`📱 Bot Token: ${TELEGRAM_CONFIG.BOT_TOKEN.substring(0, 10)}...`);
 
     // Room Configuration
     const ROOM_FLOORS = [
@@ -2176,21 +2275,87 @@
 
   <!-- Version Display -->
   <div class="version-info" id="appVersion">
-    v1.0.0
+    <span id="versionNumber">v1.0.0</span>
+    <span class="env-indicator" id="envIndicator">P</span>
   </div>
 
   <script>
+    // Hide test banner function
+    function hideTestBanner() {
+      document.getElementById('testModeBanner').classList.remove('visible');
+      document.body.classList.remove('test-mode-active');
+      localStorage.setItem('hideTestBanner', 'true');
+    }
+
+    // Update version display with environment indicator
+    function updateVersionDisplay() {
+      const versionContainer = document.getElementById('appVersion');
+      const versionNumber = document.getElementById('versionNumber');
+      const envIndicator = document.getElementById('envIndicator');
+      const testBanner = document.getElementById('testModeBanner');
+      
+      // Use the same environment detection logic as the main config
+      const isTestEnvironment = window.location.hostname.includes('test') || 
+                                localStorage.getItem('useTestBot') === 'true' ||
+                                window.location.search.includes('test=true');
+      
+      // Update environment indicator
+      if (isTestEnvironment) {
+        envIndicator.textContent = 'T';
+        envIndicator.className = 'env-indicator test';
+        versionContainer.className = 'version-info test-mode';
+        envIndicator.title = 'Test Environment - Using test bot';
+        
+        // Show test banner if not hidden
+        if (localStorage.getItem('hideTestBanner') !== 'true') {
+          testBanner.classList.add('visible');
+          document.body.classList.add('test-mode-active');
+        }
+      } else {
+        envIndicator.textContent = 'P';
+        envIndicator.className = 'env-indicator production';
+        versionContainer.className = 'version-info';
+        envIndicator.title = 'Production Environment - Using live bot';
+        
+        // Hide test banner in production
+        testBanner.classList.remove('visible');
+        document.body.classList.remove('test-mode-active');
+      }
+      
+      // Add click handler to show environment info
+      versionContainer.onclick = function() {
+        const env = isTestEnvironment ? 'TEST' : 'PRODUCTION';
+        const botToken = TELEGRAM_CONFIG.BOT_TOKEN.substring(0, 10) + '...';
+        const envDetails = isTestEnvironment 
+          ? 'Safe testing environment. Orders go to test bot only.'
+          : 'Live production environment. Orders go to real bot.';
+        alert(`Environment: ${env}\n${envDetails}\n\nBot Token: ${botToken}\nChat ID: ${TELEGRAM_CONFIG.CHAT_ID}`);
+      };
+    }
+
     // Load version from package.json
     async function loadVersion() {
       try {
         const response = await fetch('./package.json');
         const packageData = await response.json();
-        document.getElementById('appVersion').textContent = `v${packageData.version}`;
+        document.getElementById('versionNumber').textContent = `v${packageData.version}`;
       } catch (error) {
         console.log('Could not load version from package.json');
       }
+      
+      // Update environment display after version is loaded
+      updateVersionDisplay();
     }
+    
+    // Initialize version display
     loadVersion();
+    
+    // Update environment indicator when localStorage changes (for environment switching)
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'useTestBot') {
+        updateVersionDisplay();
+      }
+    });
   </script>
 
 </body>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Get Telegram Chat ID</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .input-container {
+            margin: 20px 0;
+        }
+        input[type="text"] {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: monospace;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+            margin: 20px 0;
+        }
+        .copy-button {
+            background: #007bff;
+            font-size: 14px;
+            padding: 8px 12px;
+            margin-left: 10px;
+        }
+        .copy-button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤖 Get Your Telegram Chat ID</h1>
+    <p>This tool helps you get your chat ID for the test bot configuration.</p>
+    
+    <div class="input-container">
+        <label for="botToken"><strong>Test Bot Token:</strong></label><br>
+        <input 
+            type="text" 
+            id="botToken" 
+            placeholder="Paste your test bot token here (e.g., 123456789:ABCdefGHIjklMNOpqrsTUVwxyz)"
+            autocomplete="off"
+            spellcheck="false"
+        >
+        <br>
+        <button onclick="getChatId()" id="getIdButton">Get Chat ID</button>
+        <button onclick="clearInput()" style="background: #6c757d;">Clear</button>
+    </div>
+    
+    <div id="result"></div>
+    
+    <div class="instructions">
+        <h3>📋 Instructions:</h3>
+        <ol>
+            <li><strong>Create your test bot</strong> with @BotFather on Telegram</li>
+            <li><strong>Copy the bot token</strong> and paste it in the field above</li>
+            <li><strong>Start a conversation</strong> with your test bot on Telegram</li>
+            <li><strong>Send any message</strong> to the bot (like "hello")</li>
+            <li><strong>Click "Get Chat ID"</strong> button above</li>
+            <li><strong>Copy the chat ID</strong> for your test configuration</li>
+        </ol>
+        
+        <h4>🔗 Quick Links:</h4>
+        <ul>
+            <li><a href="https://t.me/BotFather" target="_blank">@BotFather on Telegram</a></li>
+            <li><a href="environment-toggle.html">Environment Toggle Tool</a></li>
+            <li><a href="index.html">Main App</a></li>
+        </ul>
+    </div>
+
+    <script>
+        function clearInput() {
+            document.getElementById('botToken').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Chat ID copied to clipboard!');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Chat ID copied to clipboard!');
+            });
+        }
+
+        async function getChatId() {
+            const botToken = document.getElementById('botToken').value.trim();
+            const button = document.getElementById('getIdButton');
+            const resultDiv = document.getElementById('result');
+            
+            if (!botToken) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <strong>❌ Error:</strong> Please enter your bot token first.
+                    </div>
+                `;
+                return;
+            }
+
+            // Validate token format
+            if (!botToken.match(/^\d+:[A-Za-z0-9_-]+$/)) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <strong>❌ Invalid Token Format:</strong> Bot token should look like "123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
+                    </div>
+                `;
+                return;
+            }
+            
+            button.disabled = true;
+            button.textContent = 'Getting Chat ID...';
+            
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/getUpdates`);
+                const data = await response.json();
+                
+                if (data.ok && data.result.length > 0) {
+                    const chatId = data.result[data.result.length - 1].message.chat.id;
+                    const firstName = data.result[data.result.length - 1].message.from.first_name || 'Unknown';
+                    
+                    resultDiv.innerHTML = `
+                        <div class="result success">
+                            <h3>✅ Success!</h3>
+                            <p><strong>Your Chat ID:</strong> <code>${chatId}</code> 
+                               <button class="copy-button" onclick="copyToClipboard('${chatId}')">Copy</button>
+                            </p>
+                            <p><strong>User:</strong> ${firstName}</p>
+                            <p><strong>Bot Token:</strong> ${botToken.substring(0, 10)}...</p>
+                            
+                            <h4>📝 Next Steps:</h4>
+                            <ol>
+                                <li>Copy the chat ID above</li>
+                                <li>Open your <code>index.html</code> file</li>
+                                <li>Find the <code>ENV_CONFIG.test</code> section</li>
+                                <li>Replace <code>YOUR_TEST_CHAT_ID_HERE</code> with <code>${chatId}</code></li>
+                                <li>Replace <code>YOUR_TEST_BOT_TOKEN_HERE</code> with your bot token</li>
+                            </ol>
+                        </div>
+                    `;
+                } else if (data.ok && data.result.length === 0) {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <strong>❌ No Messages Found:</strong> 
+                            <p>Please send a message to your bot first:</p>
+                            <ol>
+                                <li>Go to Telegram</li>
+                                <li>Find your test bot</li>
+                                <li>Send any message (like "hello")</li>
+                                <li>Come back and try again</li>
+                            </ol>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result error">
+                            <strong>❌ API Error:</strong> ${data.description || 'Unknown error occurred'}
+                            <p>Please check that your bot token is correct.</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <strong>❌ Network Error:</strong> ${error.message}
+                        <p>Please check your internet connection and try again.</p>
+                    </div>
+                `;
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Get Chat ID';
+            }
+        }
+
+        // Allow Enter key to trigger the function
+        document.getElementById('botToken').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                getChatId();
+            }
+        });
+
+        // Focus on input when page loads
+        window.onload = function() {
+            document.getElementById('botToken').focus();
+        };
+    </script>
+</body>
+</html>

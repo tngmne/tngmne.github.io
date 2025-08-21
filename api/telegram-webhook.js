@@ -1,8 +1,33 @@
 // Telegram webhook handler for interactive bot messages
 export default async function handler(req, res) {
+    // Environment configuration
+    const ENV_CONFIG = {
+        production: {
+            botToken: process.env.BOT_TOKEN || '8071098931:AAFz_EOIJDp7RrJczbimuIE-sZmXnMPjOi0',
+            chatId: process.env.CHAT_ID || '7741980082'
+        },
+        test: {
+            botToken: process.env.TEST_BOT_TOKEN || '8381791930:AAHJpF3MPWJP455DOOkR5yy8vYHGbc3yKoI',
+            chatId: process.env.TEST_CHAT_ID || '1138899345'
+        }
+    };
+
+    // Determine environment based on environment variable or URL
+    const isTestEnvironment = process.env.NODE_ENV === 'test' || 
+                              process.env.USE_TEST_BOT === 'true' ||
+                              process.env.VERCEL_URL?.includes('test') ||
+                              req.headers.host?.includes('test');
+    
+    const config = isTestEnvironment ? ENV_CONFIG.test : ENV_CONFIG.production;
+    const botToken = config.botToken;
+    
+    console.log(`🔧 Webhook using ${isTestEnvironment ? 'TEST' : 'PRODUCTION'} environment`);
+    console.log(`📱 Bot Token: ${botToken.substring(0, 10)}...`);
+
     if (req.method === 'GET') {
         return res.status(200).json({ 
             message: 'Telegram webhook active',
+            environment: isTestEnvironment ? 'test' : 'production',
             timestamp: new Date().toISOString()
         });
     }
@@ -23,7 +48,6 @@ export default async function handler(req, res) {
         const originalText = callback_query.message.text;
         const action = callback_query.data;
         const callbackQueryId = callback_query.id;
-        const botToken = process.env.BOT_TOKEN;
 
         console.log(`Processing callback: ${action} for message ${messageId}`);
         console.log(`Full callback_query.data: "${callback_query.data}"`);

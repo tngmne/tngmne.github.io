@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Environment Toggle</title>
+    <meta charset="UTF-8">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+        .toggle-container { 
+            background: #f5f5f5; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px 0; 
+        }
+        .current-env { 
+            font-size: 18px; 
+            font-weight: bold; 
+            margin: 10px 0; 
+        }
+        .production { color: #d32f2f; }
+        .test { color: #388e3c; }
+        button { 
+            padding: 10px 20px; 
+            font-size: 16px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 5px; 
+        }
+        .btn-production { background: #ffcdd2; color: #d32f2f; }
+        .btn-test { background: #c8e6c9; color: #388e3c; }
+        .config-display { 
+            background: white; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 10px 0; 
+            border-left: 4px solid #2196f3; 
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Environment Configuration</h1>
+    
+    <div class="toggle-container">
+        <div class="current-env">
+            Current Environment: <span id="currentEnv" class="production">PRODUCTION</span>
+        </div>
+        
+        <button id="toggleBtn" class="btn-test" onclick="toggleEnvironment()">
+            Switch to TEST Environment
+        </button>
+        
+        <button onclick="window.location.href='index.html'">
+            Go to Main App
+        </button>
+    </div>
+    
+    <div class="config-display">
+        <h3>Current Configuration:</h3>
+        <div id="configInfo">
+            <strong>Bot Token:</strong> <span id="botToken">Loading...</span><br>
+            <strong>Chat ID:</strong> <span id="chatId">Loading...</span><br>
+            <strong>Environment:</strong> <span id="envType">Loading...</span>
+        </div>
+    </div>
+    
+    <div class="config-display">
+        <h3>Instructions:</h3>
+        <ol>
+            <li><strong>Production:</strong> Uses your live bot for real orders</li>
+            <li><strong>Test:</strong> Uses your test bot for safe testing</li>
+            <li>Toggle between environments before opening the main app</li>
+            <li>Test environment settings persist until you switch back</li>
+        </ol>
+        
+        <h4>Setting up Test Bot:</h4>
+        <ol>
+            <li>Create a test bot with @BotFather</li>
+            <li>Get your test chat ID using <a href="get-chat-id.html">this tool</a></li>
+            <li>Update the test configuration in index.html</li>
+        </ol>
+    </div>
+
+    <script>
+        // Environment configuration (same as in main app)
+        const ENV_CONFIG = {
+            production: {
+                BOT_TOKEN: '8071098931:AAFz_EOIJDp7RrJczbimuIE-sZmXnMPjOi0',
+                CHAT_ID: '7741980082',
+                API_URL: 'https://api.telegram.org/bot'
+            },
+            test: {
+                BOT_TOKEN: 'YOUR_TEST_BOT_TOKEN_HERE',
+                CHAT_ID: 'YOUR_TEST_CHAT_ID_HERE',
+                API_URL: 'https://api.telegram.org/bot'
+            }
+        };
+
+        function updateDisplay() {
+            const isTestMode = localStorage.getItem('useTestBot') === 'true';
+            const config = isTestMode ? ENV_CONFIG.test : ENV_CONFIG.production;
+            
+            // Update environment indicator
+            const envSpan = document.getElementById('currentEnv');
+            const toggleBtn = document.getElementById('toggleBtn');
+            
+            if (isTestMode) {
+                envSpan.textContent = 'TEST';
+                envSpan.className = 'test';
+                toggleBtn.textContent = 'Switch to PRODUCTION Environment';
+                toggleBtn.className = 'btn-production';
+            } else {
+                envSpan.textContent = 'PRODUCTION';
+                envSpan.className = 'production';
+                toggleBtn.textContent = 'Switch to TEST Environment';
+                toggleBtn.className = 'btn-test';
+            }
+            
+            // Update config display
+            document.getElementById('botToken').textContent = config.BOT_TOKEN.substring(0, 10) + '...';
+            document.getElementById('chatId').textContent = config.CHAT_ID;
+            document.getElementById('envType').textContent = isTestMode ? 'Test Environment' : 'Production Environment';
+        }
+
+        function toggleEnvironment() {
+            const isCurrentlyTest = localStorage.getItem('useTestBot') === 'true';
+            localStorage.setItem('useTestBot', (!isCurrentlyTest).toString());
+            updateDisplay();
+            
+            // Show confirmation
+            const newEnv = !isCurrentlyTest ? 'TEST' : 'PRODUCTION';
+            alert(`Switched to ${newEnv} environment!\n\nThe main app will now use the ${newEnv} bot configuration.`);
+        }
+
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>
