@@ -77,10 +77,24 @@ ${originalText}
             
         } else if (action === 'waiter_sent') {
             console.log('✅ WAITER_SENT action detected - processing waiter dispatch');
+            console.log(`Original text: "${originalText}"`);
+            
+            // Safely extract the original message content
+            let originalContent = '';
+            if (originalText) {
+                const lines = originalText.split('\n');
+                if (lines.length > 2) {
+                    originalContent = lines.slice(2).join('\n');
+                } else {
+                    originalContent = originalText;
+                }
+            }
+            console.log(`Extracted content: "${originalContent}"`);
+            
             newText = `🫅 WAITER REQUEST ✅ HANDLED
 
 A guest has requested waiter assistance.
-${originalText.split('\n').slice(2).join('\n')}
+${originalContent}
 
 ✅ **Waiter dispatched by ${callback_query.from.first_name || 'Admin'}**
 ⏰ Handled at: ${new Date().toLocaleString('en-US', { 
@@ -90,13 +104,28 @@ ${originalText.split('\n').slice(2).join('\n')}
             })}`;
             
             alertText = '👨‍🍳 Waiter has been dispatched!';
+            console.log(`Generated newText length: ${newText.length}`);
             
         } else if (action === 'waiter_ignore') {
             console.log('❌ WAITER_IGNORE action detected - processing waiter ignore');
+            console.log(`Original text: "${originalText}"`);
+            
+            // Safely extract the original message content
+            let originalContent = '';
+            if (originalText) {
+                const lines = originalText.split('\n');
+                if (lines.length > 2) {
+                    originalContent = lines.slice(2).join('\n');
+                } else {
+                    originalContent = originalText;
+                }
+            }
+            console.log(`Extracted content: "${originalContent}"`);
+            
             newText = `🫅 WAITER REQUEST ❌ IGNORED
 
 A guest has requested waiter assistance.
-${originalText.split('\n').slice(2).join('\n')}
+${originalContent}
 
 ❌ **Request ignored by ${callback_query.from.first_name || 'Admin'}**
 ⏰ Ignored at: ${new Date().toLocaleString('en-US', { 
@@ -106,6 +135,7 @@ ${originalText.split('\n').slice(2).join('\n')}
             })}`;
             
             alertText = '❌ Waiter request ignored.';
+            console.log(`Generated newText length: ${newText.length}`);
             
         } else {
             // Handle unknown actions
@@ -128,6 +158,15 @@ ${originalText.split('\n').slice(2).join('\n')}
                 show_alert: true
             })
         });
+
+        // Validate newText before editing message
+        if (!newText || newText.trim().length === 0) {
+            console.error(`❌ ERROR: newText is empty or undefined!`);
+            console.error(`Action: ${action}, newText: "${newText}"`);
+            return res.status(500).json({ error: 'Generated message text is empty' });
+        }
+
+        console.log(`✅ About to edit message with text length: ${newText.length}`);
 
         // Edit the message with visual feedback
         const editResponse = await fetch(`https://api.telegram.org/bot${botToken}/editMessageText`, {
