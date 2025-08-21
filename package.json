@@ -1,6 +1,6 @@
 {
   "name": "meal-ordering-telegram-bot",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Meal ordering system with Telegram bot webhook",
   "main": "index.html",
   "scripts": {
